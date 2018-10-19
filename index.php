@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="./lab/css/bootstrap.min.css">
     <link rel="stylesheet" href="./lab/css/style.css">
     <script type="text/javascript" src="./lab/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="./lab/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./lab/js/fontawesome-all.min.js"></script>
 </head>
 <body>
@@ -15,14 +14,17 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	        <ul class="navbar-nav mr-auto">
-	            <li class="nav-item active" id="trangchu">
+	            <li class="nav-item" id="trangchu">
 	                <a class="nav-link" href="#">Trang chủ</a>
 	            </li>
 	            <li class="nav-item" id="khoahoc">
-	                <a class="nav-link" href="#">Khoá học</a>
+	                <a class="nav-link" href="?p=khoahoc">Khoá học</a>
 	            </li>
                 <li class="nav-item" id="lophoc">
-                    <a class="nav-link" href="#">Lớp học</a>
+                    <a class="nav-link" href="?p=lophoc">Lớp học</a>
+                </li>
+                <li class="nav-item" id="hocvien">
+                    <a class="nav-link" href="?p=hocvien">Học viên</a>
                 </li>
                 <li class="nav-item" id="tochucthi">
                     <a class="nav-link" href="#">Tổ chức thi</a>
@@ -46,13 +48,21 @@
 	        </ul>
 	    </div>
 	</nav>
-	<div class="container"><br>
+	<div class="container-fluid"><br>
 		<?php if (isset($_GET['p']) && !empty($_GET['p'])) {
 			switch ($_GET['p']) {
 				case 'khoahoc':
 					require './c/c.khoahoc.php';
 					break;
-				
+				case 'lophoc':
+                    require './c/c.lophoc.php';
+                    break;
+                case 'hocvien':
+                    require './c/c.hocvien.php';
+                    break;
+                case 'nhaphocvien':
+                    require './c/c.nhaphocvien.php';
+                    break;
 				default:
 					# code...
 					break;
