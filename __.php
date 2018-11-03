@@ -10,7 +10,7 @@ class clsKetnoi
 	private $tendangnhap='root';
 	private $matkhau='1234:)))';
 	private $csdl='ttth';
-	private $host="http://localhost:8888";
+	private $host="http://localhost:8888"; 
 	function __construct()
 	{
 			$this->conn=mysqli_connect($this->maychu, $this->tendangnhap, $this->matkhau);
