@@ -1,6 +1,6 @@
 <?php 
 $ttth = array(
-	'HOST' => 'http://localhost/trungtamtinhoc/'
+	'HOST' => 'http://localhost:8888/'
 );
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 class clsKetnoi
@@ -10,7 +10,7 @@ class clsKetnoi
 	private $tendangnhap='root';
 	private $matkhau='1234:)))';
 	private $csdl='ttth';
-	private $host="http://localhost/trungtamtinhoc/";
+	private $host="http://localhost:8888";
 	function __construct()
 	{
 			$this->conn=mysqli_connect($this->maychu, $this->tendangnhap, $this->matkhau);
