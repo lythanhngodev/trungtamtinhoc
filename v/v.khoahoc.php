@@ -116,11 +116,13 @@
 <link rel="stylesheet" type="text/css" href="./lab/css/datatables.min.css">
 <script src="./lab/js/datatables.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="./lab/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 document.getElementById('khoahoc').classList.add("active");
 $(document).ready(function() {
     $('#bangkhoahoc').DataTable();
 } );
+
 $(document).on('click','#btnthemkhoahoc',function(){
 	var khoahoc = $('#tenkhoahoc').val();
 	var batdau = $('#batdau').val();

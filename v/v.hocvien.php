@@ -34,14 +34,14 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-body">
-						<button class="btn btn-sm btn-dark" data-toggle="modal" data-target="#modalnhaphocvien">Nhập HV từ Excel</button>
+						<a class="btn btn-sm btn-dark" href="?p=nhaphocvien">Nhập HV từ Excel</a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-9" style="padding-left: 0;">
 			<div class="card">
-				<div class="card-body">
+				<div class="card-body" id="khunghocvien">
 	                <table id="banglophoc" class="table table-hover" >
 	                    <thead>
 	                        <tr>
