@@ -4,6 +4,18 @@
 	    background: #f3f9ff;
 	}
 </style>
+<style type="text/css">
+	.onhap{
+		width: 160px !important;
+	}
+	.form-control:focus{
+		color: #495057 !important;
+	    background-color: #fff !important;
+	    border-color: #bbb !important;
+	    outline: 0 !important;
+	    box-shadow: none !important;
+	}
+</style>
 <div class="background-container container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -40,7 +52,7 @@
 			<div class="card">
 				<center><br>
 					<div class="form-group col-md-3" id="khungkhoahoc">
-						<label><b>Chọn khoá học</b></label>
+						<label><b>Chọn khoá học</b><br><i>Chọn khóa học cho các học viên này</i></label>
 						<select class="form-control" id="chonkhoahoc">
 							<option value="0">--- Chọn khoá học ---</option>
 							<option value="taokhoahoc">++ Tạo nhanh khóa mới ++</option>
@@ -163,9 +175,11 @@
 <script type="text/javascript" src="./lab/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./lab/js/select2.full.min.js"></script>
 <link rel="stylesheet" type="text/css" href="./lab/css/select2.css">
-
+<script type="text/javascript" src="./lab/js/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="./lab/css/jquery-ui.min.css">
 <script type="text/javascript">
 document.getElementById('hocvien').classList.add("active");
+document.getElementById('nhaphocvien').classList.add("active");
 $(document).ready(function() {
     $('#banglophoc').DataTable({
 	  "scrollY": "300px",
@@ -191,7 +205,7 @@ $(document).on('click','#banglophoc td',function(){
 	}else if($(td).find('input[type=text]').attr('ly')!='onhap'){
 		var chuoi = '';
 		chuoi = $(td).text().trim();
-		$(td).html("<input type='text' ly='onhap' class='form-control'>");
+		$(td).html("<input type='text' ly='onhap' class='form-control onhap'>");
 		$(td).find('input[type=text]').focus().val(chuoi);
 	}
 });
@@ -234,45 +248,52 @@ $(document).on('click','#btnthemkhoahoc',function(){
 });
 
 $(document).on('click','.luuthongtin',function(){
-	var bhv = [];          
+	var khoahoc = $('#chonkhoahoc').val();
+	if (jQuery.isEmptyObject(khoahoc)||khoahoc=='0'||khoahoc=='taokhoahoc') {
+		tbdanger('Vui lòng chọn khóa học');
+		return 0;
+	}
+	$('#banglophoc').find('input[type=text]').map(function(){
+		if(find('input[type=text]')!=$(this)){
+			var input = $(this).val();
+			$(this).parent().html(input);
+		}
+	});
+	var bhv = [];      
 	$('#banglophoc').find('tr:not(:first)').each(function(i, row) {
 	  var cols = [];
-	  $(this).find('td:not(:last)').each(function(i, col) {
-	      cols.push($(this).text());
+	  $(this).find('td:not(:first,:last)').each(function(i, col) {
+	      cols.push($(this).text().trim());
 	  });
 	  bhv.push(cols);
 	});
-	/*
+	if (jQuery.isEmptyObject(bhv)) {
+		tbdanger('Danh sách học viên rỗng');
+		return 0;
+	}
 	$.ajax({
-		url: 'aj/ajThemlophoc.php',
+		url: 'aj/ajNhapthanhvienvaocsdl.php',
 		type: 'POST',
 		data: {
-			lophoc:lophoc,
 			khoahoc:khoahoc,
-			diengiai:diengiai
+			bhv:bhv,
+			_token: '<?php echo $_SESSION['_token']; ?>'
 		},
 		success: function (data) {
 			var kq = $.parseJSON(data);
 			if (kq.trangthai) {
-				$('#modalthem').modal('hide');
-				tbsuccess('Đã thêm lớp học');
+				tbsuccess(kq.thongbao);
 				setTimeout(function(){
 			        location.reload();
-			    }, 2000);
+			    }, 3000);
 			}
 			else{
-				tbdanger('Lỗi!, Vui lòng thử lại sau');
+				tbdanger(kq.thongbao);
 			}
 		}
-	});*/
+	});
 });
-$(document).on('click','.sua',function(){
-	$('#suatenlophoc').val($(this).parent('td').parent('tr').find('td:nth-child(2)').text().trim());
-	$('#suaidl').val($(this).parent('td').parent('tr').find('td:nth-child(2)').attr('ly').trim());
-	$('#suakhoahoc').val($(this).parent('td').parent('tr').find('td:nth-child(3)').attr('ly').trim()).change();
-	$('#suadiengiai').val($(this).parent('td').parent('tr').find('td:nth-child(4)').text().trim());
-	$('#modalsua').modal('show');
-});
+
 $(document).on('click','#btnsualophoc',function(){
 	var lophoc = $('#suatenlophoc').val();
 	var khoahoc = $('#suakhoahoc').val();
@@ -309,6 +330,7 @@ $(document).on('click','#btnsualophoc',function(){
 });
 $(document).on('click','#laydulieu',function(){
 	var file_data = $('#fileexcel').prop('files')[0];
+	if (jQuery.isEmptyObject(file_data)) {return 0;}
 	var type = file_data.type;
 	var match = ["application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
 	if (type==match[0] || type==match[1]) {
@@ -327,7 +349,9 @@ $(document).on('click','#laydulieu',function(){
                 tbinfo("Vui lòng chờ...");
             },
             success: function(data){
+            	$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
             	$('#khunghocvien').empty();
+            	$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
             	$('#khunghocvien').html(data);
             },
             error: function () {

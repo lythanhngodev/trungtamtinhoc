@@ -25,7 +25,8 @@
 	                            <th>Tên lớp học</th>
 	                            <th class="text-center">Thuộc khoá học</th>
 	                            <th>Diễn giải</th>
-	                            <th>#</th>
+	                            <th style="width: 80px;">#</th>
+	                            <th style="width: 80px;">Xuất DS</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
@@ -39,6 +40,7 @@
 	                            <td ly="<?php echo $row['IDKH'] ?>" class="text-center"><?php echo $row['TENKHOA']; ?></td>
 	                            <td><?php echo $row['DIENGIAI'] ?></td>
 	                            <td><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton>&ensp;<bunton class="btn btn-sm btn-dark"><i class="fas fa-times"></i></bunton></td>
+	                            <td><a class="btn btn-sm btn-dark" href="ex/xuatdanhsachlop.php?idl=<?php echo $row['IDL'] ?>" target="_blank"><i class="fas fa-file-word"></i></a></td>
 	                        </tr>
 	                    <?php ++$stt;} ?>
 	                    </tbody>

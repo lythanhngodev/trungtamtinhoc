@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="./lab/css/style.css">
     <script type="text/javascript" src="./lab/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="./lab/js/fontawesome-all.min.js"></script>
+<?php 
+session_start();
+$_SESSION['_token'] = _token(256);
+ ?>
 </head>
 <body>
 	<!-- MENU -->
@@ -23,28 +27,47 @@
                 <li class="nav-item" id="lophoc">
                     <a class="nav-link" href="?p=lophoc">Lớp học</a>
                 </li>
-                <li class="nav-item" id="hocvien">
-                    <a class="nav-link" href="?p=hocvien">Học viên</a>
-                </li>
-                <li class="nav-item" id="tochucthi">
-                    <a class="nav-link" href="#">Tổ chức thi</a>
-                </li>
-                <li class="nav-item" id="ketqua">
-                    <a class="nav-link" href="#">Kết quả</a>
-                </li>
-                <li class="nav-item dropdown" id="taikhoan">
+                <li class="nav-item dropdown" id="hocvien">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Tài khoản
+                        Học viên
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Thông tin tài khoản</a>
-                        <a class="dropdown-item" href="#">Đổi mật khẩu</a>
-                        <a class="dropdown-item" href="#">Đăng xuất</a>
+                        <a class="dropdown-item" id="hocvien1" href="?p=hocvien">Học viên</a>
+                        <a class="dropdown-item" id="nhaphocvien" href="?p=nhaphocvien">Nhập học viên từ Excel</a>
                     </div>
                 </li>
-	            <li class="nav-item active" style="float: right;position:  absolute;right: 0;">
-	                <a class="nav-link" href="#">Xin chào: <?php echo "Lý"; ?></a>
-	            </li>
+                <li class="nav-item dropdown" id="tochucthi">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tổ chức thi
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" id="thisinhdangkyduthi" href="?p=thisinhdangkyduthi">Lập DS thí sinh đăng ký dự thi</a>
+                        <a class="dropdown-item" id="thisinhphongthi" href="?p=thisinhphongthi">Quản lý phòng thi</a>
+                        <a class="dropdown-item" href="#">DS đề nghị cấp chứng chỉ</a>
+                        <a class="dropdown-item" href="#">DS nộp lệ phí cấp chứng chỉ</a>
+
+                    </div>
+                </li>
+                <li class="nav-item dropdown" id="ketqua">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Kết quả
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Kết quả thi</a>
+                        <a class="dropdown-item" href="#">DS kết quả đạt</a>
+                        <a class="dropdown-item" href="#">DS Kết quả không đạt</a>
+
+                    </div>
+                </li>
+                <li class="nav-item dropdown" id="capchungchi">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Cấp chứng chỉ
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">DS đề nghị cấp chứng chỉ</a>
+                        <a class="dropdown-item" href="#">DS nộp lệ phí cấp chứng chỉ</a>
+                    </div>
+                </li>
 	        </ul>
 	    </div>
 	</nav>
@@ -63,15 +86,24 @@
                 case 'nhaphocvien':
                     require './c/c.nhaphocvien.php';
                     break;
+                case 'thisinhdangkyduthi':
+                    require './c/c.thisinhdangkyduthi.php';
+                    break;
+                case 'thisinhphongthi':
+                    require './c/c.thisinhphongthi.php';
+                    break;
 				default:
-					# code...
+					require './c/c.trangchu.php';
 					break;
 			}
-		} ?>
+		}else{
+                require './c/c.trangchu.php';
+            }
+         ?>
 	</div>
 </body>
 <script type="text/javascript">
-(function(){var c;c=jQuery;c.bootstrapGrowl=function(f,a){var b,e,d;a=c.extend({},c.bootstrapGrowl.default_options,a);b=c("<div>");b.attr("class","bootstrap-growl alert");a.type&&b.addClass("alert-"+a.type);a.allow_dismiss&&(b.addClass("alert-dismissible"),b.append('<button class="close" data-dismiss="alert" type="button"><span aria-hidden="true">&#215;</span><span class="sr-only">Close</span></button>'));b.append(f);a.top_offset&&(a.offset={from:"top",amount:a.top_offset});d=a.offset.amount;c(".bootstrap-growl").each(function(){return d= Math.max(d,parseInt(c(this).css(a.offset.from))+c(this).outerHeight()+a.stackup_spacing)});e={position:"body"===a.ele?"fixed":"absolute",margin:0,"z-index":"9999",display:"none"};e[a.offset.from]=d+"px";b.css(e);"auto"!==a.width&&b.css("width",a.width+"px");c(a.ele).append(b);switch(a.align){case "center":b.css({left:"50%","margin-left":"-"+b.outerWidth()/2+"px"});break;case "left":b.css("left","20px");break;default:b.css("right","20px")}b.fadeIn();0<a.delay&&b.delay(a.delay).fadeOut();};c.bootstrapGrowl.default_options={ele:"body",type:"info",offset:{from:"top",amount:20},align:"right",width:250,delay:4E3,allow_dismiss:!0,stackup_spacing:10}}).call(this);</script>
+(function(){var t;(t=jQuery).bootstrapGrowl=function(s,e){var a,o,l;switch(e=t.extend({},t.bootstrapGrowl.default_options,e),(a=t("<div>")).attr("class","bootstrap-growl alert"),e.type&&a.addClass("alert-"+e.type),e.allow_dismiss&&(a.addClass("alert-dismissible"),a.append('<button  class="close" data-dismiss="alert" type="button"><span aria-hidden="true">&#215;</span><span class="sr-only">Close</span></button>')),a.append(s),e.top_offset&&(e.offset={from:"top",amount:e.top_offset}),l=e.offset.amount,t(".bootstrap-growl").each(function(){return l=Math.max(l,parseInt(t(this).css(e.offset.from))+t(this).outerHeight()+e.stackup_spacing)}),(o={position:"body"===e.ele?"fixed":"absolute",margin:0,"z-index":"9999",display:"none"})[e.offset.from]=l+"px",a.css(o),"auto"!==e.width&&a.css("width",e.width+"px"),t(e.ele).append(a),e.align){case"center":a.css({left:"50%","margin-left":"-"+a.outerWidth()/2+"px"});break;case"left":a.css("left","20px");break;default:a.css("right","20px")}return a.fadeIn(),e.delay>0&&a.delay(e.delay).fadeOut(function(){return t(this).alert("close")}),a},t.bootstrapGrowl.default_options={ele:"body",type:"info",offset:{from:"top",amount:20},align:"right",width:250,delay:4e3,allow_dismiss:!0,stackup_spacing:10}}).call(this);</script>
 <script type="text/javascript">
     function tbinfo(mess){
         $.bootstrapGrowl('<i class="fa fa-spinner fa-spin"></i>  '+mess, {
@@ -86,10 +118,14 @@
         });
     }
     function tbdanger(mess){
-        $.bootstrapGrowl('<i class="fa fa-close"></i>  '+mess, {
+        $.bootstrapGrowl('<i class="fa fa-info"></i>  '+mess, {
             type: 'danger',
             delay: 2000
         });
+    }
+    function tban()
+    {
+        $('.bootstrap-growl').remove();
     }
 </script>
 
