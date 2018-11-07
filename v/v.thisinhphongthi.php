@@ -162,6 +162,16 @@ $(document).on('change','#chondanhsach',function(){
 			$('#khunghocvien').empty();
 			$('#khunghocvien').show( 'fold', {percent: 50}, 867 );
 			$('#khunghocvien').html(data);
+		    $('#banglophoc').DataTable({
+			  "scrollY": "400px",
+			  "scrollCollapse": true,
+			  "paging": false,
+			  "scrollX": true,
+			  "ordering": false
+			});
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });
@@ -192,6 +202,9 @@ $(document).on('click','.xuatdanhsachphongthi',function(){
 			$('#bangphongthi').empty();
 			$('#bangphongthi').append("<tr class='text-center'><th>TT</th><th>Tên phòng gợi nhớ</th><th>Tên phòng thực tế</th><th>Ngày thi</th></tr>");
 			$('#bangphongthi').append(data);
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 	$('#modallapphongthi').modal('show');

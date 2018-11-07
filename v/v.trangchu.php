@@ -58,7 +58,7 @@
 			                <a href="?p=thisinhphongthi" class="col-12"><img src="./lab/i/hoso.png"></a>
 			              </div>
 			              <div class="card-header">
-			                <h4>Quản lý phòng thi</h4>
+			                <h4>Phòng thi</h4>
 			              </div>
 			            </div>
 					</center>
@@ -79,10 +79,10 @@
 					<center>
 			            <div class="card" style="background-color: #fff !important;">
 			              <div class="card-body">
-			                <a href="?p=thisinhphongthi" class="col-12"><img src="./lab/i/hoso.png"></a>
+			                <a href="?p=diem" class="col-12"><img src="./lab/i/bangdiem.png"></a>
 			              </div>
 			              <div class="card-header">
-			                <h4>Kết quả thi</h4>
+			                <h4>Điểm</h4>
 			              </div>
 			            </div>
 					</center>

@@ -245,6 +245,16 @@ $(document).on('click','#xemhocvien',function(){
 			$('#khunghocvien').empty();
 			$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
 			$('#khunghocvien').html(data);
+		    $('#banglophoc').DataTable({
+			  "scrollY": "450px",
+			  "scrollCollapse": true,
+			  "paging": false,
+			  "scrollX": true,
+			  "ordering": false
+			});
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });
@@ -319,6 +329,9 @@ $(document).on('click','.luuthongtin',function(){
 			else{
 				tbdanger(kq.thongbao);
 			}
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });

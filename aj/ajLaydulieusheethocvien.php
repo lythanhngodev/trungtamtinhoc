@@ -93,12 +93,3 @@ for ($i=0; $i < count($danhsach); $i++) {
     <button class="btn btn-success luuthongtin"><i class="fas fa-check"></i> Lưu thông tin</button>
 </div>
 </center>
-<script type="text/javascript">
-    $('#banglophoc').DataTable({
-	  "scrollY": "300px",
-	  "scrollCollapse": true,
-	  "paging": false,
-	  "scrollX": true,
-      "ordering": false
-	});
-</script>

@@ -56,12 +56,3 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
     <button class="btn btn-success luuthongtin"><i class="fas fa-check"></i> Lưu danh sách</button>
 </div>
 </center>
-<script type="text/javascript">
-    $('#banglophoc').DataTable({
-	  "scrollY": "300px",
-	  "scrollCollapse": true,
-	  "paging": false,
-	  "scrollX": true,
-	  "ordering": false
-	});
-</script>

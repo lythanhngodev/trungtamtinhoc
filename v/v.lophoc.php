@@ -173,6 +173,9 @@ $(document).on('click','#btnthemlophoc',function(){
 			else{
 				tbdanger('Lỗi!, Vui lòng thử lại sau');
 			}
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });
@@ -214,6 +217,9 @@ $(document).on('click','#btnsualophoc',function(){
 			else{
 				tbdanger('Lỗi!, Vui lòng thử lại sau');
 			}
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });

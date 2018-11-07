@@ -64,12 +64,3 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
     <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachphongthiThucHanh.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS thi TH</a>
 </div>
 </center>
-<script type="text/javascript">
-    $('#banglophoc').DataTable({
-	  "scrollY": "400px",
-	  "scrollCollapse": true,
-	  "paging": false,
-	  "scrollX": true,
-	  "ordering": false
-	});
-</script>

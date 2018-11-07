@@ -151,6 +151,9 @@ $(document).on('click','#btnthemkhoahoc',function(){
 			else{
 				tbdanger('Lỗi!, Vui lòng thử lại sau');
 			}
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });
@@ -190,6 +193,9 @@ $(document).on('click','#btnsuakhoahoc',function(){
 			else{
 				tbdanger('Lỗi!, Vui lòng thử lại sau');
 			}
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });

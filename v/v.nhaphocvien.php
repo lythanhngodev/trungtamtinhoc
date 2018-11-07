@@ -243,6 +243,9 @@ $(document).on('click','#btnthemkhoahoc',function(){
 		success: function (data) {
 			$('#khungkhoahoc').empty();
 			$('#khungkhoahoc').html(data);
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });
@@ -290,6 +293,9 @@ $(document).on('click','.luuthongtin',function(){
 			else{
 				tbdanger(kq.thongbao);
 			}
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });
@@ -325,6 +331,9 @@ $(document).on('click','#btnsualophoc',function(){
 			else{
 				tbdanger('Lỗi!, Vui lòng thử lại sau');
 			}
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });
@@ -353,6 +362,13 @@ $(document).on('click','#laydulieu',function(){
             	$('#khunghocvien').empty();
             	$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
             	$('#khunghocvien').html(data);
+			    $('#banglophoc').DataTable({
+				  "scrollY": "300px",
+				  "scrollCollapse": true,
+				  "paging": false,
+				  "scrollX": true,
+			      "ordering": false
+				});
             },
             error: function () {
                 tbdanger('Không thể tải file');
