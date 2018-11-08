@@ -17,15 +17,15 @@
 					    } else
 					    /* If the time is grater than or equal to 1200 hours, but less than 1700 hours, so good afternoon */
 					    if ($time >= "12" && $time < "14") {
-					        echo "CHào buổi trưa";
+					        echo "Chào buổi trưa";
 					    } else
 					    /* Should the time be between or equal to 1700 and 1900 hours, show good evening */
 					    if ($time >= "14" && $time < "17") {
-					        echo "CHào buổi chiều";
+					        echo "Chào buổi chiều";
 					    } else
 					    /* Should the time be between or equal to 1700 and 1900 hours, show good evening */
 					    if ($time >= "17" && $time < "19") {
-					        echo "CHào buổi tối";
+					        echo "Chào buổi tối";
 					    } else
 					    /* Finally, show good night if the time is greater than or equal to 1900 hours */
 					    if ($time >= "19") {
@@ -89,4 +89,5 @@
 		        </div>
 			</div>	
 </div>
+<div style="position: fixed;margin-bottom: 0;left: 0;right:0;bottom: 0;height: 20px;width: 100%;background: #232323;color: #adadad;line-height: 20px;font-size: 90%;padding-left: 1rem;font-family: monospace;text-align: center;">© Copyright of Ngô Thanh Lý (Faculty of Information Technology 2014) | Phone: (+84) 794 967 197</div>
 <script type="text/javascript" src="./lab/js/bootstrap.min.js"></script>

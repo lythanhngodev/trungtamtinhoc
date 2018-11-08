@@ -50,11 +50,13 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
     </center>
     <center><div class="col-md-12 khungbtn">
         <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
+        <a class='btn btn-warning xuatthongtin' href='./ex/ExcelKetQuaThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất kết quả</a>
     </div>
     </center>
 </table>
 <center><div class="col-md-12 khungbtn">
     <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
+    <a class='btn btn-warning xuatthongtin' href='./ex/ExcelKetQuaThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất kết quả</a>
 </div>
 </center>
 <?php 
