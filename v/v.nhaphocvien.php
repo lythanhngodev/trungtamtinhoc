@@ -170,6 +170,11 @@
   </div>
 </div>
 
+<div id="dialog" title="Thông báo lỗi" class="dialog">
+  <p>Phát hiện: <b><span id="loicmnd" class="text-danger"></span></b> học viên có số CMND trùng nhau. Hệ thống đã tô <b class="text-danger">ĐỎ</b> các số CMND trùng nhau. Vui lòng kiểm tra lại thông tin.</p>
+</div>
+
+
 <link rel="stylesheet" type="text/css" href="./lab/css/datatables.min.css">
 <script src="./lab/js/datatables.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="./lab/js/bootstrap.min.js"></script>
@@ -180,6 +185,7 @@
 <script type="text/javascript">
 document.getElementById('hocvien').classList.add("active");
 document.getElementById('nhaphocvien').classList.add("active");
+$("#dialog").hide();
 $(document).ready(function() {
     $('#banglophoc').DataTable({
 	  "scrollY": "300px",
@@ -193,6 +199,7 @@ $('#chonkhoahoc').select2({
   width: '100%'
 });
 $(document).on('click','#banglophoc td',function(){
+	 $(this).css('background-color','#fff');
 	var td = $(this);
 	$('#banglophoc').find('td').find('input[type=text]').map(function(){
 		if(td.find('input[type=text]')!=$(this)){
@@ -270,16 +277,50 @@ $(document).on('click','.luuthongtin',function(){
 	  });
 	  bhv.push(cols);
 	});
+
 	if (jQuery.isEmptyObject(bhv)) {
 		tbdanger('Danh sách học viên rỗng');
 		return 0;
 	}
+	// kiểm tra CMND
+	var banghvloi = [];
+	for(var o = 0; o < bhv.length; o++){
+		var kiemtra = 0;
+		for(var p = o+1; p < bhv.length-1; p++){
+			if(bhv[o][3]==bhv[p][3] && o!=p){
+				kiemtra = 1;
+				banghvloi.push(bhv[p][3]);
+				//alert(o+" , "+p);
+			}
+		}
+	}
+	var demloicmnd = 0;
+	$('#banglophoc').find('tr:not(:first)').each(function(i, row) {
+	  $(this).find('td:not(:first,:last)').each(function(i, col) {
+		for(var o = 0; o < banghvloi.length; o++){
+	      if($(this).text().trim()==banghvloi[0]){
+	      	$(this).css('background-color','red');
+	      	++demloicmnd;
+	      }
+		}
+	  });
+	});
+	$('#loicmnd').text('0');
+	if (demloicmnd>0) {
+		$('#loicmnd').text(demloicmnd);
+		$( "#dialog" ).dialog();
+		tbdanger("Ôi! Lỗi");
+	}
+
+	return 0;
+
 	$.ajax({
 		url: 'aj/ajNhapthanhvienvaocsdl.php',
 		type: 'POST',
 		data: {
 			khoahoc:khoahoc,
 			bhv:bhv,
+			tenkhoahoc: $("#chonkhoahoc option:selected").text().trim(),
 			_token: '<?php echo $_SESSION['_token']; ?>'
 		},
 		success: function (data) {

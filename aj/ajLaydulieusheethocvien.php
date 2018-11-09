@@ -11,8 +11,8 @@ for($s=0;$s<count($listWorkSheets);$s++){
     $hightsRow = $objExcel->setActiveSheetIndex()->getHighestRow();
     $tennganlop = $sheetData[1]['K'];
     $ghichulop = $sheetData[1]['M'];
-    $tensheet = $listWorkSheets[$s];
-    for ($i=3; $i <=$hightsRow; $i++) { 
+    
+    for ($i=2; $i <=$hightsRow; $i++) { 
     	$mssv = trim($sheetData[$i]['B']);
     	$ho = trim($sheetData[$i]['C']);
         $ten = trim($sheetData[$i]['D']);
@@ -24,9 +24,10 @@ for($s=0;$s<count($listWorkSheets);$s++){
         $sobienlai = trim($sheetData[$i]['J']);
         $ngaybienlai = trim($sheetData[$i]['K']);
         $ghichu = trim($sheetData[$i]['L']);
+        $lop = trim($sheetData[$i]['M']); // là tên lớp CB01K009
         if ($ten=='' || $cmnd=='' || empty($ten) || empty($cmnd) || $ten=='null' || $cmnd=='null')
             continue;
-        $t_ds = [$mssv,$ho,$ten,$cmnd,$ngaysinh,$gioitinh,$noisinh,$sdt,$sobienlai,$ngaybienlai,$ghichu,$tennganlop,$ghichulop,$tensheet];
+        $t_ds = [$mssv,$ho,$ten,$cmnd,$ngaysinh,$gioitinh,$noisinh,$sdt,$sobienlai,$ngaybienlai,$ghichu,$tennganlop,$ghichulop,$lop];
         $danhsach[] = $t_ds;
     }
 }
@@ -37,6 +38,7 @@ for ($i=0; $i < count($danhsach); $i++) {
 		}
 	}
 }
+
 ?>
 <table id="banglophoc" class="table table-hover table-bordered display nowrap" style="width: 100%">
     <thead>
@@ -53,8 +55,6 @@ for ($i=0; $i < count($danhsach); $i++) {
             <th>Mã số biên lai</th>
             <th>Ngày ghi biên lai</th>
             <th>Ghi chú</th>
-            <th>Lớp</th>
-            <th>ĐĐ/TG học</th>
             <th>Sheet</th>
             <th>#</th>
         </tr>
@@ -76,8 +76,6 @@ for ($i=0; $i < count($danhsach); $i++) {
     		<td class="text-center"><?php echo $danhsach[$i][8]; ?></td>
     		<td class="text-right"><?php echo $danhsach[$i][9]; ?></td>
     		<td><?php echo $danhsach[$i][10]; ?></td>
-    		<td class="text-center"><?php echo $danhsach[$i][11]; ?></td>
-    		<td><?php echo $danhsach[$i][12]; ?></td>
             <td ly='stt'><?php echo $danhsach[$i][13]; ?></td>
             <td ly='stt'><a class="xoadong text-danger"><u>Xóa</u></a></td>
     	</tr>

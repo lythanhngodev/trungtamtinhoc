@@ -12,28 +12,53 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 		$_SESSION['_token']=_token(256);
 		$kn = new clsKetnoi();
 		$bhv = $_POST['bhv'];
-		$khoahoc = mysqli_real_escape_string($kn->conn,$_POST['khoahoc']);
-		
+		$khoahoc = trim(mysqli_real_escape_string($kn->conn,$_POST['khoahoc']));
+		$tenkhoahoc = trim(mysqli_real_escape_string($kn->conn,$_POST['tenkhoahoc']));
 		$stt_lop = 0;
-		$tenlopngan[$stt_lop] = array($bhv[0][11],$bhv[0][13]);
+		$tenlopngan[$stt_lop] = $bhv[0][11];
 		for ($i=1; $i < count($bhv); $i++) { 
 			$ktlop = 0;
 			for ($j=0; $j < count($tenlopngan); $j++) { 
-				if ($tenlopngan[$j][1]==$bhv[$i][13]) {
+				if ($tenlopngan[$j]==$bhv[$i][11]) {
 					$ktlop = 1;
 					break;
 				}
 			}
 			if ($ktlop==0) {
-				$tenlopngan[++$stt_lop]=array($bhv[$i][11],$bhv[$i][13]);
+				$tenlopngan[++$stt_lop]=$bhv[$i][11];
 			}
 		}
 		for ($i=0; $i < count($tenlopngan); $i++) { 
+	    	$tenlop = "CB"; // thieu 3
+	    	switch (strlen($tenlopngan[$i])) {
+	    		case 1:
+	    			$tenlop.="00".substr($tenlopngan[$i], 0, strlen($tenlopngan[$i])-1);
+	    			break;
+	    		case 2:
+	    			$tenlop.="0".substr($tenlopngan[$i], 0, strlen($tenlopngan[$i])-1);
+	    			break;
+	    		default:
+	    			$tenlop.=substr($tenlopngan[$i], 0, strlen($tenlopngan[$i])-1);
+	    			break;
+	    	}
+	    	switch (strlen($tenkhoahoc)) {
+	    		case 1:
+	    			$tenlop.="K00".$tenkhoahoc;
+	    			break;
+	    		case 2:
+	    			$tenlop.="K0".$tenkhoahoc;
+	    			break;
+	    		default:
+	    			$tenlop.="K".$tenkhoahoc;
+	    			break;
+	    	}
+	    	$tenlop.=" - ".$tenlopngan[$i];
 			// xử lý lớp học
-			$chuoi_them_lop = "INSERT INTO lop(MALOP, TENLOP) VALUES ('".$tenlopngan[$i][0]."','".$tenlopngan[$i][1]."');";
+			$chuoi_them_lop = "INSERT INTO lop(MALOP, TENLOP) VALUES ('".$tenlop."','".$tenlop."');";
 			$qr_them_lop = $kn->adddata($chuoi_them_lop);
 			// xử lý khóa học , lớp
-			$qr_lop = "SELECT IDL FROM lop WHERE TENLOP = '".$tenlopngan[$i][1]."' LIMIT 0,1;";
+
+			$qr_lop = "SELECT IDL FROM lop WHERE TENLOP = '".$tenlop."' LIMIT 0,1;";
 			$qr_idlop = $kn->query($qr_lop);
 			$rs_idlop = mysqli_fetch_array($qr_idlop);
 			$idlop = $rs_idlop[0];
@@ -55,6 +80,32 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 			$MASOBIENLAI = $bhv[$i][8];
 			$NGAYGHIBIENLAI = $bhv[$i][9];
 			$GHICHU = $bhv[$i][10];
+
+	    	$tenlop = "CB"; // thieu 3
+	    	switch (strlen($bhv[$i][11])) {
+	    		case 1:
+	    			$tenlop.="00".substr($bhv[$i][11], 0, strlen($bhv[$i][11])-1);
+	    			break;
+	    		case 2:
+	    			$tenlop.="0".substr($bhv[$i][11], 0, strlen($bhv[$i][11])-1);
+	    			break;
+	    		default:
+	    			$tenlop.=substr($bhv[$i][11], 0, strlen($bhv[$i][11])-1);
+	    			break;
+	    	}
+	    	switch (strlen($khoahoc)) {
+	    		case 1:
+	    			$tenlop.="K00".$tenkhoahoc;
+	    			break;
+	    		case 2:
+	    			$tenlop.="K0".$tenkhoahoc;
+	    			break;
+	    		default:
+	    			$tenlop.="K".$tenkhoahoc;
+	    			break;
+	    	}
+	    	$tenlop.=" - ".$bhv[$i][11];
+
 			$qr_hocvien= "INSERT INTO hocvien(MSSV,HO,TEN,CMND,NGAYSINH,GIOITINH,NOISINH,SDT,MASOBIENLAI,NGAYGHIBIENLAI,GHICHU) VALUES ('$MSSV','$HO','$TEN','$CMND','$NGAYSINH','$GIOITINH','$NOISINH','$SDT','$MASOBIENLAI','$NGAYGHIBIENLAI','$GHICHU');";
 			$them_hocvien = $kn->adddata($qr_hocvien);
 
@@ -63,7 +114,7 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 			$rs_idhocvien_qr = mysqli_fetch_array($qr_idhocvien_qr);
 			$idhocvien_qr = $rs_idhocvien_qr[0];
 
-			$qr_lop = "SELECT IDL FROM lop WHERE TENLOP = '".$bhv[$i][13]."' LIMIT 0,1;";
+			$qr_lop = "SELECT IDL FROM lop WHERE TENLOP = '".$tenlop."' LIMIT 0,1;";
 			$qr_idlop = $kn->query($qr_lop);
 			$rs_idlop = mysqli_fetch_array($qr_idlop);
 			$idlop = $rs_idlop[0];
