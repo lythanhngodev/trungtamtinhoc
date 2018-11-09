@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Trang quản trị | Quản lý điểm Đại học Sư phạm Kỹ thuật Vĩnh Long</title>
+	<title>PHẦN MỀM QUẢN LÝ TRUNG TÂM TIN HỌC - VLUTE</title>
     <base href="<?php echo $ttth['HOST']; ?>">
     <link rel="stylesheet" href="./lab/css/bootstrap.min.css">
     <link rel="stylesheet" href="./lab/css/style.css">
