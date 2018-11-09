@@ -119,7 +119,7 @@ $_SESSION['_token'] = _token(256);
         });
     }
     function tbdanger(mess){
-        $.bootstrapGrowl('<i class="fa fa-info"></i>  '+mess, {
+        $.bootstrapGrowl('<i class="fa fa-times"></i>  '+mess, {
             type: 'danger',
             delay: 2000
         });

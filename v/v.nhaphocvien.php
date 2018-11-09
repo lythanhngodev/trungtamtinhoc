@@ -277,7 +277,6 @@ $(document).on('click','.luuthongtin',function(){
 	  });
 	  bhv.push(cols);
 	});
-
 	if (jQuery.isEmptyObject(bhv)) {
 		tbdanger('Danh sách học viên rỗng');
 		return 0;
@@ -290,7 +289,6 @@ $(document).on('click','.luuthongtin',function(){
 			if(bhv[o][3]==bhv[p][3] && o!=p){
 				kiemtra = 1;
 				banghvloi.push(bhv[p][3]);
-				//alert(o+" , "+p);
 			}
 		}
 	}
@@ -310,10 +308,8 @@ $(document).on('click','.luuthongtin',function(){
 		$('#loicmnd').text(demloicmnd);
 		$( "#dialog" ).dialog();
 		tbdanger("Ôi! Lỗi");
+		return 0;
 	}
-
-	return 0;
-
 	$.ajax({
 		url: 'aj/ajNhapthanhvienvaocsdl.php',
 		type: 'POST',
@@ -399,6 +395,8 @@ $(document).on('click','#laydulieu',function(){
                 tbinfo("Vui lòng chờ...");
             },
             success: function(data){
+            	tban();
+            	tbsuccess('Tải xong');
             	$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
             	$('#khunghocvien').empty();
             	$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
