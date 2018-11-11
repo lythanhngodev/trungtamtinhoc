@@ -1,4 +1,5 @@
 <?php 
+sleep(1);
 if (!isset($_POST['phongthi']) || empty($_POST['phongthi'])) {
 	echo "Không có thông tin";
 	die();

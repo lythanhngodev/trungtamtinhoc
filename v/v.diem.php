@@ -177,6 +177,17 @@ $(document).on('click','.luubangdiem',function(){
 		data: {
 			bhv:bhv
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			var kq = $.parseJSON(data);
 			if (kq.trangthai) {
@@ -186,6 +197,9 @@ $(document).on('click','.luubangdiem',function(){
 			else{
 				tbdanger(kq.thongbao);
 			}
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');
@@ -208,6 +222,17 @@ $(document).on('change','#chondanhsach',function(){
 		data: {
 			danhsach:danhsach
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
 			$('#khunghocvien').empty();
@@ -220,6 +245,9 @@ $(document).on('change','#chondanhsach',function(){
 			  "scrollX": true,
 			  "ordering": false
 			});
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');
@@ -241,6 +269,17 @@ $(document).on('change','#chonphongthi',function(){
 		data: {
 			phongthi:$(this).val()
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
 			$('#khunghocvien').empty();
@@ -253,6 +292,9 @@ $(document).on('change','#chonphongthi',function(){
 			  "scrollX": true,
 			  "ordering": false
 			});
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');

@@ -1,4 +1,5 @@
 <?php 
+sleep(1);
 if (!isset($_POST['bhv']) || empty($_POST['bhv']) || !isset($_POST['tendanhsach']) || empty($_POST['tendanhsach'])) { ?>
 <script type="text/javascript">tbdanger('Có lỗi trong quá trình xử lý, vui lòng thử lại!');</script>
 <?php die(); }

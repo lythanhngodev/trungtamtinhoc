@@ -1,6 +1,6 @@
 <div class="background-container">
 	<div class="row">
-		<div class="col-12">
+		<div class="col-md-8" style="margin: 0 auto;">
 			<div class="card">
 				<div class="card-body">
 	                <h4>KHOÁ HỌC</h4>
@@ -11,7 +11,7 @@
 	</div>
 	<br>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-8" style="margin: 0 auto;">
 			<div class="card">
 				<div class="card-body">
 					<div class="col-md-12">
@@ -39,7 +39,7 @@
 	                            <td ly="<?php echo $row['IDKH'] ?>"><?php echo $row['TENKHOA']; ?></td>
 	                            <td class="text-center" ly="<?php echo $row['TGBATDAU'] ?>"><?php echo date_format(date_create_from_format('Y-m-d', $row['TGBATDAU']), 'd/m/Y'); ?></td>
 	                            <td class="text-center" ly="<?php echo $row['TGKETTHUC'] ?>"><?php echo date_format(date_create_from_format('Y-m-d', $row['TGKETTHUC']), 'd/m/Y'); ?></td>
-	                            <td class="text-center"><?php echo "0"; ?></td>
+	                            <td class="text-center"><?php echo $row['SOLOP']; ?></td>
 	                            <td><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton>&ensp;<bunton class="btn btn-sm btn-dark"><i class="fas fa-times"></i></bunton></td>
 	                        </tr>
 	                    <?php ++$stt;} ?>
@@ -107,8 +107,8 @@
       	<input type="text" id="suaidkh" hidden="hidden">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i></button>
-        <button type="button" class="btn btn-dark" id="btnsuakhoahoc"><i class="fas fa-check"></i> Điều chỉnh</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-primary" id="btnsuakhoahoc">Điều chỉnh</button>
       </div>
     </div>
   </div>
@@ -139,6 +139,17 @@ $(document).on('click','#btnthemkhoahoc',function(){
 			batdau:batdau,
 			ketthuc:ketthuc
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			var kq = $.parseJSON(data);
 			if (kq.trangthai) {
@@ -151,6 +162,9 @@ $(document).on('click','#btnthemkhoahoc',function(){
 			else{
 				tbdanger('Lỗi!, Vui lòng thử lại sau');
 			}
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');
@@ -181,6 +195,17 @@ $(document).on('click','#btnsuakhoahoc',function(){
 			ketthuc:ketthuc,
 			id:$('#suaidkh').val().trim()
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			var kq = $.parseJSON(data);
 			if (kq.trangthai) {
@@ -193,6 +218,9 @@ $(document).on('click','#btnsuakhoahoc',function(){
 			else{
 				tbdanger('Lỗi!, Vui lòng thử lại sau');
 			}
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');

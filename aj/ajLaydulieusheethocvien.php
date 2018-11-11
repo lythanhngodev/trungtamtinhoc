@@ -1,4 +1,5 @@
 <?php
+sleep(1);
 include_once "../ec/PHPExcel.php";
 $file = $_FILES['file']['tmp_name'];
 $objReader = PHPExcel_IOFactory::createReaderForFile($file);

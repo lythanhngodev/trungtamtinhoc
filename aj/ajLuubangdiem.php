@@ -1,4 +1,5 @@
 <?php
+sleep(1);
 session_start();
 require_once "../__.php";
 $ketqua = array('trangthai' => 0, 'thongbao' => '' );

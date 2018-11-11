@@ -238,7 +238,18 @@ $(document).on('click','#xemhocvien',function(){
 		data: {
 			lophoc:lophoc
 		},
-		success: function (data) {
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
+	    success: function (data) {
 			tban();
 			tbsuccess('Tải xong');
 			$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
@@ -252,6 +263,9 @@ $(document).on('click','#xemhocvien',function(){
 			  "scrollX": true,
 			  "ordering": false
 			});
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');
@@ -321,6 +335,17 @@ $(document).on('click','.luuthongtin',function(){
 			lop:$('#chonlophoc').val(),
 			_token: '<?php echo $_SESSION['_token']; ?>'
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			var kq = $.parseJSON(data);
 			if (kq.trangthai) {
@@ -329,6 +354,9 @@ $(document).on('click','.luuthongtin',function(){
 			else{
 				tbdanger(kq.thongbao);
 			}
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');

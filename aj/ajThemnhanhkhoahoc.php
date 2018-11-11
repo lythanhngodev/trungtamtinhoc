@@ -1,4 +1,5 @@
 <?php 
+	sleep(1);
 	require_once "../__.php";
 	session_start();
 	if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc'])) {

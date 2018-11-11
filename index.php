@@ -1,4 +1,24 @@
-<?php require_once "__.php"; ?>
+<?php require_once "__.php";
+function sanitize_output($buffer) {
+
+    $search = array(
+        '/\>[^\S ]+/s',     // strip whitespaces after tags, except space
+        '/[^\S ]+\</s',     // strip whitespaces before tags, except space
+        '/( )+/s',         // shorten multiple whitespace sequences
+        '/<!--(.|\s)*?-->/' // Remove HTML comments
+    );
+
+    $replace = array(
+        '>',
+        '<',
+        '\\1',
+        ''
+    );
+    $buffer = preg_replace($search, $replace, $buffer);
+    return $buffer;
+}
+ ob_start("sanitize_output");
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +27,7 @@
     <link rel="stylesheet" href="./lab/css/bootstrap.min.css">
     <link rel="stylesheet" href="./lab/css/style.css">
     <script type="text/javascript" src="./lab/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="./lab/js/fontawesome-all.min.js"></script>
+    <script async="async" type="text/javascript" src="./lab/js/fontawesome-all.min.js"></script>
 <?php 
 session_start();
 $_SESSION['_token'] = _token(256);
@@ -15,8 +35,14 @@ $_SESSION['_token'] = _token(256);
 </head>
 <body>
 	<!-- MENU -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #563d7c !important;">
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <a class="navbar-brand" href="#">
+              <img src="./ex/logo.png" width="30" height="30">
+            </a>
 	        <ul class="navbar-nav mr-auto">
 	            <li class="nav-item" id="trangchu">
 	                <a class="nav-link" href="#">Trang chủ</a>
@@ -41,6 +67,7 @@ $_SESSION['_token'] = _token(256);
                         Tổ chức thi
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" id="danhsachcacdotthi" href="?p=danhsachcacdotthi">Danh sách các đợt thi</a>
                         <a class="dropdown-item" id="thisinhdangkyduthi" href="?p=thisinhdangkyduthi">Lập DS thí sinh đăng ký dự thi</a>
                         <a class="dropdown-item" id="thisinhphongthi" href="?p=thisinhphongthi">Quản lý phòng thi</a>
                         <a class="dropdown-item" href="#">DS đề nghị cấp chứng chỉ</a>
@@ -69,6 +96,9 @@ $_SESSION['_token'] = _token(256);
 	        </ul>
 	    </div>
 	</nav>
+    <div class="progress" style="border-radius: 0;height: 5px;background: transparent;z-index: 999999;position: fixed;top: 0;left: 0;right: 0;">
+        <div class="progress-bar" id="daluot" style="background: rgb(195, 175, 226); width: 0%;"></div>
+    </div>
 	<div class="container-fluid"><br>
 		<?php if (isset($_GET['p']) && !empty($_GET['p'])) {
 			switch ($_GET['p']) {
@@ -92,6 +122,9 @@ $_SESSION['_token'] = _token(256);
                     break;
                 case 'diem':
                     require './c/c.diem.php';
+                    break;
+                case 'danhsachcacdotthi':
+                    require_once './c/c.danhsachcacdotthi.php';
                     break;
 				default:
 					require './c/c.trangchu.php';

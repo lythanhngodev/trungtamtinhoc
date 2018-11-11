@@ -1,6 +1,6 @@
 <div class="background-container">
 	<div class="row">
-		<div class="col-12">
+		<div class="col-md-8" style="margin: 0 auto;">
 			<div class="card">
 				<div class="card-body">
 	                <h4>LỚP HỌC</h4>
@@ -11,13 +11,9 @@
 	</div>
 	<br>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-8" style="margin: 0 auto;">
 			<div class="card">
 				<div class="card-body">
-					<div class="col-md-12">
-						<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modalthem"><i class="fa fa-plus"></i> Thêm mới</button>
-					</div>
-					<br>
 	                <table id="banglophoc" class="table table-hover" >
 	                    <thead>
 	                        <tr>
@@ -39,8 +35,8 @@
 	                            <td ly="<?php echo $row['IDL'] ?>"><?php echo $row['TENLOP']; ?></td>
 	                            <td ly="<?php echo $row['IDKH'] ?>" class="text-center"><?php echo $row['TENKHOA']; ?></td>
 	                            <td><?php echo $row['DIENGIAI'] ?></td>
-	                            <td><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton>&ensp;<bunton class="btn btn-sm btn-dark"><i class="fas fa-times"></i></bunton></td>
-	                            <td><a class="btn btn-sm btn-dark" href="ex/xuatdanhsachlop.php?idl=<?php echo $row['IDL'] ?>" target="_blank"><i class="fas fa-file-word"></i></a></td>
+	                            <td class="text-center"><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton></td>
+	                            <td><center><a class="btn btn-sm btn-dark" href="ex/xuatdanhsachlop.php?idl=<?php echo $row['IDL'] ?>" target="_blank"><i class="fas fa-file-word"></i></a></center></td>
 	                        </tr>
 	                    <?php ++$stt;} ?>
 	                    </tbody>
@@ -105,7 +101,7 @@
       	</div>
       	<div class="form-group">
       		<label>Thuộc khoá học</label>
-      		<select id="suakhoahoc" class="form-control">
+      		<select id="suakhoahoc" class="form-control" disabled="disabled" >
       			<option value="0">--- Chọn khoá học ---</option>
       			<?php 
       			$khoahoc = laykhoahoc();
@@ -121,8 +117,8 @@
       	<input type="text" id="suaidl" hidden="hidden">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i></button>
-        <button type="button" class="btn btn-dark" id="btnsualophoc"><i class="fas fa-check"></i> Điều chỉnh</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-primary" id="btnsualophoc">Điều chỉnh</button>
       </div>
     </div>
   </div>
@@ -188,13 +184,8 @@ $(document).on('click','.sua',function(){
 });
 $(document).on('click','#btnsualophoc',function(){
 	var lophoc = $('#suatenlophoc').val();
-	var khoahoc = $('#suakhoahoc').val();
 	if (jQuery.isEmptyObject(lophoc)) {
 		tbdanger('Nhập tên lớp học');
-		return;
-	}
-	if (jQuery.isEmptyObject(khoahoc)||khoahoc==0) {
-		tbdanger('Chọn khoá học');
 		return;
 	}
 	$.ajax({
@@ -202,14 +193,24 @@ $(document).on('click','#btnsualophoc',function(){
 		type: 'POST',
 		data: {
 			lophoc:lophoc,
-			khoahoc:khoahoc,
-			idl: $('suaidl').val()
+			diengiai:$('#suadiengiai').val().trim(),
+			idl: $('#suaidl').val()
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			var kq = $.parseJSON(data);
 			if (kq.trangthai) {
-				$('#modalthem').modal('hide');
-				tbsuccess('Đã thêm lớp học');
+				$('#modalsua').modal('hide');
+				tbsuccess('Đã điều chỉnh');
 				setTimeout(function(){
 			        location.reload();
 			    }, 2000);
@@ -217,6 +218,9 @@ $(document).on('click','#btnsualophoc',function(){
 			else{
 				tbdanger('Lỗi!, Vui lòng thử lại sau');
 			}
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');

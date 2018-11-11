@@ -6,3 +6,11 @@
     -ms-filter: blur(8px);
     filter: blur(8px);
 }
+.dropdown-item.active, .dropdown-item:active{
+	background-color: #563d7c !important;
+}
+.page-item.active .page-link {
+    z-index: 1;
+    background-color: #563c7c !important;
+    border-color: #563c7c !important;
+}

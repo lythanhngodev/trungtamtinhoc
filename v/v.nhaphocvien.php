@@ -41,7 +41,7 @@
 						<div class="form-group col-md-4" style="float: left;">
 							<label style="width: 100%"><b>Lấy dữ liệu từ Excel</b></label>
 
-							<button class="btn btn-primary" id="laydulieu">Lấy dữ liệu</button>
+							<button class="btn btn-dark" id="laydulieu">Lấy dữ liệu</button>
 						</div>
 					</div>
 				</div>
@@ -97,7 +97,7 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-body">
-					<button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+					<button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 				    Xem Hướng dẫn &amp; Lưu ý
 				  </button>
 					<div class="collapse" id="collapseExample">
@@ -105,30 +105,13 @@
 					    <ol>
 					    	<li><b><i>File Excel:</i></b>
 					    		<dl>
-					    			<dd>- Ở mỗi sheet dữ liệu tương ứng 1 lớp học</dd>
-					    			<dd>- Tên mỗi sheet tương ứng tên lớp</dd>
+					    			<dd>- Ở mỗi file dữ liệu tương ứng 1 khóa học</dd>
 					    			<dd>- Vui lòng sắp xếp theo tên học viên ở các sheet theo thứ tự <b>A-Z</b></dd>
-					    			<dd>- Ở mỗi sheet vị trí cố định của mỗi ô chính là cơ sở để hệ thống truy xuất dữ liệu, theo dõi bảng quy ước sau:<br>
-					    				<table class="table table-bordered" style="width: 400px;">
-					    					<tr style="background: #f1f1f1;">
-					    						<th>Vị trí ô</th>
-					    						<th>Ý nghĩa</th>
-					    					</tr>
-					    					<tr>
-					    						<th>K1</th>
-					    						<td>Tên lớp học</td>
-					    					</tr>
-					    					<tr>
-					    						<th>M1</th>
-					    						<td>Phòng học &amp; Thời gian học, ghi chú</td>
-					    					</tr>
-					    				</table>
-					    			</dd>
 					    		</dl>
 					    	</li>
 					    	<li><b><i>Thao tác trên bảng học viên</i></b>
 					    		<dl>
-					    			<dd>- Để chỉnh sửa thoogn tin học viên nhấp chuột vào ô cần chỉnh sữa. Haonfh thành chỉnh sửa bằng cách ấn phím <b>Enter</b></dd>	
+					    			<dd>- Để chỉnh sửa thông tin học viên nhấp chuột vào ô cần chỉnh sữa. Hoàn thành chỉnh sửa bằng cách ấn phím <b>Enter</b></dd>	
 					    		</dl>
 					    	</li>
 					    </ol>
@@ -171,7 +154,7 @@
 </div>
 
 <div id="dialog" title="Thông báo lỗi" class="dialog">
-  <p>Phát hiện: <b><span id="loicmnd" class="text-danger"></span></b> học viên có số CMND trùng nhau. Hệ thống đã tô <b class="text-danger">ĐỎ</b> các số CMND trùng nhau. Vui lòng kiểm tra lại thông tin.</p>
+  <p>Phát hiện: <b><span id="loicmnd" class="text-danger"></span></b> học viên có số CMND trùng nhau. Hệ thống đã tô <b class="text-danger"> ĐỎ</b> các số CMND trùng nhau. Vui lòng kiểm tra lại thông tin.</p>
 </div>
 
 
@@ -319,6 +302,17 @@ $(document).on('click','.luuthongtin',function(){
 			tenkhoahoc: $("#chonkhoahoc option:selected").text().trim(),
 			_token: '<?php echo $_SESSION['_token']; ?>'
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			var kq = $.parseJSON(data);
 			if (kq.trangthai) {
@@ -331,49 +325,15 @@ $(document).on('click','.luuthongtin',function(){
 				tbdanger(kq.thongbao);
 			}
 		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
+		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
 });
 
-$(document).on('click','#btnsualophoc',function(){
-	var lophoc = $('#suatenlophoc').val();
-	var khoahoc = $('#suakhoahoc').val();
-	if (jQuery.isEmptyObject(lophoc)) {
-		tbdanger('Nhập tên lớp học');
-		return;
-	}
-	if (jQuery.isEmptyObject(khoahoc)||khoahoc==0) {
-		tbdanger('Chọn khoá học');
-		return;
-	}
-	$.ajax({
-		url: 'aj/ajSualophoc.php',
-		type: 'POST',
-		data: {
-			lophoc:lophoc,
-			khoahoc:khoahoc,
-			idl: $('suaidl').val()
-		},
-		success: function (data) {
-			var kq = $.parseJSON(data);
-			if (kq.trangthai) {
-				$('#modalthem').modal('hide');
-				tbsuccess('Đã thêm lớp học');
-				setTimeout(function(){
-			        location.reload();
-			    }, 2000);
-			}
-			else{
-				tbdanger('Lỗi!, Vui lòng thử lại sau');
-			}
-		},
-		error: function(){
-			tbdanger('Lỗi, Vui lòng thử lại!');
-		}
-	});
-});
 $(document).on('click','#laydulieu',function(){
 	var file_data = $('#fileexcel').prop('files')[0];
 	if (jQuery.isEmptyObject(file_data)) {return 0;}
@@ -391,9 +351,23 @@ $(document).on('click','#laydulieu',function(){
             processData: false,
             type: 'post',
             data: form_data,
+		    xhr: function () {
+		        var xhr = new window.XMLHttpRequest();
+		        //Download progress
+		        xhr.upload.addEventListener("progress", function (evt) {
+		            if (evt.lengthComputable) {
+		                var percentComplete = evt.loaded / evt.total;
+		                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+		            }
+		        }, false);
+		        return xhr;
+		    },
             beforeSend: function () {
                 tbinfo("Vui lòng chờ...");
             },
+		    complete: function () {
+		        $("#daluot").css("width","0%");
+		    },
             success: function(data){
             	tban();
             	tbsuccess('Tải xong');

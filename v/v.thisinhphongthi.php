@@ -155,6 +155,16 @@ $(document).on('change','#chondanhsach',function(){
 		data: {
 			danhsach:$(this).val()
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			tban();
 			tbsuccess('Đã tải');
@@ -169,6 +179,9 @@ $(document).on('change','#chondanhsach',function(){
 			  "scrollX": true,
 			  "ordering": false
 			});
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');
@@ -198,10 +211,23 @@ $(document).on('click','.xuatdanhsachphongthi',function(){
 			danhsach:idds,
 			tong:tong
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			$('#bangphongthi').empty();
 			$('#bangphongthi').append("<tr class='text-center'><th>TT</th><th>Tên phòng gợi nhớ</th><th>Tên phòng thực tế</th><th>Ngày thi</th></tr>");
 			$('#bangphongthi').append(data);
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');

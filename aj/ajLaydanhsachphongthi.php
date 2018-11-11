@@ -1,4 +1,5 @@
 <?php 
+#sleep(1);
 if (!isset($_POST['danhsach']) || empty($_POST['danhsach']) || !isset($_POST['tong']) || empty($_POST['tong'])) {
 	echo "";
 	die();

@@ -1,4 +1,5 @@
 <?php 
+	sleep(1);
 	require_once "../__.php";
 	$kq = array(
 		'trangthai'=>0

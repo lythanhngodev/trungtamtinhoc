@@ -130,12 +130,22 @@ $(document).on('change','#chonkhoahoc',function(){
 	$.ajax({
 		url: 'aj/ajLaydanhsachhocvientukhoa.php',
 		type: 'POST',
-		beforeSend: function () {
-                tbinfo("Vui lòng chờ...");
-            },
 		data: {
 			khoahoc:$(this).val()
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
+		beforeSend: function () {
+                tbinfo("Vui lòng chờ...");
+            },
 		success: function (data) {
 			$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
 			$('#khunghocvien').empty();
@@ -148,6 +158,9 @@ $(document).on('change','#chonkhoahoc',function(){
 			  "scrollX": true,
 			  "ordering": false
 			});
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');
@@ -221,6 +234,16 @@ $(document).on('click','.luuthongtin',function(){
 		beforeSend: function () {
                 tbinfo("Vui lòng chờ...");
             },
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		data: {
 			bhv:bhv,
 			tendanhsach:tendanhsach,
@@ -229,6 +252,9 @@ $(document).on('click','.luuthongtin',function(){
 		},
 		success: function (data) {
 			$('body').append(data);
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');
@@ -250,6 +276,16 @@ $(document).on('change','#chondanhsach',function(){
 		data: {
 			danhsach:$(this).val()
 		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
 		success: function (data) {
 			$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
 			$('#khunghocvien').empty();
@@ -262,6 +298,9 @@ $(document).on('change','#chondanhsach',function(){
 			  "scrollX": true,
 			  "ordering": false
 			});
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
 		},
 		error: function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');
