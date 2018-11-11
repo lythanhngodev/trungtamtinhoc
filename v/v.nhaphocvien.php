@@ -40,7 +40,6 @@
 						</div>
 						<div class="form-group col-md-4" style="float: left;">
 							<label style="width: 100%"><b>Lấy dữ liệu từ Excel</b></label>
-
 							<button class="btn btn-dark" id="laydulieu">Lấy dữ liệu</button>
 						</div>
 					</div>
@@ -63,7 +62,7 @@
 							<?php }
 							 ?>
 						</select>
-					</div><hr style="width: 30%;">		
+					</div>	
 				</center>
 				<div class="card-body" id="khunghocvien">
 	                <table id="banglophoc" class="table table-hover display nowrap" style="width: 100%">
@@ -207,7 +206,7 @@ $(document).on('keyup','input[type=text]',function(e){
     }
 });
 $(document).on('click','#banglophoc .xoadong',function(){
-  $(this).parents('tr').remove();
+	$("#banglophoc").DataTable().row( $(this).parents('tr') ).remove().draw();
 });
 $(document).on('change','#chonkhoahoc',function(){
 	if ($(this).val()=='taokhoahoc') {
@@ -242,6 +241,7 @@ $(document).on('click','#btnthemkhoahoc',function(){
 
 $(document).on('click','.luuthongtin',function(){
 	var khoahoc = $('#chonkhoahoc').val();
+	$("#banglophoc").DataTable().search("").draw();
 	if (jQuery.isEmptyObject(khoahoc)||khoahoc=='0'||khoahoc=='taokhoahoc') {
 		tbdanger('Vui lòng chọn khóa học');
 		return 0;

@@ -299,6 +299,7 @@ $(document).on('keyup','input[type=text]',function(e){
 });
 
 $(document).on('click','.luuthongtin',function(){
+	$("#banglophoc").DataTable().search("").draw();
 	$('#banglophoc').find('input[type=text]').map(function(){
 		if(find('input[type=text]')!=$(this)){
 			var input = $(this).val();
@@ -328,6 +329,7 @@ $(document).on('click','.luuthongtin',function(){
 		tbdanger('Danh sách học viên rỗng');
 		return 0;
 	}
+
 	$.ajax({
 		url: 'aj/ajLuuhocvienvaocsdl.php',
 		type: 'POST',

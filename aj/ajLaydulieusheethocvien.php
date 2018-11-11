@@ -39,7 +39,6 @@ for ($i=0; $i < count($danhsach); $i++) {
 		}
 	}
 }
-
 ?>
 <table id="banglophoc" class="table table-hover table-bordered display nowrap" style="width: 100%">
     <thead>
@@ -85,6 +84,7 @@ for ($i=0; $i < count($danhsach); $i++) {
 <center><div class="col-md-12">
     <button class="btn btn-success luuthongtin"><i class="fas fa-check"></i> Lưu thông tin</button>
 </div>
+<br>
 </center>
 </table>
 <hr>

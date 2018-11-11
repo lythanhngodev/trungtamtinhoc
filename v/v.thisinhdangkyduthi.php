@@ -119,7 +119,7 @@ $('#chonkhoahoc, #chondanhsach').select2({
   width: '100%'
 });
 $(document).on('click','#banglophoc .xoadong',function(){
-  $(this).parents('tr').remove();
+      $("#banglophoc").DataTable().row( $(this).parents('tr') ).remove().draw();
 });
 $(document).on('change','#chonkhoahoc',function(){
 	if ($(this).val()=='0') {
@@ -193,6 +193,7 @@ $(document).on('keyup','input[type=text]',function(e){
     }
 });
 $(document).on('click','.luuthongtin',function(){
+	$("#banglophoc").DataTable().search("").draw();
 	$('#banglophoc').find('input[type=text]').map(function(){
 		if(find('input[type=text]')!=$(this)){
 			var input = $(this).val();
