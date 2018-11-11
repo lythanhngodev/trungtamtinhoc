@@ -56,4 +56,5 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
 <center><div class="col-md-12 khungbtn">
     <button class="btn btn-success luuthongtin"><i class="fas fa-check"></i> Lưu thông tin</button>
 </div>
+<br>
 </center>

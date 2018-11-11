@@ -27,7 +27,7 @@
 			<div class="card">
 				<center><br>
 					<div class="form-group col-md-3" style="float:left;">
-						<label><b>Danh sách đã có trước đây</b></label>
+						<label><b>Các đợt thi đã tạo</b></label>
 						<select class="form-control" id="chondanhsach">
 							<option value="0">--- Chọn danh sách ---</option>
 							<?php 

@@ -202,7 +202,8 @@ $(document).ready(function() {
 	  "scrollCollapse": true,
 	  "paging": false,
 	  "scrollX": true,
-	  "ordering": false
+	  "ordering": false,
+	  "LengthMenu": false
 	});
 } );
 $('#chonlophoc, #chonkhoahoc').select2({

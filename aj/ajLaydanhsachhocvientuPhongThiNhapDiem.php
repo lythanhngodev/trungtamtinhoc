@@ -49,10 +49,10 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
         <div class="form-group col-md-3">
             <label><b>Danh sách thí sinh phòng thi:</b> <i><?php echo $tends; ?></i></label>
         </div>
-    </center>
-    <center><div class="col-md-12 khungbtn">
-        <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
-    </div>
+        <div class="col-md-12 khungbtn">
+            <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
+        </div>
+        <br>
     </center>
 </table>
 <center><div class="col-md-12 khungbtn">

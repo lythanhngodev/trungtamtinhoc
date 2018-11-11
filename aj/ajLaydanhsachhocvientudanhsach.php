@@ -51,6 +51,7 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
 <center><div class="col-md-12 khungbtn">
     <a class='btn btn-warning xuatthongtin' href='./ex/xuatthisinhdangkyduthi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất danh sách</a>
 </div>
+<br>
 </center>
 </table>
 <center><div class="col-md-12 khungbtn">
