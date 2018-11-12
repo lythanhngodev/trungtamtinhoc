@@ -14,7 +14,7 @@ function lamtron($so){
 	if ($so==0) {
 		return 0;
 	}
-	else return (ceil($so)-1);
+	else return ($so);
 }
 if (isset($_POST['bhv']) && !empty($_POST['bhv'])) {
 	$kn = new clsKetnoi();

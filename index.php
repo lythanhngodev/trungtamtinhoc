@@ -89,8 +89,7 @@ $_SESSION['_token'] = _token(256);
                         Cấp chứng chỉ
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">DS đề nghị cấp chứng chỉ</a>
-                        <a class="dropdown-item" href="#">DS nộp lệ phí cấp chứng chỉ</a>
+                        <a class="dropdown-item" id="denghicapchungchi" href="?p=denghicapchungchi">DS đề nghị cấp chứng chỉ</a>
                     </div>
                 </li>
 	        </ul>
@@ -125,6 +124,9 @@ $_SESSION['_token'] = _token(256);
                     break;
                 case 'danhsachcacdotthi':
                     require_once './c/c.danhsachcacdotthi.php';
+                    break;
+                case 'denghicapchungchi':
+                    require_once './c/c.denghicapchungchi.php';
                     break;
 				default:
 					require './c/c.trangchu.php';

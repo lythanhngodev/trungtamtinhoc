@@ -13,6 +13,21 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 		$_SESSION['_token']=_token(256);
 		$kn = new clsKetnoi();
 		$bhv = $_POST['bhv'];
+
+		///////////////////////////////////////
+		for ($i=0; $i < count($bhv)-1; $i++) {
+		    for ($j=$i+1; $j < count($bhv); $j++) {
+		        $listFullName = array($bhv[$i][1]." ".$bhv[$i][2],$bhv[$j][1]." ".$bhv[$j][2]);
+		        $listFullName2 = sortFullName($listFullName);
+		        if ($listFullName[0]!=$listFullName2[0]) {
+		            $temp = $bhv[$i];
+		            $bhv[$i] = $bhv[$j];
+		            $bhv[$j] = $temp;
+		        }
+		    }
+		}
+		///////////////////////////////////////
+
 		$khoahoc = trim(mysqli_real_escape_string($kn->conn,$_POST['khoahoc']));
 		$tenkhoahoc = trim(mysqli_real_escape_string($kn->conn,$_POST['tenkhoahoc']));
 		$stt_lop = 0;

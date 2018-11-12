@@ -1,14 +1,4 @@
 <?php
-/*Created by Pham Van Cong*/
-/* Hàm function c_convert_vi($str)
-	 * Bước 1
-		- Kiểm tra xem từ trong câu có chứa dấu hay không, 
-		- Nếu từ có chứa dấu (huyền, sắc, hỏi, ngã, nặng) thì thêm ký tự số (1, 2, 3 , 4, 5) vào sau mỗi từ
-	 * Bước 2
-		- Loại bỏ dấu
-	 * Bước 3
-		- Thay thế chuỗi bằng chuỗi mã hóa
-	*/	
 	function c_convert_vi($str) {
 		/*Bước 1*/
 		$map = array('1'=>array('à','ằ','ầ','è','ề','ì','ù','ừ','ò','ờ','ồ','ỳ'),
@@ -147,7 +137,7 @@
 	}
 	
 	//Test lại nhé
-	$listFullName = array('Huỳnh Thái An','Nguyễn Thị Huyền An','Huỳnh Thái An','Lê Hoàng An');
+	$listFullName = array('Huỳnh Thái An'=>'1','Nguyễn Thị Huyền An'=>'2','Huỳnh Thái An'=>'3','Lê Hoàng An'=>'4');
 	echo "First:";
 	print_r($listFullName);
 	echo "<br>";

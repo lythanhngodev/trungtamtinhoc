@@ -50,19 +50,13 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
         </div>
     </center>
     <center><div class="col-md-12 khungbtn">
-        <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
-        <a class='btn btn-warning xuatthongtin' href='./ex/ExcelKetQuaThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất kết quả</a>
-        <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS đạt</a>
-        <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachKhongDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS không đạt</a>
+        <a class='btn btn-warning xuatthongtin' href='./ex/xuatDeNghiCapChungChi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất đề nghị cấp chúng chỉ</a>
     </div>
     <br>
     </center>
 </table>
 <center><div class="col-md-12 khungbtn">
-    <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
-    <a class='btn btn-warning xuatthongtin' href='./ex/ExcelKetQuaThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất kết quả</a>
-    <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS đạt</a>
-    <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachKhongDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS không đạt</a>
+    <a class='btn btn-warning xuatthongtin' href='./ex/xuatDeNghiCapChungChi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất đề nghị cấp chúng chỉ</a>
 </div>
 </center>
 <?php 

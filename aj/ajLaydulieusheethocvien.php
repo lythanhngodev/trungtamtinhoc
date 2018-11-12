@@ -1,6 +1,7 @@
 <?php
 sleep(1);
 include_once "../ec/PHPExcel.php";
+require_once "../__.php";
 $file = $_FILES['file']['tmp_name'];
 $objReader = PHPExcel_IOFactory::createReaderForFile($file);
 $listWorkSheets = $objReader->listWorksheetNames($file);
@@ -39,6 +40,19 @@ for ($i=0; $i < count($danhsach); $i++) {
 		}
 	}
 }
+///////////////////////////////////////
+for ($i=0; $i < count($danhsach)-1; $i++) {
+    for ($j=$i+1; $j < count($danhsach); $j++) {
+        $listFullName = array($danhsach[$i][1]." ".$danhsach[$i][2],$danhsach[$j][1]." ".$danhsach[$j][2]);
+        $listFullName2 = sortFullName($listFullName);
+        if ($listFullName[0]!=$listFullName2[0]) {
+            $temp = $danhsach[$i];
+            $danhsach[$i] = $danhsach[$j];
+            $danhsach[$j] = $temp;
+        }
+    }
+}
+///////////////////////////////////////
 ?>
 <table id="banglophoc" class="table table-hover table-bordered display nowrap" style="width: 100%">
     <thead>

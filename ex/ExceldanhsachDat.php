@@ -20,7 +20,7 @@ $danhsach = intval($_GET['idds']);
 $objPHPExcel = new PHPExcel;
 $numberSheet = 0;
 $objPHPExcel->setActiveSheetIndex($numberSheet);
-$tenfile = "KQHT ".date('d-m-Y');
+$tenfile = "KQHT DAT ".date('d-m-Y');
 $sheet = $objPHPExcel->getActiveSheet()->setTitle($tenfile);
 $objPHPExcel->getActiveSheet()->getDefaultStyle()->getFill()->applyFromArray(array(
     'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -63,7 +63,7 @@ $objPHPExcel->getActiveSheet()->getRowDimension('2')->setRowHeight(20);
 $objPHPExcel->getActiveSheet()->getRowDimension('3')->setRowHeight(20);
 $objPHPExcel->getActiveSheet()->getRowDimension('4')->setRowHeight(20);
 
-$sheet->setCellValue("C1","KẾT QUẢ THI CẤP CHỨNG CHỈ\nỨNG DỤNG CÔNG NGHỆ THÔNG TIN");
+$sheet->setCellValue("C1","DANH SÁCH THI SINH ĐẠT YÊU CẦU\nCẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN");
 $objPHPExcel->getActiveSheet()->getStyle('C1')->getAlignment()->setWrapText(true);
 $sheet->setCellValue("J1","Mã số: BM-IC-19-00");
 $sheet->setCellValue("J2","Ngày hiệu lực: 04/7/2018");
@@ -161,12 +161,12 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(6);
 $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(12);
 $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(10);
 
-$diemkhoa = $kn->query("SELECT DISTINCT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach'");
+$diemkhoa = $kn->query("SELECT DISTINCT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach' AND (dh.DIEMLT >= 5.0 AND dh.DIEMTH >=5.0)");
 $ds = null;
 while ($row = mysqli_fetch_assoc($diemkhoa)){
     $ds[] = $row;
 }
-/////////////////////////////////////////
+///////////////////////////
 for ($i=0; $i < count($ds)-1; $i++) {
     for ($j=$i+1; $j < count($ds); $j++) {
         $listFullName = array($ds[$i]['HO']." ".$ds[$i]['TEN'],$ds[$j]['HO']." ".$ds[$j]['TEN']);
@@ -178,10 +178,7 @@ for ($i=0; $i < count($ds)-1; $i++) {
         }
     }
 }
-/*
-for ($i=0; $i < count($ds); $i++) {
-    print_r($ds[$i]['HO']." ".$ds[$i]['TEN']."<br>");
-}*/
+//////////////////////////
 $dong = 9;
 $sokhongdat=0;
 $sodat=0;
@@ -227,9 +224,9 @@ $objPHPExcel->getActiveSheet()->getStyle('I9:L'.($dong-1))->getFont()->setBold(t
 $objPHPExcel->getActiveSheet()->getStyle('A7:M'.($dong+5))->getFont()->setSize(12);
 
 // Phần tổng kết
-$objPHPExcel->getActiveSheet()->getRowDimension($dong)->setRowHeight(60);
+$objPHPExcel->getActiveSheet()->getRowDimension($dong)->setRowHeight(20);
 $objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('A'.$dong.':M'.$dong);
-$sheet->setCellValue("A".$dong,"Có ".($dong-8)." thí sinh đăng ký dự thi cấp chứng chỉ ứng dụng CNTT (cơ bản/nâng cao)\nSố lượng thí sinh đến dự thi: ......; số lượng thi sinh vắng thi:......\nKết quả: $sodat đạt; $sokhongdat không đạt");
+$sheet->setCellValue("A".$dong,"Danh sách có ".($dong-8)." thí sinh.");
 $objPHPExcel->getActiveSheet()->getStyle('A'.$dong)->getAlignment()->setWrapText(true);
 $objPHPExcel->getActiveSheet()->getStyle('A'.$dong)->getFont()->setItalic(true);
 $sheet->getStyle('A'.$dong.':M'.$dong)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
@@ -242,32 +239,27 @@ $objPHPExcel->getActiveSheet()->getStyle('H'.$dong)->getAlignment()->setHorizont
 $objPHPExcel->getActiveSheet()->getStyle('H'.$dong)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle('H'.$dong)->getFont()->setItalic(true);
 // Phần ký tên
-$dong++;
-$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('B'.$dong.':C'.$dong);
-$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('E'.$dong.':F'.$dong);
-$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('H'.$dong.':I'.$dong);
-$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('K'.$dong.':M'.$dong);
-$sheet->setCellValue("B".$dong,"CHỦ TỊCH HỘI ĐỒNG THI");
+$dong+=2;
+$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('A'.$dong.':D'.$dong);
+$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('E'.$dong.':H'.$dong);
+$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('J'.$dong.':M'.$dong);
+$sheet->setCellValue("A".$dong,"CHỦ TỊCH HỘI ĐỒNG THI");
 $sheet->setCellValue("E".$dong,"TRƯỞNG BAN CHẤM THI");
-$sheet->setCellValue("H".$dong,"NGƯỜI ĐỌC ĐIỂM");
-$sheet->setCellValue("K".$dong,"NGƯỜI GHI ĐIỂM");
-$sheet->getStyle('B'.$dong.':K'.$dong)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$sheet->getStyle('B'.$dong.':K'.$dong)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-$objPHPExcel->getActiveSheet()->getStyle('B'.$dong.':K'.$dong)->getFont()->setBold(true);
+$sheet->setCellValue("J".$dong,"NGƯỜI GHI ĐIỂM");
+$sheet->getStyle('A'.$dong.':J'.$dong)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->getStyle('A'.$dong.':J'.$dong)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$objPHPExcel->getActiveSheet()->getStyle('A'.$dong.':K'.$dong)->getFont()->setBold(true);
 $dong++;
 // ký và ghi họ tên
 $objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('B'.$dong.':C'.$dong);
-$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('E'.$dong.':F'.$dong);
-$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('H'.$dong.':I'.$dong);
-$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('K'.$dong.':M'.$dong);
+$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('E'.$dong.':H'.$dong);
+$objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('J'.$dong.':M'.$dong);
 $sheet->setCellValue("B".$dong,"(Ký và ghi rõ họ tên)");
 $sheet->setCellValue("E".$dong,"(Ký và ghi rõ họ tên)");
-$sheet->setCellValue("H".$dong,"(Ký và ghi rõ họ tên)");
-$sheet->setCellValue("K".$dong,"(Ký và ghi rõ họ tên)");
+$sheet->setCellValue("J".$dong,"(Ký và ghi rõ họ tên)");
 $objPHPExcel->getActiveSheet()->getStyle('B'.$dong.':K'.$dong)->getFont()->setItalic(true);
-$sheet->getStyle('B'.$dong.':K'.$dong)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$sheet->getStyle('B'.$dong.':K'.$dong)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-$objPHPExcel->getActiveSheet()->getRowDimension($dong-2)->setRowHeight(25);
+$sheet->getStyle('B'.$dong.':J'.$dong)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->getStyle('B'.$dong.':J'.$dong)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 // Save Excel 2007 file
 #echo date('H:i:s') . " Write to Excel2007 format\n";
 $objWriter = New PHPExcel_Writer_Excel2007($objPHPExcel);
