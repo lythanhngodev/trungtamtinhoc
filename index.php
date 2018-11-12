@@ -24,6 +24,7 @@ function sanitize_output($buffer) {
 <head>
 	<title>PHẦN MỀM QUẢN LÝ TRUNG TÂM TIN HỌC - VLUTE</title>
     <base href="<?php echo $ttth['HOST']; ?>">
+    <link rel="shortcut icon" href="./lab/i/favicon.ico" />
     <link rel="stylesheet" href="./lab/css/bootstrap.min.css">
     <link rel="stylesheet" href="./lab/css/style.css">
     <script type="text/javascript" src="./lab/js/jquery-3.3.1.min.js"></script>
