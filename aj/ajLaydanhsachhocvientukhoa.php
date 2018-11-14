@@ -42,16 +42,6 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
         </tr>
 <?php } ?>
     </tbody>
-<center>
-	<div class="form-group col-md-3" id="khungkhoahoc">
-		<label><b>Nhập tên danh sách<br>(Để tiện trong quá trình lưu trữ dữ liệu)</b></label>
-		<input type="text" class="form-control" placeholder="VD: DS thí sinh đăng ký thi khóa X ..." value="<?php echo "TS đăng ký thi khóa ".$tenkhoa ?>" id="tendanhsach">
-	</div>
-    <div class="col-md-12 khungbtn">
-    <button class="btn btn-success luuthongtin"><i class="fas fa-check"></i> Lưu danh sách</button>
-</div>
-<br>
-</center>
 </table>
 <center><div class="col-md-12 khungbtn">
     <button class="btn btn-success luuthongtin"><i class="fas fa-check"></i> Lưu danh sách</button>

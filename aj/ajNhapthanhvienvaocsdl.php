@@ -1,5 +1,4 @@
 <?php
-sleep(1);
 session_start();
 require_once "../__.php";
 $ketqua = array('trangthai' => 0, 'thongbao' => '' ); 
@@ -13,7 +12,6 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 		$_SESSION['_token']=_token(256);
 		$kn = new clsKetnoi();
 		$bhv = $_POST['bhv'];
-
 		///////////////////////////////////////
 		for ($i=0; $i < count($bhv)-1; $i++) {
 		    for ($j=$i+1; $j < count($bhv); $j++) {
@@ -27,7 +25,6 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 		    }
 		}
 		///////////////////////////////////////
-
 		$khoahoc = trim(mysqli_real_escape_string($kn->conn,$_POST['khoahoc']));
 		$tenkhoahoc = trim(mysqli_real_escape_string($kn->conn,$_POST['tenkhoahoc']));
 		$stt_lop = 0;
@@ -68,12 +65,10 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 	    			$tenlop.="K".$tenkhoahoc;
 	    			break;
 	    	}
-	    	$tenlop.=" - ".$tenlopngan[$i];
 			// xử lý lớp học
 			$chuoi_them_lop = "INSERT INTO lop(MALOP, TENLOP) VALUES ('".$tenlop."','".$tenlop."');";
 			$qr_them_lop = $kn->adddata($chuoi_them_lop);
 			// xử lý khóa học , lớp
-
 			$qr_lop = "SELECT IDL FROM lop WHERE TENLOP = '".$tenlop."' LIMIT 0,1;";
 			$qr_idlop = $kn->query($qr_lop);
 			$rs_idlop = mysqli_fetch_array($qr_idlop);
@@ -93,8 +88,10 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 			$GIOITINH = $bhv[$i][5];
 			$NOISINH = $bhv[$i][6];
 			$SDT = $bhv[$i][7];
+			///////////////////////////////
 			$MASOBIENLAI = $bhv[$i][8];
 			$NGAYGHIBIENLAI = $bhv[$i][9];
+			///////////////////////////////
 			$GHICHU = $bhv[$i][10];
 
 	    	$tenlop = "CB"; // thieu 3
@@ -120,7 +117,6 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 	    			$tenlop.="K".$tenkhoahoc;
 	    			break;
 	    	}
-	    	$tenlop.=" - ".$bhv[$i][11];
 
 			$qr_hocvien= "INSERT INTO hocvien(MSSV,HO,TEN,CMND,NGAYSINH,GIOITINH,NOISINH,SDT,MASOBIENLAI,NGAYGHIBIENLAI,GHICHU) VALUES ('$MSSV','$HO','$TEN','$CMND','$NGAYSINH','$GIOITINH','$NOISINH','$SDT','$MASOBIENLAI','$NGAYGHIBIENLAI','$GHICHU');";
 			$them_hocvien = $kn->adddata($qr_hocvien);
@@ -136,7 +132,7 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 			$idlop = $rs_idlop[0];
 			if ($idlop > 0) {
 				if (!($kn->tontai("SELECT * FROM hocvien_lop WHERE IDHV = '$idhocvien_qr' AND IDL = '$idlop'"))) {
-					$them_hocvien_lop = $kn->adddata("INSERT INTO hocvien_lop(IDL,IDHV,THOIGIANTHEM) VALUES ('$idlop','$idhocvien_qr','".time()."')");
+					$them_hocvien_lop = $kn->adddata("INSERT INTO hocvien_lop(IDL,IDHV,THOIGIANTHEM,MASOBIENLAI,NGAYGHIBIENLAI) VALUES ('$idlop','$idhocvien_qr','".time()."','$MASOBIENLAI','$NGAYGHIBIENLAI')");
 				}
 			}
 		}

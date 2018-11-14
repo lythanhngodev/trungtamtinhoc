@@ -17,7 +17,7 @@ function sanitize_output($buffer) {
     $buffer = preg_replace($search, $replace, $buffer);
     return $buffer;
 }
- ob_start("sanitize_output");
+// ob_start("sanitize_output");
  ?>
 <!DOCTYPE html>
 <html>
@@ -62,6 +62,9 @@ $_SESSION['_token'] = _token(256);
                         <a class="dropdown-item" id="hocvien1" href="?p=hocvien">Học viên</a>
                         <a class="dropdown-item" id="nhaphocvien" href="?p=nhaphocvien">Nhập học viên từ Excel</a>
                     </div>
+                </li>
+                <li class="nav-item" id="phanconggiangday">
+                    <a class="nav-link" href="?p=phanconggiangday">Phân công giảng dạy</a>
                 </li>
                 <li class="nav-item dropdown" id="tochucthi">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -128,6 +131,9 @@ $_SESSION['_token'] = _token(256);
                     break;
                 case 'denghicapchungchi':
                     require_once './c/c.denghicapchungchi.php';
+                    break;
+                case 'phanconggiangday':
+                    require_once './c/c.phanconggiangday.php';
                     break;
 				default:
 					require './c/c.trangchu.php';

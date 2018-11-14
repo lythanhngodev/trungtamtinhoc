@@ -1,5 +1,4 @@
 <?php
-sleep(1);
 include_once "../ec/PHPExcel.php";
 require_once "../__.php";
 $file = $_FILES['file']['tmp_name'];

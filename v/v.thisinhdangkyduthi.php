@@ -21,24 +21,12 @@
 	</div>
 	<br>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<div class="card">
-				<center><br>
-					<div class="form-group col-md-3" style="float:left;">
-						<label><b>Các đợt thi đã tạo</b></label>
-						<select class="form-control" id="chondanhsach">
-							<option value="0">--- Chọn danh sách ---</option>
-							<?php 
-							$ds = laydanhsachdangkyduthi();
-							while ($row = mysqli_fetch_assoc($ds)) { ?>
-							<option value="<?php echo $row['IDDS'] ?>"><?php echo $row['TENDS'] ?></option>
-							<?php }
-							 ?>
-						</select>
-					</div>
-					<div class="form-group col-md-3" id="khungkhoahoc" style="float:left;">
+				<div class="card-body">
+					<div class="form-group col-md-6" id="khungkhoahoc">
 						<label><b>Chọn khoá học</b></label>
-						<select class="form-control" id="chonkhoahoc">
+						<select class="form-control" id="lochocvien">
 							<option value="0">--- Chọn khoá học ---</option>
 							<?php 
 							$kh = laykhoahoc();
@@ -48,15 +36,29 @@
 							 ?>
 						</select>
 					</div>
-				</center>
+				</div>
+				<div id="khungchonhocvien"></div>
 			</div>
 		</div>
-	</div>
-	<br>
-	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<div class="card">
-				<div class="card-body" id="khunghocvien">
+				<div class="card-body">
+					<div class="form-group col-md-6">
+						<label><b>Đợt thi</b></label>
+						<select class="form-control" id="chondanhsach">
+							<option value="0">--- Chọn danh sách ---</option>
+							<option value="taodotthi">+++ Tạo đợt thi mới +++</option>
+							<?php 
+							$ds = laydanhsachdangkyduthi();
+							while ($row = mysqli_fetch_assoc($ds)) { ?>
+							<option value="<?php echo $row['IDDS'] ?>"><?php echo $row['TENDS'] ?></option>
+							<?php }
+							 ?>
+						</select>
+					</div>
+					<div id="khunghocvien">
+						
+					</div>
 				</div>
 			</div>
 		</div>
@@ -120,6 +122,50 @@ $('#chonkhoahoc, #chondanhsach').select2({
 });
 $(document).on('click','#banglophoc .xoadong',function(){
       $("#banglophoc").DataTable().row( $(this).parents('tr') ).remove().draw();
+});
+$(document).on('change','#lochocvien',function(){
+	var khoahoc = $('#lochocvien').val();
+	$.ajax({
+		url: 'aj/ajLochocvientukhoa.php',
+		type: 'POST',
+		beforeSend: function () {
+                tbinfo("Vui lòng chờ...");
+        },
+		data: {
+			khoahoc:khoahoc
+		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
+	    success: function (data) {
+			tban();
+			tbsuccess('Tải xong');
+			$('#khungchonhocvien').hide( 'fold', {percent: 50}, 567 );
+			$('#khungchonhocvien').empty();
+			$('#khungchonhocvien').show( 'fold', {percent: 50}, 567 );
+			$('#khungchonhocvien').html(data);
+		    $('#banghocvien').DataTable({
+			  "scrollY": "450px",
+			  "scrollCollapse": true,
+			  "paging": false,
+			  "scrollX": true,
+			  "ordering": false
+			});
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
+		}
+	});
 });
 $(document).on('change','#chonkhoahoc',function(){
 	if ($(this).val()=='0') {
@@ -191,6 +237,18 @@ $(document).on('keyup','input[type=text]',function(e){
 		var input = $(this).val();
 		$(this).parent().html(input);
     }
+});
+$(document).on('click','.checkall',function(){
+	if($(this).is(':checked')){
+		$('[type="checkbox"]').each(function(){
+			$(this).attr('checked',true);
+		});
+	}
+	else{
+		$('[type="checkbox"]').each(function(){
+			$(this).attr('checked',false);
+		});
+	}
 });
 $(document).on('click','.luuthongtin',function(){
 	$("#banglophoc").DataTable().search("").draw();

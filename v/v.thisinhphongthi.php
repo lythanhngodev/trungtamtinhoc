@@ -132,9 +132,11 @@ $_stt = 0;
 while ($row = mysqli_fetch_assoc($ds)) {
 	$_ds[$_stt] = $row['TENDS'];
 	++$_stt;
-} ?>
+}
 
+?>
 var danhsach = <?php echo json_encode($_ds) ?>;
+
 $('#chondanhsach').select2({
   width: '100%'
 });

@@ -3,6 +3,7 @@
 	    border: 1px solid #2d93ff;
 	    background: #f3f9ff;
 	}
+.ui-autocomplete { position: absolute; cursor: default;z-index:999999 !important;} 
 </style>
 <style type="text/css">
 	.onhap{
@@ -14,6 +15,9 @@
 	    border-color: #bbb !important;
 	    outline: 0 !important;
 	    box-shadow: none !important;
+	}
+	#bangphancong td{
+		padding: 6px !important;
 	}
 </style>
 <div class="background-container container-fluid">
@@ -151,7 +155,26 @@
     </div>
   </div>
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="modalphanconggiangday" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Phân công giảng dạy</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<table id="bangphancong" class="table table-bordered">
+      	</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" id="btnphanconggiangday">Lưu Học viên &amp; Phân công</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="dialog" title="Thông báo lỗi" class="dialog">
   <p>Phát hiện: <b><span id="loicmnd" class="text-danger"></span></b> học viên có số CMND trùng nhau. Hệ thống đã tô <b class="text-danger"> ĐỎ</b> các số CMND trùng nhau. Vui lòng kiểm tra lại thông tin.</p>
 </div>
@@ -165,6 +188,32 @@
 <script type="text/javascript" src="./lab/js/jquery-ui.min.js"></script>
 <link rel="stylesheet" type="text/css" href="./lab/css/jquery-ui.min.css">
 <script type="text/javascript">
+<?php 
+$cb = laydanhsachcanbo();
+$_cb = [];
+$_stt = -1;
+while ($row = mysqli_fetch_assoc($cb)) {
+	$_cb[++$_stt] = $row['TENCB'];
+}
+$dsp = laydanhsachphong();
+$_dsp = [];
+$_sttp = 0;
+while ($rowp = mysqli_fetch_assoc($dsp)) {
+	$_dsp[$_sttp] = $rowp['DIADIEM'];
+	++$_sttp;
+}
+$cbbd = laydanhsachbuoiday();
+$_dsbd = [];
+$_sttbd = -1;
+while ($rowbd = mysqli_fetch_assoc($cbbd)) {
+	$_dsbd[++$_sttbd] = $rowbd['TENCB'];
+}
+?>
+</script>
+<script type="text/javascript">
+var canbo = <?php echo json_encode($_cb) ?>;
+var diadiem = <?php echo json_encode($_dsp) ?>;
+var buoiday = <?php echo json_encode($_dsbd) ?>;
 document.getElementById('hocvien').classList.add("active");
 document.getElementById('nhaphocvien').classList.add("active");
 $("#dialog").hide();
@@ -180,6 +229,7 @@ $(document).ready(function() {
 $('#chonkhoahoc').select2({
   width: '100%'
 });
+
 $(document).on('click','#banglophoc td',function(){
 	 $(this).css('background-color','#fff');
 	var td = $(this);
@@ -304,7 +354,6 @@ $(document).on('click','.luuthongtin',function(){
 		},
 		xhr: function () {
 	        var xhr = new window.XMLHttpRequest();
-	        //Download progress
 	        xhr.upload.addEventListener("progress", function (evt) {
 	            if (evt.lengthComputable) {
 	                var percentComplete = evt.loaded / evt.total;
