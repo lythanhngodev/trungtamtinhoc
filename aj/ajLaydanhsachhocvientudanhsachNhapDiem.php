@@ -8,7 +8,7 @@ require_once '../__.php';
 $kn = new clsKetnoi();
 $danhsach = intval($_POST['danhsach']);
 $tends = '';
-$qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach';"); ?>
+$qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS,dh.GHICHUD FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach' ORDER BY dh.SBD ASC;"); ?>
 <table id="banglophoc" class="table table-hover table-bordered display nowrap" style="width: 100%">
     <thead>
         <tr class="text-center">
@@ -21,8 +21,7 @@ $qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.
             <th>MSSV</th>
             <th>Điểm LT</th>
             <th>Điểm TH</th>
-            <th>Tổng điểm</th>
-            <th>#</th>
+            <th>Ghi chú</th>
         </tr>
     </thead>
     <tbody>
@@ -39,8 +38,7 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
     		<td ly='stt' class="text-center"><?php echo $row['MSSV'] ?></td>
     		<td class="text-center lt"><?php echo $row['DIEMLT'] ?></td>
             <td class="text-center th"><?php echo $row['DIEMTH'] ?></td>
-            <td class="text-center td"><?php echo $row['TONGDIEM'] ?></td>
-            <td ly='stt'></td>
+            <td><?php echo $row['GHICHUD'] ?></td>
         </tr>
 <?php } ?>
     </tbody>
@@ -50,19 +48,20 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
         </div>
     </center>
     <center><div class="col-md-12 khungbtn">
-        <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
         <a class='btn btn-warning xuatthongtin' href='./ex/ExcelKetQuaThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất kết quả</a>
         <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS đạt</a>
-        <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachKhongDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS không đạt</a>
+        <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachKhongDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS không đạt</a> <br><br>
+        <input type="file" id="dulieufile"> <button class="btn btn-dark" id="diemexcel">Nhập điểm từ Excel</button><br><br>
+        <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
     </div>
     <br>
     </center>
 </table>
 <center><div class="col-md-12 khungbtn">
-    <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
     <a class='btn btn-warning xuatthongtin' href='./ex/ExcelKetQuaThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất kết quả</a>
     <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS đạt</a>
-    <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachKhongDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS không đạt</a>
+    <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachKhongDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS không đạt</a><br><br>
+        <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
 </div>
 </center>
 <?php 

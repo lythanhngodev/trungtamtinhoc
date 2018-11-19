@@ -150,12 +150,9 @@ $(document).on('click','.luubangdiem',function(){
 	$('#banglophoc').find('tr:not(:first)').each(function(i, row) {
 	  var cols = [];
 	  var demhv = 0;
-	  $(this).find('td:not(:last)').each(function(i, col) {
+	  $(this).find('td').each(function(i, col) {
 	  	if (demhv==0) {
-	  		cols.push($(this).attr('idpt'));
-	  		cols.push($(this).attr('idds'));
-	  		cols.push($(this).attr('idhv'));
-	  		cols.push($(this).attr('sbd'));
+	  		cols.push($(this).attr('idpt'));cols.push($(this).attr('idds'));cols.push($(this).attr('idhv'));cols.push($(this).attr('sbd'));
 	  	}
 	  	if(demhv>6){
 	  		cols.push($(this).text().trim());
@@ -179,7 +176,6 @@ $(document).on('click','.luubangdiem',function(){
 		},
 		xhr: function () {
 	        var xhr = new window.XMLHttpRequest();
-	        //Download progress
 	        xhr.upload.addEventListener("progress", function (evt) {
 	            if (evt.lengthComputable) {
 	                var percentComplete = evt.loaded / evt.total;
@@ -224,7 +220,6 @@ $(document).on('change','#chondanhsach',function(){
 		},
 		xhr: function () {
 	        var xhr = new window.XMLHttpRequest();
-	        //Download progress
 	        xhr.upload.addEventListener("progress", function (evt) {
 	            if (evt.lengthComputable) {
 	                var percentComplete = evt.loaded / evt.total;
@@ -302,4 +297,71 @@ $(document).on('change','#chonphongthi',function(){
 	});
 	}
 });
+$(document).on('click','#diemexcel',function(){
+	var file_data = $('#dulieufile').prop('files')[0];
+	if (jQuery.isEmptyObject(file_data)) {tbdanger('Chưa file nào được chọn');return 0;}
+	var type = file_data.type;
+	var match = ["application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
+	if (type==match[0] || type==match[1]) {
+	    var form_data = new FormData();
+	    form_data.append('file', file_data);
+        $.ajax({
+            url: './aj/ajNhapdiemtuExcel.php',
+            dataType: 'text',
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'post',
+            data: form_data,
+		    xhr: function () {
+		        var xhr = new window.XMLHttpRequest();
+		        xhr.upload.addEventListener("progress", function (evt) {
+		            if (evt.lengthComputable) {
+		                var percentComplete = evt.loaded / evt.total;
+		                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+		            }
+		        }, false);
+		        return xhr;
+		    },
+            beforeSend: function () {
+                tbinfo("Vui lòng chờ...");
+            },
+		    complete: function () {
+		        $("#daluot").css("width","0%");
+		    },
+            success: function(data){
+            	tban();
+            	tbsuccess('Tải xong');
+            	var d = $.parseJSON(data);
+            	if ($.isEmptyObject(d)) {
+            		tbdanger('File không có dữ liệu');
+            	}else{    
+	$('#banglophoc').find('tr:not(:first)').each(function(i, row) {
+	  var demhv = 0;
+	  var co = 0;
+	  $(this).find('td:not(:first)').each(function(i, col) {
+	  	if (demhv==0) {
+	  		for(var n=0;n<d.length;n++){
+	  			if ($(this).text()==d[n][0]) {
+	  				$(this).parent('tr').find('td:nth-child(8)').text(d[n][1]);
+	  				$(this).parent('tr').find('td:nth-child(9)').text(d[n][2]);
+	  				$(this).parent('tr').find('td:nth-child(10)').text(d[n][3]);
+	  			}
+	  		}
+	  	}
+	  	demhv++;
+	  });
+	});
+            	}
+            },
+            error: function () {
+                tbdanger('Không thể tải file');
+            }
+        });
+	}
+	else{
+		tbdanger('Vui lòng chọn định dạng Excel');
+	}
+});
+
 </script>

@@ -27,7 +27,7 @@ if (isset($_POST['bhv']) && !empty($_POST['bhv'])) {
 		$SBD = $bhv[$i][3];
 		$DIEMLT=$bhv[$i][4];
 		$DIEMTH=$bhv[$i][5];
-		$TONGDIEM=$bhv[$i][6];
+		$GHICHUD = $bhv[$i][6];
 		if (strlen($DIEMLT)==0)
 			$DIEMLT = 0;
 		else
@@ -37,19 +37,14 @@ if (isset($_POST['bhv']) && !empty($_POST['bhv'])) {
 			$DIEMTH = 0;
 		else
 			$DIEMTH = floatval($DIEMTH);
-
-		if (strlen($TONGDIEM)==0)
-			$TONGDIEM = 0;
-		else
-			$TONGDIEM = floatval($TONGDIEM);
 		$DIEMLT = lamtron($DIEMLT);
 		$DIEMTH = lamtron($DIEMTH);
-		$TONGDIEM = lamtron($TONGDIEM);
 		$qr_diem= "UPDATE danhsachdangkyduthi_hocvien
 		SET 
 			DIEMLT='$DIEMLT',
 			DIEMTH='$DIEMTH',
-			TONGDIEM='$TONGDIEM'
+			TONGDIEM='".($DIEMLT+$DIEMTH)."',
+			GHICHUD='$GHICHUD'
 		WHERE
 			IDPT = '$IDPT' AND
 			IDDS = '$IDDS' AND

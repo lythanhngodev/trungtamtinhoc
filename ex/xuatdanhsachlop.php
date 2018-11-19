@@ -66,9 +66,16 @@
 					<td style="text-align: center;"><?php echo $r['NGAYSINH'] ?></td>
 					<td style="text-align: center;"><?php echo $r['GIOITINH'] ?></td>
 					<td style="text-align: center;"><?php echo $r['NOISINH'] ?></td>
-					<td style="text-align: center;"><?php //echo $r['GHICHU'] ?></td>
+					<td style="text-align: center;"><?php echo $r['GHICHU'] ?></td>
 				</tr>
 				<?php ++$stt; } ?>
+			</table>
+			<p><i>Danh sách có <b><?php echo ($stt-1); ?></b> học viên.</i></p>
+			<table style="width:100%;font-size: 14pt;">
+				<tr style="text-align: center;">
+					<td></td>
+					<td style="width: 4cm;"><b>Hiệu trưởng</b></td>
+				</tr>
 			</table>
 		</div>
 	</div>

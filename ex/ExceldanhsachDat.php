@@ -42,7 +42,8 @@ $objDrawing->setCoordinates('A1');
 $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
 $objDrawing->setWidthAndHeight(90,90);
 $objDrawing->setResizeProportional(true);
-
+$objDrawing->setOffsetX(20);
+$objDrawing->setOffsetY(8);
 $styleArray = array(
     'font'  => array(
         'name'  => 'Times New Roman',
@@ -85,7 +86,7 @@ $sheet->getStyle('A1:M4')
     ));
 
 $objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('A5:M5');
-$sheet->setCellValue("A5","KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN ............");
+$sheet->setCellValue("A5","KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN CƠ BẢN");
 $objPHPExcel->getActiveSheet()->getStyle("A5")->getFont()->setSize(14);
 $sheet->getStyle('A5:M5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $sheet->getStyle('A5:M5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
@@ -147,9 +148,9 @@ $objPHPExcel->getActiveSheet()->getStyle('A7:M8')->getFill()->applyFromArray(arr
         'rgb' => 'b9b9b9'
     )
 ));
-$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(6);
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(14);
-$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(12);
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(13);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(7);
 $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(21);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(13);
@@ -161,24 +162,11 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(6);
 $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(12);
 $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(10);
 
-$diemkhoa = $kn->query("SELECT DISTINCT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach' AND (dh.DIEMLT >= 5.0 AND dh.DIEMTH >=5.0)");
+$diemkhoa = $kn->query("SELECT DISTINCT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS,dh.GHICHUD FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach' AND (dh.DIEMLT >= 5.0 AND dh.DIEMTH >=5.0) ORDER BY dh.SBD ASC;");
 $ds = null;
 while ($row = mysqli_fetch_assoc($diemkhoa)){
     $ds[] = $row;
 }
-///////////////////////////
-for ($i=0; $i < count($ds)-1; $i++) {
-    for ($j=$i+1; $j < count($ds); $j++) {
-        $listFullName = array($ds[$i]['HO']." ".$ds[$i]['TEN'],$ds[$j]['HO']." ".$ds[$j]['TEN']);
-        $listFullName2 = sortFullName($listFullName);
-        if ($listFullName[0]!=$listFullName2[0]) {
-            $temp = $ds[$i];
-            $ds[$i] = $ds[$j];
-            $ds[$j] = $temp;
-        }
-    }
-}
-//////////////////////////
 $dong = 9;
 $sokhongdat=0;
 $sodat=0;
@@ -202,6 +190,7 @@ for ($i=0; $i < count($ds); $i++) {
         $sokhongdat++;
     }
     $sheet->setCellValue("L".$dong,$dat);
+    $sheet->setCellValue("M".$dong,$ds[$i]['GHICHUD']);
     $dong++;
 }
 $sheet->getStyle('A9:M'.($dong-1))
