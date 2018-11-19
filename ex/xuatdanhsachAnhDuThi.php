@@ -40,7 +40,7 @@
 <body style="width: 26.7cm">
 	<div class="Section1">
 <?php 
-$qr_hv = $kn->query("SELECT DISTINCT pt.IDPT,pt.TENTHUCTE,pt.NGAYTHI,kh.TENKHOA FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV LEFT JOIN danhsachphongthi pt ON dh.IDDS=pt.IDDS AND dh.IDPT=pt.IDPT LEFT JOIN khoahoc kh ON ds.IDKH=kh.IDKH WHERE dh.IDDS='$idds';");
+$qr_hv = $kn->query("SELECT DISTINCT pt.IDPT,pt.TENTHUCTE,pt.NGAYTHI,kh.TENKHOA FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV LEFT JOIN danhsachphongthi pt ON dh.IDDS=pt.IDDS AND dh.IDPT=pt.IDPT LEFT JOIN khoahoc kh ON ds.IDKH=kh.IDKH WHERE dh.IDDS='$idds' ORDER BY pt.IDPT ASC;");
 $demdong = mysqli_num_rows($qr_hv);
 $demdong*=20;
 $mangphong = null;
@@ -77,11 +77,11 @@ for ($i=0; $i < ceil($demdong/20) ; $i++) {
 					<td style="padding-left: 5mm;width: 55mm;">Mã số: BM-IC-09-00<br>Ngày hiệu lực: 04/7/2018<br>Lần soát xét: 00<br>Trang: <?php echo $trang."/".$tongtrang; ?></td>
 				</tr>
 			</table>
-			<p style="text-align: center;font-size: 18px;"><b>KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN .............</b></p>
+			<p style="text-align: center;font-size: 18px;"><b>KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN CƠ BẢN</b></p>
 			<p style="text-align: center;font-size: 16px">Khoá <?php echo $mangphong[$i][2] ?>, ngày thi <?php echo date_format(date_create_from_format('Y-m-d', $mangphong[$i][1]), 'd/m/Y') ?> </p>
 			<table border="1" style="width: 100%;border-collapse: collapse;background-color: #b3b3b3;">
 				<tr style="padding-left: 0.5cm;font-size: 20px;">
-					<td style="padding-left: 0.5cm;text-align: left !important;"><b>Chứng chỉ ứng dụng CNTT ...............</b></td>
+					<td style="padding-left: 0.5cm;text-align: left !important;"><b>Chứng chỉ ứng dụng CNTT cơ bản</b></td>
 					<td rowspan="2" style="padding-left: 0.5cm;text-align: left !important;"><b>PHÒNG THI: <?php echo $mangphong[$i][0]; ?></b></td>
 				</tr>
 				<tr style="text-align: left;padding-left: 0.5cm;font-size: 20px;">
@@ -89,7 +89,7 @@ for ($i=0; $i < ceil($demdong/20) ; $i++) {
 				</tr>
 			</table>
 				<?php 
-				$qr = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS, dh.SBD FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$idds' LIMIT ".($i*20).", 20;");
+				$qr = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS, dh.SBD FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$idds' ORDER BY dh.SBD ASC LIMIT ".($i*20).", 20;");
 				$cot = 1;
 				while ($r = mysqli_fetch_assoc($qr)) {
 					if ($cot ==1) { ?>

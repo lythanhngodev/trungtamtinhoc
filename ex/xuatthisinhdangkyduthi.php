@@ -55,7 +55,7 @@ while ($row = mysqli_fetch_assoc($qr_hv)) {
 					<td style="padding-left: 5mm;width: 45mm;">Mã số: BM-IC-02-00<br>Ngày hiệu lực: 04/7/2018<br>Lần soát xét: 00</td>
 				</tr>
 			</table>
-			<p style="text-align: center;font-size: 20px;"><b>KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN ...........................</b></p>
+			<p style="text-align: center;font-size: 20px;"><b>KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN CƠ BẢN</b></p>
 			<p style="text-align: center;">Khoá <?php echo $mangphong[0][1] ?>, ngày thi <?php echo date_format(date_create_from_format('Y-m-d', $mangphong[0][0]), 'd/m/Y') ?> </p>
 			<p style="text-align: center;"><i>(Kèm theo Quyết định số:...................................., ngày.........................)</i></p>
 			<table border="1" style="width: 100%;border-collapse: collapse;">

@@ -64,7 +64,7 @@ for ($i=0; $i < $tong ; $i++) { ?>
 				</tr>
 			</table>
 			<?php if($i==0){ ?>
-			<p style="text-align: center;font-size: 20px;"><b>KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN ...........................</b></p>
+			<p style="text-align: center;font-size: 20px;"><b>KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN CƠ BẢN</b></p>
 			<p style="text-align: center;">Khoá <?php echo $tenkhoahoc; ?>, ngày thi <?php echo date_format(date_create_from_format('Y-m-d', $mangphong[$i][1]), 'd/m/Y') ?> </p>
 		<?php } else echo "<br><br>" ?>
 			<table border="1" style="width: 100%;border-collapse: collapse;">
@@ -81,7 +81,7 @@ for ($i=0; $i < $tong ; $i++) { ?>
 					<th>Ký nhận</th>
 				</tr>
 				<?php 
-				$qr_hv = $kn->query("SELECT DISTINCT dh.SBD,hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,hv.SDT,hv.MASOBIENLAI,hv.NGAYGHIBIENLAI,hv.GHICHU,ds.TENTHUCTE FROM danhsachdangkyduthi_hocvien dh LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV LEFT JOIN danhsachphongthi ds ON dh.IDPT=ds.IDPT  WHERE dh.IDDS='$idds' LIMIT ".($i*20).", 20;");
+				$qr_hv = $kn->query("SELECT DISTINCT dh.SBD,hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,hv.SDT,hv.MASOBIENLAI,hv.NGAYGHIBIENLAI,hv.GHICHU,ds.TENTHUCTE FROM danhsachdangkyduthi_hocvien dh LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV LEFT JOIN danhsachphongthi ds ON dh.IDPT=ds.IDPT  WHERE dh.IDDS='$idds' ORDER BY dh.SBD ASC LIMIT ".($i*20).", 20;");
 				while ($r = mysqli_fetch_assoc($qr_hv)) { ?>
 				<tr>
 					<td style="text-align: center;"><?php echo $stt; ?></td>

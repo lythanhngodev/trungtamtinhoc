@@ -43,7 +43,7 @@
 	<div class="Section1">
 		<div style="margin: 0;box-shadow: 0;font-size: 18px;">
 			<p style="text-align: center;font-size: 24px;"><b>DANH SÁCH HỌC VIÊN</b></p>
-			<p style="text-align: center;"><b>LỚP KỸ NĂNG SỬ DỤNG CÔNG NGHỆ THÔNG TIN ...............................</b></p>
+			<p style="text-align: center;"><b>LỚP KỸ NĂNG SỬ DỤNG CÔNG NGHỆ THÔNG TIN CƠ BẢN</b></p>
 			<p style="text-align: center;">Khoá <?php echo $row['TENKHOA'] ?>, từ ngày <?php echo date('d/m/Y',strtotime($row['TGBATDAU'])) ?> đến ngày <?php echo date('d/m/Y',strtotime($row['TGKETTHUC'])) ?></p>
 			<p style="text-align: center;">Mã lớp: <?php echo $row['TENLOP'] ?>, CBGD: <?php echo $row['CBGD'] ?>, Phòng: <?php echo $row['PHONG'] ?></p>
 			<p style="text-align: center;"><i>(Kèm theo quyết định số ..../QĐ-ĐHSPKTVL-TTNNTH ngày ..... tháng .... năm .......)</i></p>

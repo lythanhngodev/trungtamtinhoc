@@ -22,6 +22,12 @@
 		$kn->adddata("INSERT INTO danhsachphongthi(IDDS,TENGOINHO,TENTHUCTE,NGAYTHI) VALUES ('$idds','".$ao[$i]."','".$thuc[$i]."','".$ngaythi[$i]."');");
 		++$hs;
 	}
+	$phongthi = $kn->query("SELECT IDPT FROM danhsachphongthi WHERE IDDS = '$idds' ORDER BY IDPT ASC;");
+	$phong;
+	$sttp=-1;
+	while ($row=mysqli_fetch_assoc($phongthi)) {
+		$phong[++$sttp] = $row['IDPT'];
+	}
 	$h_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS, dh.SBD FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$idds';");
 	$ds_hv=null;
 	while ($row=mysqli_fetch_assoc($h_hv)) {
@@ -32,17 +38,17 @@
 		die();
 	}
 #############
-		for ($i=0; $i < count($ds_hv)-1; $i++) {
-		    for ($j=$i+1; $j < count($ds_hv); $j++) {
-		        $listFullName = array($ds_hv[$i]['HO']." ".$ds_hv[$i]['TEN'],$ds_hv[$j]['HO']." ".$ds_hv[$j]['TEN']);
-		        $listFullName2 = sortFullName($listFullName);
-		        if ($listFullName[0]!=$listFullName2[0]) {
-		            $temp = $ds_hv[$i];
-		            $ds_hv[$i] = $ds_hv[$j];
-		            $ds_hv[$j] = $temp;
-		        }
-		    }
-		}
+	for ($i=0; $i < count($ds_hv)-1; $i++) {
+	    for ($j=$i+1; $j < count($ds_hv); $j++) {
+	        $listFullName = array($ds_hv[$i]['HO']." ".$ds_hv[$i]['TEN'],$ds_hv[$j]['HO']." ".$ds_hv[$j]['TEN']);
+	        $listFullName2 = sortFullName($listFullName);
+	        if ($listFullName[0]!=$listFullName2[0]) {
+	            $temp = $ds_hv[$i];
+	            $ds_hv[$i] = $ds_hv[$j];
+	            $ds_hv[$j] = $temp;
+	        }
+	    }
+	}
 	for ($i=0; $i < count($ds_hv); $i++) {
 		#xử lý số báo danh
 		$skhoa = "K"; // thieu 3
@@ -115,11 +121,11 @@ for ($i=0; $i < $tong ; $i++) {
 					<td style="padding-left: 5mm;width: 45mm;">Mã số: BM-IC-07-00<br>Ngày hiệu lực: 04/7/2018<br>Lần soát xét: 00</td>
 				</tr>
 			</table>
-			<p style="text-align: center;font-size: 20px;"><b>KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN .............</b></p>
+			<p style="text-align: center;font-size: 20px;"><b>KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN CƠ BẢN</b></p>
 			<p style="text-align: center;">Khoá ........, ngày thi <?php echo date_format(date_create_from_format('Y-m-d', $ngaythi[$i]), 'd/m/Y') ?> </p>
 			<table border="1" style="width: 100%;border-collapse: collapse;background-color: #b3b3b3;">
 				<tr style="padding-left: 0.5cm;font-size: 16pt;">
-					<td style="padding-left: 0.5cm;text-align: left !important;"><b>Chứng chỉ ứng dụng CNTT ...............</b></td>
+					<td style="padding-left: 0.5cm;text-align: left !important;"><b>Chứng chỉ ứng dụng CNTT cơ bản</b></td>
 					<td rowspan="2" style="padding-left: 0.5cm;text-align: left !important;"><b>PHÒNG THI: <?php echo ($i+1)."<br><span style='font-size:14pt;'>(Phòng thực tế: ".$thuc[$i].")</span>"; ?></b></td>
 				</tr>
 				<tr style="text-align: left;padding-left: 0.5cm;font-size: 20px;">
@@ -150,7 +156,7 @@ for ($i=0; $i < $tong ; $i++) {
 					<td style="text-align: center;"><?php echo $r['NOISINH'] ?></td>
 					<td style="text-align: center;"><?php echo $r['GHICHU'] ?></td>
 					<?php 
-					$kn->editdata("UPDATE danhsachdangkyduthi_hocvien SET IDPT='".($i+1)."' WHERE IDDS='$idds' AND IDHV='".$r['IDHV']."';");
+					$kn->editdata("UPDATE danhsachdangkyduthi_hocvien SET IDPT='".$phong[$i]."' WHERE IDDS='$idds' AND IDHV='".$r['IDHV']."';");
 					 ?>
 				</tr>
 				<?php ++$stt; } ?>

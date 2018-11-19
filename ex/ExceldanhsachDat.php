@@ -226,7 +226,7 @@ $objPHPExcel->getActiveSheet()->getStyle('A7:M'.($dong+5))->getFont()->setSize(1
 // Phần tổng kết
 $objPHPExcel->getActiveSheet()->getRowDimension($dong)->setRowHeight(20);
 $objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('A'.$dong.':M'.$dong);
-$sheet->setCellValue("A".$dong,"Danh sách có ".($dong-8)." thí sinh.");
+$sheet->setCellValue("A".$dong,"Danh sách có ".($dong-9)." thí sinh.");
 $objPHPExcel->getActiveSheet()->getStyle('A'.$dong)->getAlignment()->setWrapText(true);
 $objPHPExcel->getActiveSheet()->getStyle('A'.$dong)->getFont()->setItalic(true);
 $sheet->getStyle('A'.$dong.':M'.$dong)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);

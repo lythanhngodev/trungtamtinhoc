@@ -229,7 +229,7 @@ $objPHPExcel->getActiveSheet()->getStyle('A7:M'.($dong+5))->getFont()->setSize(1
 // Phần tổng kết
 $objPHPExcel->getActiveSheet()->getRowDimension($dong)->setRowHeight(60);
 $objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('A'.$dong.':M'.$dong);
-$sheet->setCellValue("A".$dong,"Có ".($dong-8)." thí sinh đăng ký dự thi cấp chứng chỉ ứng dụng CNTT (cơ bản/nâng cao)\nSố lượng thí sinh đến dự thi: ......; số lượng thi sinh vắng thi:......\nKết quả: $sodat đạt; $sokhongdat không đạt");
+$sheet->setCellValue("A".$dong,"Có ".($dong-9)." thí sinh đăng ký dự thi cấp chứng chỉ ứng dụng CNTT (cơ bản/nâng cao)\nSố lượng thí sinh đến dự thi: ......; số lượng thi sinh vắng thi:......\nKết quả: $sodat đạt; $sokhongdat không đạt");
 $objPHPExcel->getActiveSheet()->getStyle('A'.$dong)->getAlignment()->setWrapText(true);
 $objPHPExcel->getActiveSheet()->getStyle('A'.$dong)->getFont()->setItalic(true);
 $sheet->getStyle('A'.$dong.':M'.$dong)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
