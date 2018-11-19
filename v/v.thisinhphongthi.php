@@ -18,6 +18,7 @@
 	                <h4>QUẢN LÝ PHÒNG THI &AMP; THÍ SINH</h4>
 	                <h6>Lập danh sách phòng thi cho thí sinh đã đăng ký dự thi</h6>
 	                <h6>Xuất word các tài liệu có liên quan</h6>
+	                <h6 class="text-danger">Thí sinh sẽ được đánh số báo danh tự động sau khi tạo phòng thi</h6>
 				</div>
 			</div>
 		</div>
@@ -76,7 +77,7 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="modallapphongthi" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modallapphongthi" role="dialog" data-keyboard="false" data-backdrop="static" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
   	<form action="./ex/xuatdanhsachphongthi.php" method="POST" target="_blank">
     <div class="modal-content">
@@ -89,6 +90,7 @@
       <div class="modal-body">
         <p>Từ <b><span id="sohocvien"></span></b> học viên chia làm <b><span id="sophong"></span></b> phòng.</p>
         <p>Vui lòng điền đầy đủ thông tin các phòng bên dưới</p>
+        <p class="text-danger">Khi tạo danh sách SBD thí sinh sẽ được đánh lại từ đầu và đánh tự động.</p>
       	<table class="table table-bordered" id="bangphongthi">
       		<tr>
       			<th>Tên phòng gợi nhớ</th>
@@ -98,7 +100,6 @@
       	<input type="text" hidden="hidden" name="idds" id="iddanhsach">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i></button>
         <button type="submit" class="btn btn-warning" id="btnxuatdanhsachphongthi"><i class="fas fa-file-word"></i> Lưu &amp; Xuất DS phòng thi</button>
       </div>
       </form>
@@ -225,7 +226,7 @@ $(document).on('click','.xuatdanhsachphongthi',function(){
 	    },
 		success: function (data) {
 			$('#bangphongthi').empty();
-			$('#bangphongthi').append("<tr class='text-center'><th>TT</th><th>Tên phòng gợi nhớ</th><th>Tên phòng thực tế</th><th>Ngày thi</th></tr>");
+			$('#bangphongthi').append("<tr class='text-center'><th>Số TT phòng</th><th>Tên phòng thực tế</th><th>Ngày thi</th></tr>");
 			$('#bangphongthi').append(data);
 		},
 	    complete: function () {

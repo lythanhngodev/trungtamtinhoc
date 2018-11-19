@@ -1,11 +1,7 @@
 <style type="text/css">
-	#banglophoc input[type=text]{
-	    border: 1px solid #2d93ff;
-	    background: #f3f9ff;
-	}
-	.xoadong{
-		cursor: pointer;
-	}
+	#banglophoc input[type=text]{border: 1px solid #2d93ff;background: #f3f9ff;}
+	.xoadong{cursor: pointer;}
+	#banglophoc td, #banghocvien td {padding-left: 6px !important;}
 </style>
 <div class="background-container container-fluid">
 	<div class="row">
@@ -14,7 +10,6 @@
 				<div class="card-body">
 	                <h4>THÍ SINH ĐĂNG KÝ DỰ THI</h4>
 	                <h6>Lập danh sách thí sinh đăng ký dự thi</h6>
-	                <h6 class="text-danger">Thí sinh sẽ được đánh số báo danh tự động sau khi tạo danh sách</h6>
 				</div>
 			</div>
 		</div>
@@ -43,7 +38,7 @@
 		<div class="col-md-6">
 			<div class="card">
 				<div class="card-body">
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-6" id="khungchondanhsach" style="float: left;">
 						<label><b>Đợt thi</b></label>
 						<select class="form-control" id="chondanhsach">
 							<option value="0">--- Chọn danh sách ---</option>
@@ -55,6 +50,12 @@
 							<?php }
 							 ?>
 						</select>
+					</div>
+					<div class="form-group col-md-6" style="float: left;">
+						<label style="width: 100%;float: left;"><b>Nhập từ Excel</b></label>
+						<input type="file" id="dulieufile" class="form-control" style="width: 70%;float: left;"> 
+						<button class="btn btn-dark" id="laydulieu" style="width: 25%;float: left;margin-left: 4px;">Nhập</button><br>
+						<a href="#" class="text-link text-dark" style="float: right;"><i><u>Tải xuống file mẫu</u></i></a>
 					</div>
 					<div id="khunghocvien">
 						
@@ -87,6 +88,47 @@
 		</div>
 	</div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="modaltaodotthi" role="dialog" data-keyboard="false" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tạo đợt thi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<div class="form-group">
+      		<label>Tên đợt thi</label>
+      		<input type="text" id="tendot" class="form-control" placeholder="Nhập tên đợt thi ...">
+      	</div>
+		<div class="form-group">
+      		<label>Chọn khóa học</label>
+			<select class="form-control" id="khoahocchon">
+				<?php 
+				$ds = laykhoahoc();
+				while ($row = mysqli_fetch_assoc($ds)) { ?>
+				<option value="<?php echo $row['IDKH'] ?>"><?php echo $row['TENKHOA'] ?></option>
+				<?php }
+				 ?>
+			</select>
+      	</div>
+      	<div class="form-group">
+      		<label>Thời gian bắt đầu</label>
+      		<input type="date" id="batdau" class="form-control">
+      	</div>
+      	<div class="form-group">
+      		<label>Thời gian kết thúc</label>
+      		<input type="date" id="ketthuc" class="form-control">
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" id="btnthemdotthi"><i class="fas fa-check"></i> Thêm</button>
+      </div>
+    </div>
+  </div>
+</div>
 <link rel="stylesheet" type="text/css" href="./lab/css/datatables.min.css">
 <script src="./lab/js/datatables.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="./lab/js/bootstrap.min.js"></script>
@@ -107,17 +149,7 @@ $(document).ready(function() {
 	});
 } );
 
-<?php 
-$ds = laydanhsachdangkyduthi();
-$_ds = [];
-$_stt = 0;
-while ($row = mysqli_fetch_assoc($ds)) {
-	$_ds[$_stt] = $row['TENDS'];
-	++$_stt;
-} ?>
-
-var danhsach = <?php echo json_encode($_ds) ?>;
-$('#chonkhoahoc, #chondanhsach').select2({
+$('#chonkhoahoc, #chondanhsach, #khoahocchon, #lochocvien').select2({
   width: '100%'
 });
 $(document).on('click','#banglophoc .xoadong',function(){
@@ -214,30 +246,6 @@ $(document).on('change','#chonkhoahoc',function(){
 	});
 	}
 });
-$(document).on('click','#banglophoc td',function(){
-	var td = $(this);
-	$('#banglophoc').find('td').find('input[type=text]').map(function(){
-		if(td.find('input[type=text]')!=$(this)){
-			var input = $(this).val();
-			$(this).parent().html(input);
-		}
-	});
-	if($(td).attr('ly')=='stt'){
-		return 0;
-	}else if($(td).find('input[type=text]').attr('ly')!='onhap'){
-		var chuoi = '';
-		chuoi = $(td).text().trim();
-		$(td).html("<input type='text' ly='onhap' class='form-control'>");
-		$(td).find('input[type=text]').focus().val(chuoi);
-	}
-});
-$(document).on('keyup','input[type=text]',function(e){
-    if(e.keyCode == 13)
-    {
-		var input = $(this).val();
-		$(this).parent().html(input);
-    }
-});
 $(document).on('click','.checkall',function(){
 	if($(this).is(':checked')){
 		$('[type="checkbox"]').each(function(){
@@ -250,38 +258,104 @@ $(document).on('click','.checkall',function(){
 		});
 	}
 });
+$(document).on('click','.themvaokhoathi',function(){
+	if ($('#banglophoc').length==0) {
+		tbdanger('Lỗi! Vui lòng chọn đợt thi ở cột kế bên trước');
+		return 0;
+	}
+	var bhv = [];
+	var dulieu = $('#banglophoc').DataTable().rows().data();
+	dulieu.map(function(d){
+		bhv.push(d[0]);
+	});
+
+	var bc = [];      
+	$('#banghocvien').find('tr:not(:first)').each(function(i, row) {
+	  var cols = [];
+	  $(this).find('td:first,input').each(function(i, col) {
+	      if ($(this).is(':checked')) {
+	      	cols.push($(this).parent('td').attr('idhv'));
+	      	cols.push($(this).parent('td').parent('tr').find('td:nth-child(2)').text());
+	      	cols.push($(this).parent('td').parent('tr').find('td:nth-child(3)').text());
+	      	cols.push($(this).parent('td').parent('tr').find('td:nth-child(4)').text());
+	      	cols.push($(this).parent('td').parent('tr').find('td:nth-child(6)').text());
+	      	cols.push($(this).parent('td').parent('tr').find('td:nth-child(7)').text());
+	      	cols.push($(this).parent('td').attr('khoa'));
+	      	bc.push(cols);
+          }
+	  });
+	});
+	var oo = [];
+	for(var i=0;i<bc.length;i++){
+		var kthv = 0
+		for(var j=0;j<bhv.length;j++){
+			if (bc[i][0]==bhv[j]) {
+				kthv = 1;
+			}
+		}
+		(kthv==0) ? oo.push(bc[i]) : "";
+	}
+	var t = $('#banglophoc').dataTable();
+	oo.map(function(data){
+	    var row = t.fnGetNodes(t.fnAddData([data[0],data[1],data[2],data[3],data[4],data[5],'HVTTK'+data[6],'<span class="text-danger xoadong">xóa</span>']));
+	    $(row).find('td:nth-child(1)').attr('hidden','hidden');
+	});
+});
+$(document).on('click','#btnthemdotthi',function(){
+	var tendot = $('#tendot').val();
+	var batdau = $('#batdau').val();
+	var ketthuc = $('#ketthuc').val();
+	var khoahoc = $('#khoahocchon').val();
+	if (jQuery.isEmptyObject(tendot)) {
+		tbdanger('Chưa nhập tên đợt thi');
+		return 0;
+	}
+	$('#khungchondanhsach').empty();
+	$.ajax({
+		url: 'aj/ajTaodotthi.php',
+		type: 'POST',
+		beforeSend: function () {
+                tbinfo("Vui lòng chờ...");
+            },
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
+		data: {
+			tendot:tendot,
+			batdau:batdau,
+			ketthuc:ketthuc,
+			khoahoc: khoahoc
+		},
+		success: function (data) {
+			$('#khungchondanhsach').html(data);
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
+		}
+	});
+});
 $(document).on('click','.luuthongtin',function(){
 	$("#banglophoc").DataTable().search("").draw();
-	$('#banglophoc').find('input[type=text]').map(function(){
-		if(find('input[type=text]')!=$(this)){
-			var input = $(this).val();
-			$(this).parent().html(input);
-		}
-	});
-	var tendanhsach = $('#tendanhsach').val();
-	if (jQuery.isEmptyObject(tendanhsach)) {
+	var dotthi = $('#chondanhsach').val();
+	if (jQuery.isEmptyObject(dotthi)) {
+		tbdanger('Chưa chọn đợt thi');
 		return 0;
 	}
-	var ktds = 0;
-	danhsach.map(function(v){
-		if (v==tendanhsach) {
-			tbdanger('Tên danh sách đã tồn tại!');
-			ktds=1;
-			return 0;
-		}
-	});
-	if (ktds==1) {
-		return 0;
-	}
-	var bhv = [];  
-	var khoahoc = '';        
-	$('#banglophoc').find('tr:not(:first)').each(function(i, row) {
-	  var cols = [];
-	  var demhv = 0;
-	  $(this).find('td:not(:last)').each(function(i, col) {
-	  	if (demhv==0) {cols.push($(this).attr('mahv'));khoahoc=$(this).attr('khoahoc');++demhv;}
-	  });
-	  bhv.push(cols);
+	var bhv = [];
+	var dulieu = $('#banglophoc').DataTable().rows().data();
+	dulieu.map(function(d){
+		var dong = [];dong.push(d[0]);dong.push(d[6]);
+		bhv.push(dong);
 	});
 	if (jQuery.isEmptyObject(bhv)) {
 		tbdanger('Danh sách học viên rỗng');
@@ -305,12 +379,16 @@ $(document).on('click','.luuthongtin',function(){
 	    },
 		data: {
 			bhv:bhv,
-			tendanhsach:tendanhsach,
-			tenkh:$('#chonkhoahoc :selected').text(),
-			khoahoc:khoahoc
+			idds:dotthi
 		},
 		success: function (data) {
-			$('body').append(data);
+			var kq = $.parseJSON(data);
+			if (kq.trangthai) {
+				tbsuccess('Đã lưu');
+			}
+			else{
+				tbdanger('Lỗi!, Vui lòng thử lại sau');
+			}
 		},
 	    complete: function () {
 		        $("#daluot").css("width","0%");
@@ -324,6 +402,12 @@ $(document).on('change','#chondanhsach',function(){
 	if($(this).val()=='0'){
 		$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
 		$('#khunghocvien').empty();
+		return 0;
+	}
+	if($(this).val()=='taodotthi'){
+		$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
+		$('#khunghocvien').empty();
+		$('#modaltaodotthi').modal('show');
 		return 0;
 	}
 	$.ajax({
@@ -365,5 +449,80 @@ $(document).on('change','#chondanhsach',function(){
 			tbdanger('Lỗi, Vui lòng thử lại!');
 		}
 	});
+});
+$(document).on('click','#laydulieu',function(){
+	if (!$('#banglophoc').length) {
+		tbdanger('Chưa chọn đợt thi');
+		return 0;
+	}
+	var file_data = $('#dulieufile').prop('files')[0];
+	if (jQuery.isEmptyObject(file_data)) {tbdanger('Chưa file nào được chọn');return 0;}
+	var type = file_data.type;
+	var match = ["application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
+	if (type==match[0] || type==match[1]) {
+	    var form_data = new FormData();
+	    form_data.append('file', file_data);
+        $.ajax({
+            url: './aj/ajLaydulieudangkythi.php', // gửi đến file upload.php
+            dataType: 'text',
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'post',
+            data: form_data,
+		    xhr: function () {
+		        var xhr = new window.XMLHttpRequest();
+		        xhr.upload.addEventListener("progress", function (evt) {
+		            if (evt.lengthComputable) {
+		                var percentComplete = evt.loaded / evt.total;
+		                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+		            }
+		        }, false);
+		        return xhr;
+		    },
+            beforeSend: function () {
+                tbinfo("Vui lòng chờ...");
+            },
+		    complete: function () {
+		        $("#daluot").css("width","0%");
+		    },
+            success: function(data){
+            	tban();
+            	tbsuccess('Tải xong');
+            	var d = $.parseJSON(data);
+            	if ($.isEmptyObject(d)) {
+            		tbdanger('File không có dữ liệu');
+            	}else{
+            		console.log(d);
+					var bhv = [];
+					var dulieu = $('#banglophoc').DataTable().rows().data();
+					dulieu.map(function(d){
+						bhv.push(d[0]);
+					});
+					var oo = [];
+					for(var i=0;i<d.length;i++){
+						var kthv = 0
+						for(var j=0;j<bhv.length;j++){
+							if (d[i][8]==bhv[j]) {
+								kthv = 1;
+							}
+						}
+						(kthv==0) ? oo.push(d[i]) : "";
+					}
+					var t = $('#banglophoc').dataTable();
+					oo.map(function(data){
+					    var row = t.fnGetNodes(t.fnAddData([data[8],data[0]+' '+data[1],data[2],data[3],data[5],data[6],data[7],'<span class="text-danger xoadong">xóa</span>']));
+					    $(row).find('td:nth-child(1)').attr('hidden','hidden');
+					});
+            	}
+            },
+            error: function () {
+                tbdanger('Không thể tải file');
+            }
+        });
+	}
+	else{
+		tbdanger('Vui lòng chọn định dạng Excel');
+	}
 });
 </script>

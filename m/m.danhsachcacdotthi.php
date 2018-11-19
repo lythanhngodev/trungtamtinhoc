@@ -3,7 +3,7 @@
 	
 	function laydanhsachdotthi(){
 		$kn = new clsKetnoi();
-		$query = "SELECT DISTINCT ds.IDDS,ds.TENDS,ds.TG,kh.TENKHOA FROM danhsachdangkyduthi ds LEFT JOIN khoahoc kh ON ds.IDKH=kh.IDKH;";
+		$query = "SELECT DISTINCT ds.IDDS,ds.TENDS,ds.TUNGAY,ds.DENNGAY FROM danhsachdangkyduthi ds";
 		$result = $kn->query($query);
 		return $result;
 	}

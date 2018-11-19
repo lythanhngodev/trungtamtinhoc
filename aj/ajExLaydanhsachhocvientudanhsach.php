@@ -8,7 +8,7 @@ require_once '../__.php';
 $kn = new clsKetnoi();
 $danhsach = intval($_POST['danhsach']);
 $tends = '';
-$qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach'"); ?>
+$qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.GHICHU FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach'"); ?>
 <table id="banglophoc" class="table table-hover table-bordered display nowrap" style="width: 100%">
     <thead>
         <tr class="text-center">
@@ -29,17 +29,16 @@ $qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.
 $stt = 0;
 while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
     	<tr>
-    		<td ly='stt' class="text-center"><?php echo (++$stt);$tends=$row['TENDS'] ?></td>
-    		<td ly='stt'><?php echo $row['HO'] ?></td>
-    		<td ly='stt'><?php echo $row['TEN'] ?></td>
-    		<td ly='stt' class="text-center"><?php echo $row['NGAYSINH'] ?></td>
-    		<td ly='stt' class="text-center"><?php echo $row['GIOITINH'] ?></td>
-    		<td ly='stt' class="text-center"><?php echo $row['NOISINH'] ?></td>
-    		<td ly='stt' class="text-center"><?php echo $row['CMND'] ?></td>
-    		<td ly='stt' class="text-center"><?php echo $row['MSSV'] ?></td>
-    		<td ly='stt'></td>
-    		<td ly='stt'></td>
-
+    		<td class="text-center"><?php echo (++$stt);$tends=$row['TENDS'] ?></td>
+    		<td><?php echo $row['HO'] ?></td>
+    		<td><?php echo $row['TEN'] ?></td>
+    		<td class="text-center"><?php echo $row['NGAYSINH'] ?></td>
+    		<td class="text-center"><?php echo $row['GIOITINH'] ?></td>
+    		<td class="text-center"><?php echo $row['NOISINH'] ?></td>
+    		<td class="text-center"><?php echo $row['CMND'] ?></td>
+    		<td class="text-center"><?php echo $row['MSSV'] ?></td>
+    		<td class="text-center"><?php echo $row['GHICHU'] ?></td>
+    		<td class="text-center" ></td>
 <?php } ?>
     	</tr>
     </tbody>

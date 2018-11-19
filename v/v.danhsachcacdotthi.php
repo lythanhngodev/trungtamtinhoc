@@ -19,8 +19,9 @@
 	                        <tr>
 	                            <th class="text-center">TT</th>
 	                            <th>Tên đợt thi</th>
-	                            <th class="text-center">Thời gian tạo</th>
-	                            <th class="text-center">Trong khóa học</th>
+	                            <th class="text-center">Từ ngày</th>
+	                            <th class="text-center">Đến ngày</th>
+	                            <th>#</th>
 	                            <th>#</th>
 	                        </tr>
 	                    </thead>
@@ -32,9 +33,10 @@
 	                        <tr>
 	                            <td class="text-center"><?php echo $stt; ?></td>
 	                            <td ly="<?php echo $row['IDDS'] ?>"><?php echo $row['TENDS']; ?></td>
-	                            <td class="text-center"><?php echo date('d-m-Y',$row['TG']); ?></td>
-	                            <td class="text-center"><?php echo $row['TENKHOA']; ?></td>
+	                            <td class="text-center"><?php echo $row['TUNGAY']; ?></td>
+	                            <td class="text-center"><?php echo $row['DENNGAY']; ?></td>
 	                            <td><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton>&ensp;<bunton class="btn btn-sm btn-dark xoa"><i class="fas fa-times"></i></bunton></td>
+	                            <td><center><a class='btn btn-warning btn-sm' href='./ex/xuatthisinhdangkyduthi.php?idds=<?php echo $row['IDDS'] ?>' target='_blank'><i class='fas fa-file-word'></i></a></center></td>
 	                        </tr>
 	                    <?php ++$stt;} ?>
 	                    </tbody>

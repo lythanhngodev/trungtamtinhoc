@@ -8,16 +8,14 @@ require_once '../__.php';
 $kn = new clsKetnoi();
 $danhsach = intval($_POST['danhsach']);
 $tends = '';
-$qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach'"); ?>
+$qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.GHICHU FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach'"); ?>
 <table id="banglophoc" class="table table-hover table-bordered display nowrap" style="width: 100%">
     <thead>
         <tr class="text-center">
-        	<th>STT</th>
-            <th>Họ</th>
-            <th>Tên</th>
+            <th hidden="hidden">Mã</th>
+            <th>Họ tên</th>
             <th>Ngày sinh</th>
             <th>Giới tính</th>
-            <th>Nơi sinh</th>
             <th>Số CMND</th>
             <th>MSSV</th>
             <th>Ghi chú</th>
@@ -26,19 +24,16 @@ $qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.
     </thead>
     <tbody>
 <?php
-$stt = 0;
 while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
     	<tr>
-    		<td ly='stt' class="text-center"><?php echo (++$stt);$tends=$row['TENDS'] ?></td>
-    		<td ly='stt'><?php echo $row['HO'] ?></td>
-    		<td ly='stt'><?php echo $row['TEN'] ?></td>
+            <td hidden="hidden"><?php echo $row['IDHV'];$tends=$row['TENDS'] ?></td>
+    		<td ly='stt'><?php echo $row['HO']." ".$row['TEN'] ?></td>
     		<td ly='stt' class="text-center"><?php echo $row['NGAYSINH'] ?></td>
     		<td ly='stt' class="text-center"><?php echo $row['GIOITINH'] ?></td>
-    		<td ly='stt' class="text-center"><?php echo $row['NOISINH'] ?></td>
     		<td ly='stt' class="text-center"><?php echo $row['CMND'] ?></td>
     		<td ly='stt' class="text-center"><?php echo $row['MSSV'] ?></td>
-    		<td ly='stt'></td>
-    		<td ly='stt'></td>
+            <td><?php echo $row['GHICHU'] ?></td>
+    		<td ly='stt'><span class="text-danger xoadong">xóa</span></td>
 
 <?php } ?>
     	</tr>
@@ -49,12 +44,12 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
     </div>
 </center>
 <center><div class="col-md-12 khungbtn">
-    <a class='btn btn-warning xuatthongtin' href='./ex/xuatthisinhdangkyduthi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất danh sách</a>
+    <button class='btn btn-success luuthongtin'><i class='fas fa-save'></i> Lưu danh sách</button>
 </div>
 <br>
 </center>
 </table>
 <center><div class="col-md-12 khungbtn">
-    <a class='btn btn-warning xuatthongtin' href='./ex/xuatthisinhdangkyduthi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất danh sách</a>
+    <button class='btn btn-success luuthongtin'><i class='fas fa-save'></i> Lưu danh sách</button>
 </div>
 </center>
