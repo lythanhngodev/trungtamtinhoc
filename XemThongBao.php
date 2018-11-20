@@ -30,7 +30,7 @@
     <!-- Logo -->
     <a class="logo" href="/">
         <span class="logo-mini"><img src="/lab/i/vlute_icon36.png" /></span>
-        <span class="logo-lg"><img src="/lab/i/vlute_icon36.png" /> <b>VLUTE</b> CI</span>
+        <span class="logo-lg"><img src="/lab/i/vlute_icon36.png" /> <b>VLUTE CI</b></span>
     </a>
     <!-- Header Navbar -->
             <nav class="navbar navbar-static-top">
@@ -53,7 +53,7 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="active">
-            <a href="ThongBao.php">
+            <a href="/">
                 <i class="fa fa-bullhorn"></i> <span>Thông báo từ trung tâm</span>
             </a>
         </li>

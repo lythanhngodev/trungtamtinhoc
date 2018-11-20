@@ -49,7 +49,7 @@ ob_start("sanitize_output");
     <!-- Logo -->
     <a class="logo" href="/">
         <span class="logo-mini"><img src="/lab/i/vlute_icon36.png" /></span>
-        <span class="logo-lg"><img src="/lab/i/vlute_icon36.png" /> <b>VLUTE</b> CI</span>
+        <span class="logo-lg"><img src="/lab/i/vlute_icon36.png" /> <b>VLUTE CI</b></span>
     </a>
     <!-- Header Navbar -->
             <nav class="navbar navbar-static-top">
@@ -117,7 +117,7 @@ ob_start("sanitize_output");
           <?php 
           $tb = laythongbao();
           while ($ro = mysqli_fetch_assoc($tb)) { ?>
-        <div class="row">
+        <div class="row" style="margin: 0;">
           <div class="col-md-2 col-sm-2 col-lg-3"></div>
             <div class="col-md-8 col-sm-8 col-lg-6">
               <div class="box box-widget">
