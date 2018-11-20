@@ -1,5 +1,6 @@
 <?php
 session_start();
+if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest')) {echo "<h2>Đâu dễ phá vậy</2>";die();}
 require_once "../../__.php";
 $ketqua = array('trangthai' => 0, 'thongbao' => '' ); 
 if (!isset($_SESSION['_token']) || empty($_SESSION['_token'])) {

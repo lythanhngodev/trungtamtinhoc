@@ -1,4 +1,6 @@
 <?php
+session_start();
+if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die();}
 if(!isset($_GET['idds']) || empty($_GET['idds'])){
     echo "Không có dữ liệu";
     exit();

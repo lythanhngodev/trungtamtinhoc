@@ -1,3 +1,4 @@
+<?php if (!isset($checkpage)) {echo "<h2>Đâu dễ phá vậy</2>";die();} ?>
 <style type="text/css">
 	#banglophoc input[type=text]{
 	    border: 1px solid #2d93ff;

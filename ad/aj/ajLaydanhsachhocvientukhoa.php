@@ -1,5 +1,7 @@
 <?php 
 sleep(1);
+session_start();
+if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest')) {echo "<h2>Đâu dễ phá vậy</2>";die();}
 if (!isset($_POST['khoahoc']) || empty($_POST['khoahoc'])) {
 	echo "Không có thông tin";
 	die();

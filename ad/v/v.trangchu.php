@@ -1,3 +1,4 @@
+<?php if (!isset($checkpage)) {echo "<h2>Đâu dễ phá vậy</2>";die();} ?>
 <div class="background-container container-fluid">
 	<div class="row">
 		<div class="col-12">

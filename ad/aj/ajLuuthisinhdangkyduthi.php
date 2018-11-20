@@ -1,4 +1,6 @@
 <?php 
+session_start();
+if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest')) {echo "<h2>Đâu dễ phá vậy</2>";die();}
     $kq = array(
         'trangthai'=>0
     );

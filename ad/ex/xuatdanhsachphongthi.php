@@ -1,4 +1,6 @@
 <?php 
+session_start();
+if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die();}
 	include_once("../../__.php");
 	if (!isset($_POST['idds']) || empty($_POST['idds'])) {
 	    echo "Không tìm thấy thông tin, vui lòng thử lại!";

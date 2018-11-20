@@ -1,3 +1,4 @@
+<?php if (!isset($checkpage)) {echo "<h2>Đâu dễ phá vậy</2>";die();} ?>
 <style type="text/css">
 	#banglophoc input[type=text]{border: 1px solid #2d93ff;background: #f3f9ff;}
 	.xoadong{cursor: pointer;}
@@ -179,9 +180,9 @@ $(document).on('change','#lochocvien',function(){
 	    success: function (data) {
 			tban();
 			tbsuccess('Tải xong');
-			$('#khungchonhocvien').hide( 'fold', {percent: 50}, 567 );
+			$('#khungchonhocvien').hide(367);
 			$('#khungchonhocvien').empty();
-			$('#khungchonhocvien').show( 'fold', {percent: 50}, 567 );
+			$('#khungchonhocvien').show(667 );
 			$('#khungchonhocvien').html(data);
 		    $('#banghocvien').DataTable({
 			  "scrollY": "450px",
@@ -225,10 +226,10 @@ $(document).on('change','#chonkhoahoc',function(){
                 tbinfo("Vui lòng chờ...");
             },
 		success: function (data) {
-			$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
+			$('#khunghocvien').hide( 367 );
 			$('#khunghocvien').empty();
 			$('#khunghocvien').html(data);
-			$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
+			$('#khunghocvien').show( 667 );
 		    $('#banglophoc').DataTable({
 			  "scrollY": "300px",
 			  "scrollCollapse": true,
@@ -400,12 +401,12 @@ $(document).on('click','.luuthongtin',function(){
 });
 $(document).on('change','#chondanhsach',function(){
 	if($(this).val()=='0'){
-		$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
+		$('#khunghocvien').hide( 367 );
 		$('#khunghocvien').empty();
 		return 0;
 	}
 	if($(this).val()=='taodotthi'){
-		$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
+		$('#khunghocvien').hide( 367 );
 		$('#khunghocvien').empty();
 		$('#modaltaodotthi').modal('show');
 		return 0;
@@ -430,10 +431,10 @@ $(document).on('change','#chondanhsach',function(){
 	        return xhr;
 	    },
 		success: function (data) {
-			$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
+			$('#khunghocvien').hide( 367 );
 			$('#khunghocvien').empty();
 			$('#khunghocvien').html(data);
-			$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
+			$('#khunghocvien').show( 667 );
 		    $('#banglophoc').DataTable({
 			  "scrollY": "300px",
 			  "scrollCollapse": true,

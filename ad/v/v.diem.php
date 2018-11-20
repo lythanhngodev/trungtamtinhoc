@@ -1,3 +1,4 @@
+<?php if (!isset($checkpage)) {echo "<h2>Đâu dễ phá vậy</2>";die();} ?>
 <style type="text/css">
 	#banglophoc input[type=text]{
 	    border: 1px solid #2d93ff;
@@ -229,10 +230,10 @@ $(document).on('change','#chondanhsach',function(){
 	        return xhr;
 	    },
 		success: function (data) {
-			$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
+			$('#khunghocvien').hide('fold',{percent: 50},500);
 			$('#khunghocvien').empty();
 			$('#khunghocvien').html(data);
-			$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
+			$('#khunghocvien').show('fold',{percent: 50},800);
 		    $('#banglophoc').DataTable({
 			  "scrollY": "400px",
 			  "scrollCollapse": true,
@@ -276,10 +277,10 @@ $(document).on('change','#chonphongthi',function(){
 	        return xhr;
 	    },
 		success: function (data) {
-			$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
+			$('#khunghocvien').hide( 567 );
 			$('#khunghocvien').empty();
 			$('#khunghocvien').html(data);
-			$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
+			$('#khunghocvien').show( 900 );
 		    $('#banglophoc').DataTable({
 			  "scrollY": "400px",
 			  "scrollCollapse": true,

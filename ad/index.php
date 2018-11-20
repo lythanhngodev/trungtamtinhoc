@@ -1,13 +1,13 @@
 <?php require_once "../__.php";
 function sanitize_output($buffer) {
-
     $search = array(
         '/\>[^\S ]+/s',     // strip whitespaces after tags, except space
         '/[^\S ]+\</s',     // strip whitespaces before tags, except space
         '/( )+/s',         // shorten multiple whitespace sequences
+        '/(\n)+/s',         // shorten multiple whitespace sequences
+        '/(\t)+/s',         // shorten multiple whitespace sequences
         '/<!--(.|\s)*?-->/' // Remove HTML comments
     );
-
     $replace = array(
         '>',
         '<',
@@ -17,7 +17,8 @@ function sanitize_output($buffer) {
     $buffer = preg_replace($search, $replace, $buffer);
     return $buffer;
 }
-// ob_start("sanitize_output");
+ob_start("sanitize_output");
+require_once '_ckl.php';
  ?>
 <!DOCTYPE html>
 <html>
@@ -30,8 +31,9 @@ function sanitize_output($buffer) {
     <script type="text/javascript" src="../lab/js/jquery-3.3.1.min.js"></script>
     <script async="async" type="text/javascript" src="../lab/js/fontawesome-all.min.js"></script>
 <?php 
-session_start();
 $_SESSION['_token'] = _token(256);
+$checkpage = $_SESSION['_token'];
+$_SESSION['_checkpage'] = $_SESSION['_token'];
  ?>
 </head>
 <body>
@@ -96,6 +98,24 @@ $_SESSION['_token'] = _token(256);
                         <a class="dropdown-item" id="denghicapchungchi" href="?p=denghicapchungchi">DS đề nghị cấp chứng chỉ</a>
                     </div>
                 </li>
+                <li class="nav-item dropdown" id="taikhoan">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tài khoản
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" id="thongtintaikhoan" href="?p=thongtintaikhoan">Thông tin tài khoản</a>
+                        <a class="dropdown-item" id="dangxuat" href="./lo.php">Đăng xuất</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" id="thongbao">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Quản lý thông báo
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" id="themthongbao" href="?p=themthongbao">Thêm thông báo</a>
+                        <a class="dropdown-item" id="quanlythongbao" href="?p=quanlythongbao">Quản lý thông báo</a>
+                    </div>
+                </li>
 	        </ul>
 	    </div>
 	</nav>
@@ -134,6 +154,15 @@ $_SESSION['_token'] = _token(256);
                     break;
                 case 'phanconggiangday':
                     require_once './c/c.phanconggiangday.php';
+                    break;
+                case 'themthongbao':
+                    require_once './c/c.themthongbao.php';
+                    break;
+                case 'quanlythongbao':
+                    require_once './c/c.quanlythongbao.php';
+                    break;
+                case 'suathongbao':
+                    require_once './c/c.suathongbao.php';
                     break;
 				default:
 					require './c/c.trangchu.php';

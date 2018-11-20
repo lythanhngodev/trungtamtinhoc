@@ -1,3 +1,4 @@
+<?php if (!isset($checkpage)) {echo "<h2>Đâu dễ phá vậy</2>";die();} ?>
 <style type="text/css">
 	#banglophoc input[type=text]{
 	    border: 1px solid #2d93ff;
@@ -397,9 +398,7 @@ $(document).on('click','#laydulieu',function(){
             success: function(data){
             	tban();
             	tbsuccess('Tải xong');
-            	$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
-            	$('#khunghocvien').empty();
-            	$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
+				$('#khungphancong').empty();
             	$('#khunghocvien').html(data);
 			    $('#banglophoc').DataTable({
 				  "scrollY": "300px",
