@@ -1,45 +1,12 @@
 <?php require_once '_xl_.php'; ?>
-<?php 
-function sanitize_output($buffer) {
-    $search = array(
-        '/\>[^\S ]+/s',     // strip whitespaces after tags, except space
-        '/[^\S ]+\</s',     // strip whitespaces before tags, except space
-        '/( )+/s',         // shorten multiple whitespace sequences
-        '/(\n)+/s',         // shorten multiple whitespace sequences
-        '/<!--(.|\s)*?-->/' // Remove HTML comments
-    );
-    $replace = array(
-        '>',
-        '<',
-        '\\1',
-        ''
-    );
-    $buffer = preg_replace($search, $replace, $buffer);
-    return $buffer;
-}
-ob_start("sanitize_output");
- ?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Tra cứu điểm | VLUTE-CI</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <base href="http://localhost:8888/">
-  <link rel="shortcut icon" href="/lab/i/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/lab/i/favicon.ico" type="image/x-icon">
   <meta name="description" content="VLUTE-CI | Quản lý thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long">
-  <meta name="keywords" content="VLUTE, VLUTE-CI, Trung tâm tin học, lịch thi, tra cứu điểm, lythanhngodev">
-
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="/lte/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/lte/dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-        page. However, you can choose any other skin. Make sure you
-        apply the skin class to the body tag so the changes take effect. -->
-  <link rel="stylesheet" href="/lte/dist/css/skins/skin-yellow-light.min.css">
+  <?php require_once 'header.php'; ?>
 </head>
 <body class="sidebar-mini skin-yellow-light">
 <div class="wrapper">
@@ -82,10 +49,9 @@ ob_start("sanitize_output");
               </span>
           </a>
           <ul class="treeview-menu" style="display: block;">
-            <li><a href="TKBHocVien.php">TKB hoc viên</a></li>
-            <li><a href="TKBGiangVien.php">TKB giảng viên</a></li>
-            <li><a href="LichThi.php">Lịch thi HV</a></li>
-            <li class="active"><a href="DiemThi.php">Điểm thi</a></li>
+            <li><a href="LichThi.php"><i class="fa fa-calendar"></i> Lịch thi HV</a></li>
+            <li class="active"><a href="DiemThi.php"><i class="fa fa-graduation-cap"></i> Điểm thi</a></li>
+            <li><a href="TraCuuVanBang.php"><i class="fa fa-graduation-cap"></i> Tra cứu văn bằng</a></li>
           </ul>
         </li>
       </ul>
@@ -115,7 +81,7 @@ ob_start("sanitize_output");
                 </div>
             </div>
             <div class="form-group col-md-4">
-                <select class="form-control" id="hocky">
+                <select class="form-control" id="dotthi">
                   <?php 
                   $dotthi = laydotthi();
                   while ($row = mysqli_fetch_assoc($dotthi)) { ?>
@@ -146,13 +112,16 @@ ob_start("sanitize_output");
 <!-- jQuery 3 -->
 <script src="/lte/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="/lte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/lte/bower_components/bootstrap/dist/js/bootstrap.min.js" defer="defer"></script>
 <!-- AdminLTE App -->
-<script src="/lte/dist/js/adminlte.min.js"></script>
-<script type="text/javascript" src="/lab/js/jquery-ui.min.js"></script>
+<script src="/lte/dist/js/adminlte.min.js" defer="defer"></script>
+<script type="text/javascript" src="/lab/js/jquery-ui.min.js" defer="defer"></script>
 <link rel="stylesheet" type="text/css" href="/lab/css/jquery-ui.min.css">
+<script type="text/javascript" src="/lab/js/select2.full.min.js" defer="defer"></script>
+<link rel="stylesheet" type="text/css" href="/lab/css/select2.css">
  <script type="text/javascript">
 $(document).ready(function(){
+  $('#dotthi').select2({width: '100%'});
   $( "#tukhoa" ).autocomplete({
       source: function( request, response ) {
           $.ajax({
@@ -164,7 +133,7 @@ $(document).ready(function(){
                   $('#tukhoa').removeClass('ui-autocomplete-loading');  
                   response( $.map( data, function(item) {
                     return {
-                        label: item.CMND + ' - ' + item.HOTEN,
+                        label: item.SBD + ' - ' + item.HOTEN,
                         value: item.IDHV
                     }
                   }));
@@ -188,10 +157,10 @@ $(document).on('click','#xemdiem',function(){
     url: 'api/ajXemdiem.php',
     type: 'POST',
     beforeSend: function () { tbinfo("Đang tra cứu..."); },
-    data: { d:$('#idso').val(),k:$('#hocky').val()},
+    data: { d:$('#idso').val(),k:$('#dotthi').val()},
     success: function (data) {
       tban();
-      tbsuccess('Tải xong');
+      (jQuery.isEmptyObject(data)) ? tbdanger('Không có dữ liệu') : tbsuccess('Tải xong');
       $('#khungthongtin').html(data);
     },
     error: function(){

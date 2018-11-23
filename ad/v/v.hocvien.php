@@ -59,6 +59,10 @@
 							<label><b>Xem kết quả</b></label><br>
 							<button class="btn btn-dark" id="xemhocvien">Xem danh sách học viên</button>
 						</div>
+						<div class="form-group col-md-4" style="float: left;">
+							<label><b>Xem tất cả học viên</b></label><br>
+							<button class="btn btn-dark" id="xemtatcahocvien">Xem tất cả học viên</button>
+						</div>
 					</div>
 				</div>
 			</div>	
@@ -274,6 +278,44 @@ $(document).on('click','#xemhocvien',function(){
 		}
 	});
 });
+$(document).on('click','#xemtatcahocvien',function(){
+	$.ajax({
+		url: 'aj/ajLaytatcahocvien.php',
+		type: 'POST',
+		beforeSend: function () {
+                tbinfo("Vui lòng chờ...");
+        },
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
+	    success: function (data) {
+			tban();
+			tbsuccess('Tải xong');
+			$('#khunghocvien').hide( 'fold', {percent: 50}, 567 );
+			$('#khunghocvien').empty();
+			$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
+			$('#khunghocvien').html(data);
+		    $('#banglophoc').DataTable({
+	    		"aLengthMenu": [15,20,40,50,100],
+			  "scrollX": true
+			});
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
+		}
+	});
+});
 $(document).on('click','#banglophoc td',function(){
 	var td = $(this);
 	$('#banglophoc').find('td').find('input[type=text]').map(function(){
@@ -337,6 +379,62 @@ $(document).on('click','.luuthongtin',function(){
 		data: {
 			bhv:bhv,
 			lop:$('#chonlophoc').val(),
+			_token: '<?php echo $_SESSION['_token']; ?>'
+		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
+		success: function (data) {
+			var kq = $.parseJSON(data);
+			if (kq.trangthai) {
+				tbsuccess(kq.thongbao);
+			}
+			else{
+				tbdanger(kq.thongbao);
+			}
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
+		}
+	});
+});
+$(document).on('click','.luutatcathongtin',function(){
+	$("#banglophoc").DataTable().search("").draw();
+	$('#banglophoc').find('input[type=text]').map(function(){
+		if(find('input[type=text]')!=$(this)){
+			var input = $(this).val();
+			$(this).parent().html(input);
+		}
+	});
+	var bhv = [];      
+	$('#banglophoc').find('tr:not(:first)').each(function(i, row) {
+	  var cols = [];
+	  $(this).find('td').each(function(i, col) {
+	      cols.push($(this).text().trim());
+	  });
+	  bhv.push(cols);
+	});
+	if (jQuery.isEmptyObject(bhv)) {
+		tbdanger('Danh sách học viên rỗng');
+		return 0;
+	}
+
+	$.ajax({
+		url: 'aj/ajCapnhatthongtinhocvien.php',
+		type: 'POST',
+		data: {
+			bhv:bhv,
 			_token: '<?php echo $_SESSION['_token']; ?>'
 		},
 		xhr: function () {

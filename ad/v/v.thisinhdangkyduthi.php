@@ -431,10 +431,7 @@ $(document).on('change','#chondanhsach',function(){
 	        return xhr;
 	    },
 		success: function (data) {
-			$('#khunghocvien').hide( 367 );
-			$('#khunghocvien').empty();
 			$('#khunghocvien').html(data);
-			$('#khunghocvien').show( 667 );
 		    $('#banglophoc').DataTable({
 			  "scrollY": "300px",
 			  "scrollCollapse": true,

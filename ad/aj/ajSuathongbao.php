@@ -16,6 +16,7 @@ if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']
 		$nguoidang = $_SESSION['_tencb'];
 		$id = intval($_POST['id']);
 		$link = $kn->to_slug($ten);
+		$hinhanh = (isset($_POST['hinh']))?$_POST['hinh']:null;
 		$sql = "
 			UPDATE thongbao 
 			SET
@@ -28,6 +29,10 @@ if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']
 			WHERE IDBV = '$id' 
 			;
 		";
+		$kn->deletedata("DELETE FROM thongbao_hinhanh WHERE IDBV='$id';");
+		for ($i=0; $i < count($hinhanh); $i++) { 
+			$kn->adddata("INSERT INTO thongbao_hinhanh(IDBV,HINHANH) VALUES ('$id','".$hinhanh[$i]."')");
+		}
 		if ($kn->query($sql)) {
 			$kq['trangthai']=1;
 			echo json_encode($kq);

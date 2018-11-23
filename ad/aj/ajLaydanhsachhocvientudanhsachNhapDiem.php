@@ -50,6 +50,7 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
         </div>
     </center>
     <center><div class="col-md-12 khungbtn">
+        <a class='btn btn-warning xuatthongtin' href='./ex/ExcelXuatFileNhapDiem.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất file nhập điểm</a>
         <a class='btn btn-warning xuatthongtin' href='./ex/ExcelKetQuaThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất kết quả</a>
         <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS đạt</a>
         <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachKhongDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS không đạt</a> <br><br>
@@ -60,6 +61,7 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
     </center>
 </table>
 <center><div class="col-md-12 khungbtn">
+    <a class='btn btn-warning xuatthongtin' href='./ex/ExcelXuatFileNhapDiem.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất file nhập điểm</a>
     <a class='btn btn-warning xuatthongtin' href='./ex/ExcelKetQuaThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất kết quả</a>
     <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS đạt</a>
     <a class='btn btn-warning xuatthongtin' href='./ex/ExceldanhsachKhongDat.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS không đạt</a><br><br>

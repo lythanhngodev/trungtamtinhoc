@@ -5,7 +5,6 @@ function sanitize_output($buffer) {
         '/[^\S ]+\</s',     // strip whitespaces before tags, except space
         '/( )+/s',         // shorten multiple whitespace sequences
         '/(\n)+/s',         // shorten multiple whitespace sequences
-        '/(\t)+/s',         // shorten multiple whitespace sequences
         '/<!--(.|\s)*?-->/' // Remove HTML comments
     );
     $replace = array(
@@ -29,7 +28,7 @@ require_once '_ckl.php';
     <link rel="stylesheet" href="../lab/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lab/css/style.css">
     <script type="text/javascript" src="../lab/js/jquery-3.3.1.min.js"></script>
-    <script async="async" type="text/javascript" src="../lab/js/fontawesome-all.min.js"></script>
+    <script async="async" type="text/javascript" src="../lab/js/fontawesome-all.min.js" defer="defer"></script>
 <?php 
 $_SESSION['_token'] = _token(256);
 $checkpage = $_SESSION['_token'];
@@ -47,9 +46,6 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
               <img src="./ex/logo.png" width="30" height="30">
             </a>
 	        <ul class="navbar-nav mr-auto">
-	            <li class="nav-item" id="trangchu">
-	                <a class="nav-link" href="#">Trang chủ</a>
-	            </li>
 	            <li class="nav-item" id="khoahoc">
 	                <a class="nav-link" href="?p=khoahoc">Khoá học</a>
 	            </li>
@@ -66,7 +62,7 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                     </div>
                 </li>
                 <li class="nav-item" id="phanconggiangday">
-                    <a class="nav-link" href="?p=phanconggiangday">Phân công giảng dạy</a>
+                    <a class="nav-link" href="?p=phanconggiangday">PC giảng dạy</a>
                 </li>
                 <li class="nav-item dropdown" id="tochucthi">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -98,6 +94,15 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                         <a class="dropdown-item" id="denghicapchungchi" href="?p=denghicapchungchi">DS đề nghị cấp chứng chỉ</a>
                     </div>
                 </li>
+                <li class="nav-item dropdown" id="thongbao">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Thông báo
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" id="themthongbao" href="?p=themthongbao">Thêm thông báo</a>
+                        <a class="dropdown-item" id="quanlythongbao" href="?p=quanlythongbao">Quản lý thông báo</a>
+                    </div>
+                </li>
                 <li class="nav-item dropdown" id="taikhoan">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Tài khoản
@@ -107,14 +112,10 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                         <a class="dropdown-item" id="dangxuat" href="./lo.php">Đăng xuất</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown" id="thongbao">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Quản lý thông báo
+                <li class="nav-item dropdown" id="nhapkhoathicu">
+                    <a class="nav-link" href="?p=nhapkhoathicu">
+                        <span class="badge badge-warning">Nhập khóa thi cũ</span>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="themthongbao" href="?p=themthongbao">Thêm thông báo</a>
-                        <a class="dropdown-item" id="quanlythongbao" href="?p=quanlythongbao">Quản lý thông báo</a>
-                    </div>
                 </li>
 	        </ul>
 	    </div>
@@ -164,6 +165,10 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                 case 'suathongbao':
                     require_once './c/c.suathongbao.php';
                     break;
+                case 'nhapkhoathicu':
+                    require_once './c/c.nhapkhoathicu.php';
+                    break;
+                
 				default:
 					require './c/c.trangchu.php';
 					break;

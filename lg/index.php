@@ -40,7 +40,7 @@ ob_start("sanitize_output");
     <link rel="icon" href="">
     <title>Đăng nhập</title>
     <link rel="stylesheet" href="./lab/css/bootstrap.min.css">
-<style>body {background: #efefef;}.login-box {background: #fff;width: 800px;height: 530px;margin-top: 10%;border-radius: 6px;}.picture-box {background: url('./lab/i/signup-bg.jpg');width: 400px;height: 100%;background-size: cover;border-radius: 10px 0 0 10px;float: left;}.form-box {width: 400px;padding: 55px 40px;border-radius: 0 10px 10px 0;float: left;}.form-box i {font-size: 50px;margin-bottom: 15px;}.form-box h2 {margin-bottom: 25px;}</style>
+<style>body {background: #efefef;}.login-box {background: #fff;width: 800px;height: 530px;margin-top: 5%;border-radius: 6px;}.picture-box {background: url('./lab/i/signup-bg.jpg');width: 400px;height: 100%;background-size: cover;border-radius: 10px 0 0 10px;float: left;}.form-box {width: 400px;padding: 55px 40px;border-radius: 0 10px 10px 0;float: left;}.form-box i {font-size: 50px;margin-bottom: 15px;}.form-box h2 {margin-bottom: 25px;}</style>
     </head>
     <body>
 <div class="container">
@@ -56,7 +56,7 @@ ob_start("sanitize_output");
                 </div>
             <div class="form-group">
                   <label for="exampleInputPassword1" class="sr-only">Password</label>
-                  <input type="password" class="form-control" name="<?php echo $_SESSION['_idpa']; ?>" placeholder="Password" required="required" pattern=".{4,}" title="Mật khẩu trên 4 ký tự">
+                  <input type="password" class="form-control" name="<?php echo $_SESSION['_idpa']; ?>" placeholder="Password" required="required" pattern=".{8,}" title="Mật khẩu trên 8 ký tự">
               </div>
             <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button><br>
             <p><small class="text-muted"><a href="#">Quên mật khẩu?</a></small></p>

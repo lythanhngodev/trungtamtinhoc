@@ -45,7 +45,8 @@
 						</div>
 						<div class="form-group col-md-4" style="float: left;">
 							<label style="width: 100%"><b>Lấy dữ liệu từ Excel</b></label>
-							<button class="btn btn-dark" id="laydulieu">Lấy dữ liệu</button>
+							<button class="btn btn-dark" id="laydulieu">Lấy dữ liệu</button><br>
+							<a href="../lab/e/mau-excel-0.xlsx" class="text-link text-dark"><i><u>Tải xuống file mẫu</u></i></a>
 						</div>
 					</div>
 				</div>

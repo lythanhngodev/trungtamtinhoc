@@ -47,8 +47,6 @@ if (isset($_POST['bhv']) && !empty($_POST['bhv'])) {
 			TONGDIEM='".($DIEMLT+$DIEMTH)."',
 			GHICHUD='$GHICHUD'
 		WHERE
-			IDPT = '$IDPT' AND
-			IDDS = '$IDDS' AND
 			IDHV = '$IDHV' AND
 			SBD = '$SBD'
 			;";

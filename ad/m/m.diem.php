@@ -4,7 +4,7 @@
 	
 	function laydanhsachdangkyduthi(){
 		$kn = new clsKetnoi();
-		$query = "SELECT * FROM danhsachdangkyduthi;";
+		$query = "SELECT * FROM danhsachdangkyduthi ORDER BY IDDS DESC;";
 		$result = $kn->query($query);
 		return $result;
 	}

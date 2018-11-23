@@ -37,7 +37,6 @@ ini_set ('upload_max_filesize', '20M'); //set file size upload len MB
 // fully functional, in demo mode.
 $config['LicenseName'] = 'lythanhngo';
 $config['LicenseKey'] = 'LY4JDDYYJF24MDLGMTPYC7UEE88EJH3H';
-
 /*
  Uncomment lines below to enable PHP error reporting and displaying PHP errors.
  Do not do this on a production server. Might be helpful when debugging why CKFinder does not work as expected.
@@ -205,7 +204,7 @@ $config['ResourceType'][] = Array(
 		'url' => $baseUrl . 'images',
 		'directory' => $baseDir . 'images',
 		'maxSize' => "50M",
-		'allowedExtensions' => 'bmp,gif,jpeg,jpg,png.ico',
+		'allowedExtensions' => 'bmp,gif,jpeg,jpg,png,ico',
 		'deniedExtensions' => '');
 
 $config['ResourceType'][] = Array(

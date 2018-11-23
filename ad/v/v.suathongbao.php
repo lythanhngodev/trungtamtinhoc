@@ -15,18 +15,21 @@
 </style>
 <div class="background-container container-fluid">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
 			<div class="card">
 				<div class="card-body">
-	                <h4>Thêm thông báo</h4>
-	                <h6>Thêm thông báo dành cho mọi người</h6>
+	                <h4>Sửa thông báo</h4>
+	                <h6>Sửa thông báo dành cho mọi người</h6>
 				</div>
 			</div>
 		</div>
+		<div class="col-md-2"></div>
 	</div>
 	<br>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
 			<div class="card">
 				<div class="card-body">
                   <div class="col-md-12">
@@ -46,6 +49,21 @@
                   <div class="col-md-12">
                         <div class="form-group">
                             <label for="tags" class="font-weight-bold" >
+                                Hình ảnh đính kèm</label>
+                            <div class="row col-md-12" id="khunghinh">
+                            <?php $hinh = layhinhthongbao($tb['IDBV']);
+                            while ($r=mysqli_fetch_assoc($hinh)) { ?>
+								<div class="hinhcon" style="background-image:url('<?php echo $ttth['HOST']."/".$r['HINHANH'] ?>')" data="<?php echo $r['HINHANH'] ?>"><i class="fa fa-times"></i></div>
+                            <?php } ?>
+                            </div>
+                            <div class="row col-md-12" style="margin-top:1rem;">
+								<div class="hinhanh" onclick="return duyetfile()">+</div>
+                            </div>
+                        </div>
+                  </div>
+                  <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="tags" class="font-weight-bold" >
                                 Nội dung tóm tắt</label>
                             <textarea class="form-control" rows="5" id="noidungthongbao"><?php echo $tb['NOIDUNG'] ?></textarea>
                         </div>
@@ -55,6 +73,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-md-2"></div>
 	</div>
 </div>
 <script type="text/javascript">
@@ -72,13 +91,16 @@
 <link rel="stylesheet" type="text/css" href="../lab/css/jquery-ui.min.css">
 <script type="text/javascript">
 document.getElementById('thongbao').classList.add("active");
-document.getElementById('themthongbao').classList.add("active");
 
 $(document).on('click','#luuthongbao',function(){
 	var tenthongbao = $('#tenthongbao').val();
 	var motathongbao = $('#motathongbao').val();
+	var	hinhanha = [];
+	$('#khunghinh').find('div').each(function(){
+		hinhanha.push(encodeURI($(this).attr('data')));
+	});
 	var noidungthongbao = CKEDITOR.instances['noidungthongbao'].getData();
-	if (jQuery.isEmptyObject(tenthongbao)||jQuery.isEmptyObject(motathongbao)||jQuery.isEmptyObject(noidungthongbao)) {
+	if (jQuery.isEmptyObject(tenthongbao)||jQuery.isEmptyObject(motathongbao)) {
 		tbdanger('Vui lòng điền đầy đủ thông tin');
 		return 0;
 	}
@@ -89,7 +111,8 @@ $(document).on('click','#luuthongbao',function(){
 			ten:tenthongbao,
 			mota:motathongbao,
 			noidung:noidungthongbao,
-			id:'<?php echo $tb['IDBV'] ?>'
+			id:'<?php echo $tb['IDBV'] ?>',
+			hinh:hinhanha
 		},
 		xhr: function () {
 	        var xhr = new window.XMLHttpRequest();
@@ -118,4 +141,29 @@ $(document).on('click','#luuthongbao',function(){
 		}
 	});
 });
+$(document).on('click','#khunghinh .hinhcon .fa-times',function(){
+	$(this).parent('.hinhcon').hide(500);
+	var t = $(this);
+	setTimeout(function(){
+	        t.parent('.hinhcon').remove()
+	    }, 500);
+	});
+</script>
+<script type="text/javascript">
+var finder = new CKFinder();
+function duyetfile() {
+    finder.selectActionFunction = SetFileField;
+    finder.popup();
+}
+function SetFileField(fileUrl) {
+    var host = "<?php echo $ttth['HOST']; ?>/";
+    host = host.substr(0,host.lastIndexOf("\/"));
+    var link = fileUrl.substr(host.length+1,fileUrl.length-host.length);
+    var kt = 0;
+	var div = "<div class='hinhcon' style=\"background-image:url('"+fileUrl+"')\" data='"+link+"'><i class='fa fa-times'></i></div>";
+	$('#khunghinh').find('div').each(function(){
+		($(this).attr('data')==link)?kt=1:'';
+	});
+	(kt==0)?$('#khunghinh').append(div):tbdanger('Bạn đã chọn hình này rồi');
+}
 </script>

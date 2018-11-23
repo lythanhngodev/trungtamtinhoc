@@ -14,12 +14,23 @@ if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']
 	    $noidung = str_replace('&ensp;',' ',$noidung);
 	    $noidung = str_replace('&nbsp;',' ',$noidung);
 		$nguoidang = $_SESSION['_tencb'];
-		$link = $kn->to_slug($ten);
+		$link = $kn->to_slug($ten)."_".time();
+		$hinhanh = $_POST['hinh'];
 		$sql = "
 			INSERT INTO thongbao (TENTB, MOTA, NOIDUNG, NGAYDANG, NGUOIDANG,LINK) VALUES ('$ten','$mota','$noidung','".date('Y/m/d')."','$nguoidang','$link');
 		";
 		if ($kn->query($sql)) {
-			$kq['trangthai']=1;
+			$qr = $kn->query("SELECT IDBV FROM thongbao WHERE LINK='$link'");
+			$idbv = mysqli_fetch_array($qr);
+			$id = $idbv[0];
+			if ($id!=0) {
+				for ($i=0; $i < count($hinhanh); $i++) { 
+					$kn->adddata("INSERT INTO thongbao_hinhanh(IDBV,HINHANH) VALUES ('$id','".$hinhanh[$i]."')");
+				}
+				$kq['trangthai']=1;
+				echo json_encode($kq);
+				exit();
+			}
 			echo json_encode($kq);
 			exit();
 		}

@@ -10,7 +10,12 @@ require_once '../../__.php';
 $kn = new clsKetnoi();
 $khoahoc = intval($_POST['khoahoc']);
 $tends = '';
-$qr_hv = $kn->query("SELECT DISTINCT kh.IDKH,kh.TENKHOA,l.IDL,l.MALOP,pc.TENCB,pc.TUNGAY,pc.DENNGAY,pc.BUOIDAY,pc.DIADIEM FROM lop l LEFT JOIN khoahoc_lop kl ON l.IDL=kl.IDL LEFT JOIN khoahoc kh ON kl.IDKH=kh.IDKH LEFT JOIN phanconggiangday pc ON pc.MALOP=l.MALOP WHERE kh.IDKH='$khoahoc' ORDER BY l.MALOP ASC"); ?>
+$qr_hv = $kn->query("SELECT DISTINCT kh.IDKH,kh.TENKHOA,l.IDL,l.MALOP,pc.TENCB,pc.TUNGAY,pc.DENNGAY,pc.BUOIDAY,pc.DIADIEM FROM lop l LEFT JOIN khoahoc_lop kl ON l.IDL=kl.IDL LEFT JOIN khoahoc kh ON kl.IDKH=kh.IDKH LEFT JOIN phanconggiangday pc ON pc.MALOP=l.MALOP WHERE kh.IDKH='$khoahoc' ORDER BY l.MALOP ASC");
+if (mysqli_num_rows($qr_hv)==0) {
+    echo "Không có thông tin";
+    die();
+}
+ ?>
 <table id="bangphancong" class="table table-hover display nowrap table-bordered" style="width: 100%">
     <thead>
         <tr style="text-align: center;">
