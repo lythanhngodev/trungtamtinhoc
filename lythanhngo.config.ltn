@@ -10,5 +10,5 @@ db_password = '1234:)))'			; mat khau CSDL
 
 [HOST]
 h_name		= 'http://localhost:8888'	; ten mien chinh
-h_name_con	= 'http://localhost:8888/ad'	; ten mien con
+h_name_con	= 'http://localhost:8888/ad'	; ten mien con 
 
