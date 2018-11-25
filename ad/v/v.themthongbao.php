@@ -94,7 +94,7 @@ $(document).on('click','#luuthongbao',function(){
 	var motathongbao = $('#motathongbao').val();
 	var	hinhanha = [];
 	$('#khunghinh').find('div').each(function(){
-		hinhanha.push(encodeURI($(this).attr('data')));
+		hinhanha.push(($(this).attr('data')));
 	});
 	var noidungthongbao = CKEDITOR.instances['noidungthongbao'].getData();
 	if (jQuery.isEmptyObject(tenthongbao)||jQuery.isEmptyObject(motathongbao)) {

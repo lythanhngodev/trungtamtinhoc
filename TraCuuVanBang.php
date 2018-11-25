@@ -66,30 +66,25 @@
     <section class="content container-fluid">
       <section class="content-header">
           <h1>
-              Tra cứu văn bằng
+              Tra cứu chứng chỉ tin học
           </h1>
       </section>
     </section>
     <section class="content">
         <div class="row">
             <div class="form-group col-md-4">
-                <div class="input-group">
-                    <input id="tukhoa" name="tukhoa" type="text" class="form-control" placeholder="CMND, Số báo danh, Họ tên ...">
-                    <div class="input-group-btn">
-                        <button class="btn btn-success" id="xemlich"><i class="fa fa-search"></i> Tra cứu</button>
-                    </div>
-                </div>
+                <input id="tukhoa" name="tukhoa" type="text" class="form-control" placeholder="CMND, Số báo danh, Họ tên ...">
             </div>
             <div class="form-group col-md-4">
-                <select class="form-control" id="dotthi">
-                  <?php 
-                  $dotthi = laydotthi();
-                  while ($row = mysqli_fetch_assoc($dotthi)) { ?>
-                    <option value="<?php echo $row['IDDS'] ?>"><?php echo $row['TENDS'].'  ( '.date_format(date_create_from_format('Y-m-d', $row['TUNGAY']), 'd/m/Y').' đến '.date_format(date_create_from_format('Y-m-d', $row['DENNGAY']), 'd/m/Y')." )" ?></option>
-                  <?php }
-                   ?>
-                </select>
-                <input type="text" hidden="hidden" id="idso">
+                <input id="sovaoso" name="sovaoso" type="text" class="form-control" placeholder="Số vào sổ ...">
+            </div>
+            <div class="form-group col-md-4">
+                <input id="ngayvaoso" name="ngayvaoso" type="text" class="form-control" placeholder="Ngày vào sổ ...">
+            </div>
+            <div class="form-group col-md-4">
+                <div class="input-group">
+                    <button class="btn btn-success" id="xemlich"><i class="fa fa-search"></i> Tra cứu</button>
+                </div>
             </div>
         </div>
         <div class="box box-solid" id="khungthongtin">
@@ -136,8 +131,8 @@ $(document).ready(function(){
                   $('#tukhoa').removeClass('ui-autocomplete-loading');  
                   response( $.map( data, function(item) {
                     return {
-                        label: item.CMND + ' - ' + item.HOTEN,
-                        value: item.IDHV
+                        label: item[4] + ' - ' + item[0],
+                        value: item[3]
                     }
                   }));
               },
@@ -146,7 +141,7 @@ $(document).ready(function(){
               }
           });
       },
-      minLength: 4,
+      minLength: 3,
       select: function (event, ui) {
           $('#idso').val(ui.item.value);
           $('#tukhoa').val(ui.item.label);
@@ -172,7 +167,6 @@ $(document).on('click','#xemlich',function(){
   });
 });
  </script>
- <script type="text/javascript">(function(){var t;(t=jQuery).bootstrapGrowl=function(s,e){var a,o,l;switch(e=t.extend({},t.bootstrapGrowl.default_options,e),(a=t("<div>")).attr("class","bootstrap-growl alert"),e.type&&a.addClass("alert-"+e.type),e.allow_dismiss&&(a.addClass("alert-dismissible"),a.append('<button  class="close" data-dismiss="alert" type="button"><span aria-hidden="true">&#215;</span><span class="sr-only">Close</span></button>')),a.append(s),e.top_offset&&(e.offset={from:"top",amount:e.top_offset}),l=e.offset.amount,t(".bootstrap-growl").each(function(){return l=Math.max(l,parseInt(t(this).css(e.offset.from))+t(this).outerHeight()+e.stackup_spacing)}),(o={position:"body"===e.ele?"fixed":"absolute",margin:0,"z-index":"9999",display:"none"})[e.offset.from]=l+"px",a.css(o),"auto"!==e.width&&a.css("width",e.width+"px"),t(e.ele).append(a),e.align){case"center":a.css({left:"50%","margin-left":"-"+a.outerWidth()/2+"px"});break;case"left":a.css("left","20px");break;default:a.css("right","20px")}return a.fadeIn(),e.delay>0&&a.delay(e.delay).fadeOut(function(){return t(this).alert("close")}),a},t.bootstrapGrowl.default_options={ele:"body",type:"info",offset:{from:"top",amount:20},align:"right",width:250,delay:4e3,allow_dismiss:!0,stackup_spacing:10}}).call(this);</script><script type="text/javascript">function tbinfo(mess){$.bootstrapGrowl('<i class="fa fa-spinner fa-spin"></i>  '+mess, {type: 'info',delay: 2000});}function tbsuccess(mess){$.bootstrapGrowl('<i class="fa fa-check"></i>  '+mess, {type: 'success',delay: 2000});}function tbdanger(mess){$.bootstrapGrowl('<i class="fa fa-times"></i>  '+mess, {type: 'danger',delay: 2000});}function tban(){$('.bootstrap-growl').remove();}</script>
-    <script type="text/javascript">var __ltn_ = document.createElement('link');__ltn_.rel = 'stylesheet';__ltn_.href = 'lte/bower_components/font-awesome/css/font-awesome.min.css';__ltn_.type = 'text/css';var __gl = document.getElementsByTagName('link')[0];__gl.parentNode.insertBefore(__ltn_, __gl);</script>
+ <?php require_once 'script.php' ?>
 </body>
 </html>

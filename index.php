@@ -7,9 +7,10 @@
   <title>VLUTE CI - Trang thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long</title>
   <meta name="description" content="VLUTE CI - Quản lý thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long">
   <?php require_once 'header.php'; ?>
+  <style type="text/css">#footer{display: none;}</style>
 </head>
 <body class="sidebar-mini skin-yellow-light">
-<div class="wrapper">
+<div class="wrapper" id="wrapper">
   <!-- Main Header -->
   <header class="main-header">
     <!-- Logo -->
@@ -91,22 +92,22 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<div id="xemhinh" style="position: fixed;top: 0;left: 0;right: 0;width: 100%;height: 100%;background-color: #212121;z-index: 99999999999;display: none;">
-  <div style="position: fixed;top: 0;right: 0;" id="donghinh"><i class="fa fa-times" style="font-size: 18pt;border-radius: 35px;color: #fff;padding: 5px 7px;"></i></div>
+<div id="xemhinh">
+  <div style="position: fixed;top: 0;right: 0;" id="donghinh"><i class="fa fa-times" style="font-size: 18pt;border-radius: 35px;color: #212121;padding: 5px 7px;" tooltip="Đóng cửa sổ"></i></div>
   <div class="cthinh" style="width: 100%;float: left;text-align: center;">
   </div>
   <div style="margin: 0.22rem;position: fixed;bottom: 0;width: 100%;">
-    <ul id="danhsachhinh" style="overflow-x: scroll;user-select: none;"></ul>
+    <ul id="danhsachhinh"></ul>
   </div>
 </div>
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
-<script src="/lte/bower_components/jquery/dist/jquery.min.js?v=<?php echo time(); ?>"></script>
+<script src="/lte/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="/lte/bower_components/bootstrap/dist/js/bootstrap.min.js?v=<?php echo time(); ?>"></script>
+<script src="/lte/bower_components/bootstrap/dist/js/bootstrap.min.js" defer="defer" ></script>
 <!-- AdminLTE App -->
-<script src="/lte/dist/js/adminlte.min.js?v=<?php echo time(); ?>"></script>
+<script src="/lte/dist/js/adminlte.min.js" defer="defer" ></script>
 <script type="text/javascript" src="/lab/js/jquery-ui.min.js" defer="defer"></script>
 <link rel="stylesheet" type="text/css" href="/lab/css/jquery-ui.min.css">
  <script type="text/javascript">
@@ -115,33 +116,32 @@ function showhinh(_h){
   var pic_real_width;
   var pic_real_height;
   var tmpImg = new Image();
-  tmpImg.src=_h; //or  document.images[i].src;
+  tmpImg.src=_h;
   pic_real_width=tmpImg.width;
   pic_real_height=tmpImg.height;
-  $('.cthinh').html("<img src='"+_h+"'>");
-  $('#xemhinh').show(200);
-  // trường hợp 1
+  $('.cthinh').fadeOut(0);
+  $('.cthinh').html("<img class='hinhhienthi' src='"+_h+"'>");
+  $('#xemhinh,.cthinh').fadeIn(350);
   // màn hình ngang // hình show dọc
-  if ((width>height)&&(pic_real_height>=pic_real_width)) {
-    $('.cthinh img').css('height',height+'px');
+  if ((($(window).width()>$(window).height()))&&(pic_real_height>=pic_real_width)) {
+    $('.cthinh img').css('height',($(window).height()-107)+'px');
   }else
   // màn hình ngang // hình show ngang
   if ((width>height)&&(pic_real_height<pic_real_width)) {
-    if (pic_real_width-pic_real_height <=400) {
-      $('.cthinh img').css('width','55%');
-    }
-      else
-    $('.cthinh img').css('width','60%');
+      if (pic_real_height>$(window).height()) {
+        $('.cthinh img').css('height',(($(window).height())-107)+'px');
+      }else
+      $('.cthinh img').css('height',(pic_real_height-107)+'px');
   }else
   // màn hình dọc // hình dọc
-  if ((width<height)&&(pic_real_height>=pic_real_width)) {
-    $('.cthinh img').css('width',width+'px');
-    $('.cthinh img').css('margin-top',(($(window).height()-$('.cthinh img').height())/2)+'px');
+  if (($(window).width()<$(window).height())&&(pic_real_height>=pic_real_width)) {
+    $('.cthinh img').css('width',$(window).width()+'px');
+    $('.cthinh img').css('margin-top',((($(window).height()-$('.cthinh img').height())/2)-45)+'px');
   }
   // màn hình dọc // hình ngang
   else{
     $('.cthinh img').css('width',width+'px');
-    $('.cthinh img').css('margin-top',(($(window).height()-$('.cthinh img').height())/2)+'px');
+    $('.cthinh img').css('margin-top',((($(window).height()-$('.cthinh img').height())/2)-45)+'px');
   }
 }
 $(document).on('click','.hinhcon',function(){
@@ -155,10 +155,29 @@ $(document).on('click','.hinhcon',function(){
     $('#danhsachhinh').append("<a><div class=\"hinhconct\" style=\"background-image:url('"+this+"')\" data=\""+this+"\"></div></a>");
   });
   showhinh(_t.attr('data'));
-  
+  $(document).find('.hinhconct').each(function(){
+    if (_t.attr('data')==$(this).attr('data')) {$(this).css('border','2px solid #FF9800')}
+  });
 });
 $(document).on('click','.hinhconct',function(){
   showhinh($(this).attr('data'));
+  var _t=$(this).attr('data');
+  $(document).find('.hinhconct').each(function(){
+    {$(this).css('border','none')}
+  });
+  $(document).find('.hinhconct').each(function(){
+    if (_t==$(this).attr('data')) {$(this).css('border','2px solid #FF9800')}
+  });
+});
+var clickan = false;
+$(document).on('click','.cthinh',function(){
+  if (!clickan) {
+    $('#danhsachhinh').fadeOut(350);
+    clickan=true;
+  }else{
+    $('#danhsachhinh').fadeIn(350);
+    clickan=false;
+  }
 });
 $(document).ready(function(){
   $( "#tukhoa" ).autocomplete({
@@ -197,14 +216,14 @@ $(document).ready(function(){
 });
 $(document).keyup(function(e) {
      if (e.key === "Escape") { // escape key maps to keycode `27`
-        $('#xemhinh').hide(150);
+        $('#xemhinh').fadeOut(350);
     }
 });
 $(document).on('click','#donghinh',function(e) {
-        $('#xemhinh').hide(150);
+        $('#xemhinh').fadeOut(350);
 });
  </script>
- <script type="text/javascript">(function(){var t;(t=jQuery).bootstrapGrowl=function(s,e){var a,o,l;switch(e=t.extend({},t.bootstrapGrowl.default_options,e),(a=t("<div>")).attr("class","bootstrap-growl alert"),e.type&&a.addClass("alert-"+e.type),e.allow_dismiss&&(a.addClass("alert-dismissible"),a.append('<button  class="close" data-dismiss="alert" type="button"><span aria-hidden="true">&#215;</span><span class="sr-only">Close</span></button>')),a.append(s),e.top_offset&&(e.offset={from:"top",amount:e.top_offset}),l=e.offset.amount,t(".bootstrap-growl").each(function(){return l=Math.max(l,parseInt(t(this).css(e.offset.from))+t(this).outerHeight()+e.stackup_spacing)}),(o={position:"body"===e.ele?"fixed":"absolute",margin:0,"z-index":"9999",display:"none"})[e.offset.from]=l+"px",a.css(o),"auto"!==e.width&&a.css("width",e.width+"px"),t(e.ele).append(a),e.align){case"center":a.css({left:"50%","margin-left":"-"+a.outerWidth()/2+"px"});break;case"left":a.css("left","20px");break;default:a.css("right","20px")}return a.fadeIn(),e.delay>0&&a.delay(e.delay).fadeOut(function(){return t(this).alert("close")}),a},t.bootstrapGrowl.default_options={ele:"body",type:"info",offset:{from:"top",amount:20},align:"right",width:250,delay:4e3,allow_dismiss:!0,stackup_spacing:10}}).call(this);</script><script type="text/javascript">function tbinfo(mess){$.bootstrapGrowl('<i class="fa fa-spinner fa-spin"></i>  '+mess, {type: 'info',delay: 2000});}function tbsuccess(mess){$.bootstrapGrowl('<i class="fa fa-check"></i>  '+mess, {type: 'success',delay: 2000});}function tbdanger(mess){$.bootstrapGrowl('<i class="fa fa-times"></i>  '+mess, {type: 'danger',delay: 2000});}function tban(){$('.bootstrap-growl').remove();}</script>
-  <script type="text/javascript">var __ltn_ = document.createElement('link');__ltn_.rel = 'stylesheet';__ltn_.href = 'lte/bower_components/font-awesome/css/font-awesome.min.css';__ltn_.type = 'text/css';var __gl = document.getElementsByTagName('link')[0];__gl.parentNode.insertBefore(__ltn_, __gl);</script>
+ <?php require_once 'script.php' ?>
+  <script type="text/javascript">$('#footer').fadeIn(2000);</script>
 </body>
 </html>

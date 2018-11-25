@@ -9,4 +9,5 @@ CKEDITOR.editorConfig = function( config ) {
 	config.uiColor = '#ecf0f1';
 	config.extraPlugins = 'youtube';
 	config.extraPlugins = 'slideshow';
+	config.extraPlugins = 'imageresize';
 };

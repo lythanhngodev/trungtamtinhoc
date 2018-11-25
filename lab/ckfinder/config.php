@@ -94,18 +94,18 @@ $config['Thumbnails'] = Array(
 		'directory' => $baseDir . '_thumbs',
 		'enabled' => true,
 		'directAccess' => false,
-		'maxWidth' => 100,
-		'maxHeight' => 100,
+		'maxWidth' => 160,
+		'maxHeight' => 160,
 		'bmpSupported' => false,
-		'quality' => 80);
+		'quality' => 90);
 
 /*
 Set the maximum size of uploaded images. If an uploaded image is larger, it
 gets scaled down proportionally. Set to 0 to disable this feature.
 */
 $config['Images'] = Array(
-		'maxWidth' => 4000,
-		'maxHeight' => 3000,
+		'maxWidth' => 2048,
+		'maxHeight' => 2048,
 		'quality' => 80);
 
 /*

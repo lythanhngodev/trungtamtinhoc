@@ -7,39 +7,6 @@
   <title>Xem thông báo - VLUTE CI</title>
   <meta name="description" content="VLUTE CI - Quản lý thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long">
   <?php require_once 'header.php'; ?>
-<style type="text/css">
-.baicohinhanh .hinhcon{
-    width: 100px;
-    height: 100px;
-    float: left;
-    background-position: center;
-    background-size: cover;
-    border-radius: 10px;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-    position: relative;
-}
-.hinhconct{
-    width: 80px;
-    height: 80px;
-    float: left;
-    background-position: center;
-    background-size: cover;
-    border-radius: 10px;
-    margin-right: 1rem;
-}
-#danhsachhinh{
-  padding: 0;
-  margin: 0;
-  white-space: nowrap;
-}
-#danhsachhinh a,.baicohinhanh a{
-  display: inline-table;
-  text-decoration: none;
-  text-align: center;
-}
-
-    </style>
 </head>
 <body class="sidebar-mini skin-yellow-light">
 <div class="wrapper">
@@ -128,8 +95,9 @@
                     <p><?php echo $ro['MOTA']; ?></p>
                     <div class="baicohinhanh" style="float: left;margin: 0.22rem;bottom: 0;width: 100%;white-space: nowrap;overflow: auto;">
                         <?php $hinh = layhinhthongbao($ro['IDBV']);
+                        $delay=200;
                         while ($r=mysqli_fetch_assoc($hinh)) { ?>
-                          <a><div class="hinhcon" style="background-image:url('<?php echo $ttth['HOST']."/".$r['HINHANH'] ?>')" data="<?php echo $ttth['HOST']."/".$r['HINHANH'] ?>"></div></a>
+                          <a><div class="hinhcon animated fadeInRight" style="background-image:url('<?php echo $ttth['HOST']."/_thumbs/".$r['HINHANH'] ?>');animation-delay: <?php echo $delay;$delay+=80; ?>ms;" data="<?php echo $ttth['HOST']."/".$r['HINHANH'] ?>"></div></a>
                         <?php } ?>
                     </div>
                     <hr>
@@ -157,12 +125,12 @@
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
-<div id="xemhinh" style="position: fixed;top: 0;left: 0;right: 0;width: 100%;height: 100%;background-color: #212121;z-index: 99999999999;display: none;">
-  <div style="position: fixed;top: 0;right: 0;" id="donghinh"><i class="fa fa-times" style="font-size: 18pt;border-radius: 35px;color: #fff;padding: 5px 7px;"></i></div>
+<div id="xemhinh">
+  <div style="position: fixed;top: 0;right: 0;" id="donghinh"><i class="fa fa-times" style="font-size: 18pt;border-radius: 35px;color: #4c4c4c;padding: 5px 7px;"></i></div>
   <div class="cthinh" style="width: 100%;float: left;text-align: center;">
   </div>
   <div style="margin: 0.22rem;position: fixed;bottom: 0;width: 100%;">
-    <ul id="danhsachhinh" style="overflow-x: scroll;user-select: none;"></ul>
+    <ul id="danhsachhinh"></ul>
   </div>
 </div>
 <!-- ./wrapper -->
@@ -212,20 +180,20 @@ function showhinh(_h){
   tmpImg.src=_h; //or  document.images[i].src;
   pic_real_width=tmpImg.width;
   pic_real_height=tmpImg.height;
-  $('.cthinh').html("<img src='"+_h+"'>");
-  $('#xemhinh').show(200);
+  $('.cthinh').fadeOut(0);
+  $('.cthinh').html("<img class='hinhhienthi' src='"+_h+"'>");
+  $('#xemhinh,.cthinh').fadeIn(350);
   // trường hợp 1
   // màn hình ngang // hình show dọc
   if ((width>height)&&(pic_real_height>=pic_real_width)) {
-    $('.cthinh img').css('height',height+'px');
+    $('.cthinh img').css('height',(height-107)+'px');
   }else
   // màn hình ngang // hình show ngang
   if ((width>height)&&(pic_real_height<pic_real_width)) {
-    if (pic_real_width-pic_real_height <=400) {
-      $('.cthinh img').css('width','55%');
-    }
-      else
-    $('.cthinh img').css('width','60%');
+      if (pic_real_height>height) {
+        $('.cthinh img').css('height',(height-107)+'px');
+      }else
+      $('.cthinh img').css('height',(pic_real_height-107)+'px');
   }else
   // màn hình dọc // hình dọc
   if ((width<height)&&(pic_real_height>=pic_real_width)) {
@@ -253,16 +221,33 @@ $(document).on('click','.hinhcon',function(){
 });
 $(document).on('click','.hinhconct',function(){
   showhinh($(this).attr('data'));
+  var _t=$(this).attr('data');
+  $(document).find('.hinhconct').each(function(){
+    {$(this).css('border','none')}
+  });
+  $(document).find('.hinhconct').each(function(){
+    if (_t==$(this).attr('data')) {$(this).css('border','2px solid #FF9800')}
+  });
 });
 $(document).keyup(function(e) {
      if (e.key === "Escape") { // escape key maps to keycode `27`
-        $('#xemhinh').hide(150);
+        $('#xemhinh').fadeOut(350);
     }
 });
 $(document).on('click','#donghinh',function(e) {
-        $('#xemhinh').hide(150);
+        $('#xemhinh').fadeOut(350);
+});
+var clickan = false;
+$(document).on('click','.cthinh',function(){
+  if (!clickan) {
+    $('#danhsachhinh').fadeOut(350);
+    clickan=true;
+  }else{
+    $('#danhsachhinh').fadeIn(350);
+    clickan=false;
+  }
 });
  </script>
-   <script type="text/javascript">var __ltn_ = document.createElement('link');__ltn_.rel = 'stylesheet';__ltn_.href = 'lte/bower_components/font-awesome/css/font-awesome.min.css';__ltn_.type = 'text/css';var __gl = document.getElementsByTagName('link')[0];__gl.parentNode.insertBefore(__ltn_, __gl);</script>
+ <?php require_once 'script.php' ?>
 </body>
 </html>

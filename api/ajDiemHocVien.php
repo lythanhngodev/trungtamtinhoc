@@ -37,7 +37,7 @@ $sql = "
 ";
 $danhsach = $kn->query($sql);
 $ds = null;
-while ($row = mysqli_fetch_assoc($danhsach)) {
+while ($row = mysqli_fetch_row($danhsach)) {
 	$ds[]=$row;
 }
 echo json_encode($ds);
