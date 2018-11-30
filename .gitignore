@@ -2,3 +2,6 @@
 __.php
 lythanhngo.config.ini
 *.ltn
+.htaccess
+lg/@l.php
+web.config
