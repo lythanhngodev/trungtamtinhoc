@@ -11,7 +11,8 @@ if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']
 		$khoahoc = mysqli_real_escape_string($kn->conn,$_POST['khoahoc']);
 		$batdau = mysqli_real_escape_string($kn->conn,$_POST['batdau']);
 		$ketthuc = mysqli_real_escape_string($kn->conn,$_POST['ketthuc']);
-		$kiemtra = $kn->adddata("INSERT INTO khoahoc (TENKHOA,TGBATDAU,TGKETTHUC) VALUES ('$khoahoc','$batdau','$ketthuc');");
+		$loaikhoa = mysqli_real_escape_string($kn->conn,$_POST['loaikhoa']);
+		$kiemtra = $kn->adddata("INSERT INTO khoahoc (TENKHOA,TGBATDAU,TGKETTHUC,LOAIKHOA) VALUES ('$khoahoc','$batdau','$ketthuc','$loaikhoa');");
 		if ($kiemtra>0) {
 			$kq['trangthai']=1;
 			echo json_encode($kq);

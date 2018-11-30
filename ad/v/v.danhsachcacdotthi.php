@@ -22,6 +22,7 @@
 	                            <th>Tên đợt thi</th>
 	                            <th class="text-center">Từ ngày</th>
 	                            <th class="text-center">Đến ngày</th>
+	                            <th class="text-center">Loại thi</th>
 	                            <th>#</th>
 	                            <th>#</th>
 	                        </tr>
@@ -36,6 +37,7 @@
 	                            <td ly="<?php echo $row['IDDS'] ?>"><?php echo $row['TENDS']; ?></td>
 	                            <td class="text-center"><?php echo $row['TUNGAY']; ?></td>
 	                            <td class="text-center"><?php echo $row['DENNGAY']; ?></td>
+	                            <td class="text-center"><?php echo $row['LOAITHI']; ?></td>
 	                            <td><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton>&ensp;<bunton class="btn btn-sm btn-dark xoa"><i class="fas fa-times"></i></bunton></td>
 	                            <td><center><a class='btn btn-warning btn-sm' href='./ex/xuatthisinhdangkyduthi.php?idds=<?php echo $row['IDDS'] ?>' target='_blank'><i class='fas fa-file-word'></i></a></center></td>
 	                        </tr>
@@ -62,7 +64,16 @@
       		<label>Tên danh sách đợt thi</label>
       		<input type="text" id="suatendanhsach" class="form-control" placeholder="Nhập tên danh sách ...">
       	</div>
-
+      	<div class="form-group">
+      		<label>Loại đợt thi</label>
+      		<select id="sualoaithi" class="form-control">
+      			<?php 
+      			$loaikhoa = layloaikhoa();
+      			while ($row = mysqli_fetch_assoc($loaikhoa)) { ?>
+      			<option value="<?php echo $row['TENLK'] ?>"><?php echo $row['TENLK'] ?></option>
+      			<?php } ?>
+      		</select>
+      	</div>
       	<input type="text" id="suaidds" hidden="hidden">
       </div>
       <div class="modal-footer">
@@ -109,6 +120,7 @@ $(document).ready(function() {
 $(document).on('click','.sua',function(){
 	$('#suatendanhsach').val($(this).parent('td').parent('tr').find('td:nth-child(2)').text().trim());
 	$('#suaidds').val($(this).parent('td').parent('tr').find('td:nth-child(2)').attr('ly').trim());
+	$('#sualoaithi').val($(this).parent('td').parent('tr').find('td:nth-child(5)').text().trim()).change();
 	$('#modalsua').modal('show');
 });
 $(document).on('click','.xoa',function(){
@@ -118,6 +130,7 @@ $(document).on('click','.xoa',function(){
 });
 $(document).on('click','#btnsuakhoahoc',function(){
 	var tends = $('#suatendanhsach').val();
+	var loaithi = $('#sualoaithi').val();
 	if (jQuery.isEmptyObject(tends)) {
 		tbdanger('Nhập tên khoá học');
 		return;
@@ -127,7 +140,8 @@ $(document).on('click','#btnsuakhoahoc',function(){
 		type: 'POST',
 		data: {
 			tends:tends,
-			id:$('#suaidds').val().trim()
+			id:$('#suaidds').val().trim(),
+			loaithi:loaithi
 		},
 		xhr: function () {
 	        var xhr = new window.XMLHttpRequest();

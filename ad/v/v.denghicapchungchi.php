@@ -28,7 +28,7 @@
 							<?php 
 							$ds = laydanhsachdangkyduthi();
 							while ($row = mysqli_fetch_assoc($ds)) { ?>
-							<option value="<?php echo $row['IDDS'] ?>"><?php echo $row['TENDS'] ?></option>
+							<option value="<?php echo $row['IDDS'] ?>"><?php echo $row['TENDS'].' - '.$row['LOAITHI'] ?></option>
 							<?php }
 							 ?>
 						</select>

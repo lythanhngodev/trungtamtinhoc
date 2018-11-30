@@ -9,11 +9,12 @@ if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']
 		$batdau = mysqli_real_escape_string($kn->conn,$_POST['batdau']);
 		$ketthuc = mysqli_real_escape_string($kn->conn,$_POST['ketthuc']);
 		$khoahoc = mysqli_real_escape_string($kn->conn,$_POST['khoahoc']);
-		$kiemtra = $kn->adddata("INSERT INTO danhsachdangkyduthi (TENDS,TUNGAY,DENNGAY,IDKH) VALUES ('$tendot','$batdau','$ketthuc','$khoahoc');");
+		$loaithi = mysqli_real_escape_string($kn->conn,$_POST['loaithi']);
+		$kiemtra = $kn->adddata("INSERT INTO danhsachdangkyduthi (TENDS,TUNGAY,DENNGAY,IDKH,LOAITHI) VALUES ('$tendot','$batdau','$ketthuc','$khoahoc','$loaithi');");
 		$khoc = $kn->query("SELECT * FROM danhsachdangkyduthi ORDER BY IDDS DESC;");
 		$option = "<label><b>Chọn danh sách</b></label><select class='form-control' id='chondanhsach'><option value='0'>--- Chọn khoá học ---</option><option value='taodotthi'>++ Tạo mới đợt thi ++</option>";
 		while ($row = mysqli_fetch_assoc($khoc)) {
-			$option.="<option value='".$row['IDDS']."'>".$row['TENDS']."</option>";
+			$option.="<option value='".$row['IDDS']."'>".$row['TENDS'].' - '.$row['LOAITHI']."</option>";
 		}
 		echo $option."</select>";
 		if ($kiemtra>0) { ?>

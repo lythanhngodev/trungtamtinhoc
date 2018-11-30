@@ -41,7 +41,7 @@
 							<?php 
 							$kh = laykhoahoc();
 							while ($row = mysqli_fetch_assoc($kh)) { ?>
-							<option value="<?php echo $row['IDKH'] ?>"><?php echo $row['TENKHOA'] ?></option>
+							<option value="<?php echo $row['IDKH'] ?>"><?php echo $row['TENKHOA'].' - '.$row['LOAIKHOA'] ?></option>
 							<?php }
 							 ?>
 						</select>

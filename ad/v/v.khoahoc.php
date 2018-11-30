@@ -27,6 +27,7 @@
 	                            <th class="text-center">TG Bắt đầu</th>
 	                            <th class="text-center">TG Kết thúc</th>
 	                            <th class="text-center">Tổng Lớp</th>
+	                            <th class="text-center">Loại khóa</th>
 	                            <th>#</th>
 	                        </tr>
 	                    </thead>
@@ -41,6 +42,7 @@
 	                            <td class="text-center" ly="<?php echo $row['TGBATDAU'] ?>"><?php echo date_format(date_create_from_format('Y-m-d', $row['TGBATDAU']), 'd/m/Y'); ?></td>
 	                            <td class="text-center" ly="<?php echo $row['TGKETTHUC'] ?>"><?php echo date_format(date_create_from_format('Y-m-d', $row['TGKETTHUC']), 'd/m/Y'); ?></td>
 	                            <td class="text-center"><?php echo $row['SOLOP']; ?></td>
+	                            <td class="text-center"><?php echo $row['LOAIKHOA']; ?></td>
 	                            <td><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton>&ensp;<bunton class="btn btn-sm btn-dark"><i class="fas fa-times"></i></bunton></td>
 	                        </tr>
 	                    <?php ++$stt;} ?>
@@ -74,6 +76,16 @@
       		<label>Thời gian kết thúc</label>
       		<input type="date" id="ketthuc" class="form-control">
       	</div>
+      	<div class="form-group">
+      		<label>Loại khóa học</label>
+      		<select id="loaikhoa" class="form-control">
+      			<?php 
+      			$loaikhoa = layloaikhoa();
+      			while ($row = mysqli_fetch_assoc($loaikhoa)) { ?>
+      			<option value="<?php echo $row['TENLK'] ?>"><?php echo $row['TENLK'] ?></option>
+      			<?php } ?>
+      		</select>
+      	</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i></button>
@@ -105,6 +117,16 @@
       		<label>Thời gian kết thúc</label>
       		<input type="date" id="suaketthuc" class="form-control">
       	</div>
+      	<div class="form-group">
+      		<label>Loại khóa học</label>
+      		<select id="sualoaikhoa" class="form-control">
+      			<?php 
+      			$loaikhoa = layloaikhoa();
+      			while ($row = mysqli_fetch_assoc($loaikhoa)) { ?>
+      			<option value="<?php echo $row['TENLK'] ?>"><?php echo $row['TENLK'] ?></option>
+      			<?php } ?>
+      		</select>
+      	</div>
       	<input type="text" id="suaidkh" hidden="hidden">
       </div>
       <div class="modal-footer">
@@ -128,6 +150,7 @@ $(document).on('click','#btnthemkhoahoc',function(){
 	var khoahoc = $('#tenkhoahoc').val();
 	var batdau = $('#batdau').val();
 	var ketthuc = $('#ketthuc').val();
+	var loaikhoa = $('#loaikhoa').val();
 	if (jQuery.isEmptyObject(khoahoc)) {
 		tbdanger('Nhập tên khoá học');
 		return;
@@ -138,7 +161,8 @@ $(document).on('click','#btnthemkhoahoc',function(){
 		data: {
 			khoahoc:khoahoc,
 			batdau:batdau,
-			ketthuc:ketthuc
+			ketthuc:ketthuc,
+			loaikhoa:loaikhoa
 		},
 		xhr: function () {
 	        var xhr = new window.XMLHttpRequest();
@@ -177,12 +201,14 @@ $(document).on('click','.sua',function(){
 	$('#suaidkh').val($(this).parent('td').parent('tr').find('td:nth-child(2)').attr('ly').trim());
 	$('#suabatdau').val($(this).parent('td').parent('tr').find('td:nth-child(3)').attr('ly').trim());
 	$('#suaketthuc').val($(this).parent('td').parent('tr').find('td:nth-child(4)').attr('ly').trim());
+	$('#sualoaikhoa').val($(this).parent('td').parent('tr').find('td:nth-child(6)').text().trim()).change();
 	$('#modalsua').modal('show');
 });
 $(document).on('click','#btnsuakhoahoc',function(){
 	var khoahoc = $('#suatenkhoahoc').val();
 	var batdau = $('#suabatdau').val();
 	var ketthuc = $('#suaketthuc').val();
+	var loaikhoa = $('#sualoaikhoa').val();
 	if (jQuery.isEmptyObject(khoahoc)) {
 		tbdanger('Nhập tên khoá học');
 		return;
@@ -194,7 +220,8 @@ $(document).on('click','#btnsuakhoahoc',function(){
 			khoahoc:khoahoc,
 			batdau:batdau,
 			ketthuc:ketthuc,
-			id:$('#suaidkh').val().trim()
+			id:$('#suaidkh').val().trim(),
+			loaikhoa:loaikhoa
 		},
 		xhr: function () {
 	        var xhr = new window.XMLHttpRequest();

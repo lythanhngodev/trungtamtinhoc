@@ -4,7 +4,7 @@
 	
 	function laydanhsachdotthi(){
 		$kn = new clsKetnoi();
-		$query = "SELECT DISTINCT ds.IDDS,ds.TENDS,ds.TUNGAY,ds.DENNGAY FROM danhsachdangkyduthi ds";
+		$query = "SELECT DISTINCT ds.IDDS,ds.TENDS,ds.TUNGAY,ds.DENNGAY,ds.LOAITHI FROM danhsachdangkyduthi ds ORDER BY IDDS DESC;";
 		$result = $kn->query($query);
 		return $result;
 	}

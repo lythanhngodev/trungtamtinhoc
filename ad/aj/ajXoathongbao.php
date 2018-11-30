@@ -6,14 +6,10 @@ if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']
 	$kq = array(
 		'trangthai'=>0
 	);
-	if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc'])) {
+	if (isset($_POST['id']) && !empty($_POST['id'])) {
 		$kn = new clsKetnoi();
-		$khoahoc = mysqli_real_escape_string($kn->conn,$_POST['khoahoc']);
-		$batdau = mysqli_real_escape_string($kn->conn,$_POST['batdau']);
-		$ketthuc = mysqli_real_escape_string($kn->conn,$_POST['ketthuc']);
-		$loaikhoa = mysqli_real_escape_string($kn->conn,$_POST['loaikhoa']);
 		$id = intval($_POST['id']);
-		$kiemtra = $kn->editdata("UPDATE khoahoc SET TENKHOA='$khoahoc',TGBATDAU='$batdau',TGKETTHUC='$ketthuc',LOAIKHOA='$loaikhoa' WHERE IDKH='$id';");
+		$kiemtra = $kn->deletedata("DELETE FROM thongbao WHERE IDBV='$id';");
 		if ($kiemtra>0) {
 			$kq['trangthai']=1;
 			echo json_encode($kq);

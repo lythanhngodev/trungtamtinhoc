@@ -72,16 +72,16 @@
     </section>
     <section class="content">
         <div class="row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-12">
                 <input id="tukhoa" name="tukhoa" type="text" class="form-control" placeholder="CMND, Số báo danh, Họ tên ...">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-12">
                 <input id="sovaoso" name="sovaoso" type="text" class="form-control" placeholder="Số vào sổ ...">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-12">
                 <input id="ngayvaoso" name="ngayvaoso" type="text" class="form-control" placeholder="Ngày vào sổ ...">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-12">
                 <div class="input-group">
                     <button class="btn btn-success" id="xemlich"><i class="fa fa-search"></i> Tra cứu</button>
                 </div>
