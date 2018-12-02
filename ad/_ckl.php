@@ -4,6 +4,8 @@
     $kn = new clsKetnoi();
     $idgv="";
     $hotengv="";
+    $mail="";
+    $tdn="";
     if (isset($_SESSION['_us']) && isset($_SESSION['_pa']) && !empty($_SESSION['_us']) && !empty($_SESSION['_pa'])) {
     	if($kn->checklogin_session($_SESSION['_us'], $_SESSION['_pa'])!="admin")
     		$kn->golink($ttth['HOST']."/lg");
@@ -13,6 +15,8 @@
             $hotengv = $row['HT'];
             $idgv = $row['IDTK'];
             $_SESSION['_tencb'] = $hotengv;
+            $mail=$row['MAIL'];
+            $tdn=$row['TDN'];
         }
     }
     else{

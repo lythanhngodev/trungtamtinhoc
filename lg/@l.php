@@ -12,14 +12,12 @@ foreach ($helper as $key){
 $_SESSION['_idus'] = $us;
 $_SESSION['_idpa'] = $pa;
 function sanitize_output($buffer) {
-
     $search = array(
         '/\>[^\S ]+/s',     // strip whitespaces after tags, except space
         '/[^\S ]+\</s',     // strip whitespaces before tags, except space
         '/( )+/s',         // shorten multiple whitespace sequences
         '/<!--(.|\s)*?-->/' // Remove HTML comments
     );
-
     $replace = array(
         '>',
         '<',
@@ -47,9 +45,10 @@ ob_start("sanitize_output");
                 <label for="exampleInputPassword1" class="sr-only">Password</label>
                 <input type="password" class="form-control" name="<?php echo $_SESSION['_idpa']; ?>" placeholder="Password" required="required" pattern=".{8,}" title="Mật khẩu trên 8 ký tự">
             </div>
-          <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button><br>
+          <button type="submit" class="btn btn-success btn-block">Đăng nhập</button><br>
           <p><small class="text-muted"><a>Quên mật khẩu?</a></small></p>
         </form>
       </div>
     </div>
   </div>
+  <div style="position: fixed;bottom: 0;height: 20px;width: 100%;background: #28a745;color: #fff;line-height: 20px;font-size: 90%;padding-left: 1rem;font-family: monospace;text-align: center;">© Copyright of Ngô Thanh Lý (Faculty of Information Technology 2014) | Phone: (+84) 794 967 197</div>

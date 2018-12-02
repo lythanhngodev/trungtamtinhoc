@@ -1,2 +1,2 @@
 RewriteEngine On
-RewriteRule ^/lg/@l/(.*)$ /lg/@l.php?cip=$1
+RewriteRule ^/lg/_(.*)o(.*)$ /lg/@l.php?cip=$1&cpi=$2

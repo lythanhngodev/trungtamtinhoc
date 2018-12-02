@@ -168,7 +168,9 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                 case 'nhapkhoathicu':
                     require_once './c/c.nhapkhoathicu.php';
                     break;
-                
+                case 'thongtintaikhoan':
+                    require_once './c/c.thongtintaikhoan.php';
+                    break;
 				default:
 					require './c/c.trangchu.php';
 					break;
