@@ -27,13 +27,13 @@ require_once '../__.php';
 $kn = new clsKetnoi();
 $key = mysqli_real_escape_string($kn->conn,$_POST['key']);
 $sql = "
-	SELECT DISTINCT HOTEN, CMND, MSSV,IDHV,SBD FROM vwDiemThi WHERE CMND like '%".$key."%'
+	SELECT DISTINCT HOTEN, IDDKTHV, NGAYSINH FROM vwchungchi WHERE CMND like '%".$key."%'
 	UNION
-	SELECT DISTINCT HOTEN, CMND, MSSV,IDHV,SBD FROM vwDiemThi WHERE MSSV like '%".$key."%'
+	SELECT DISTINCT HOTEN, IDDKTHV, NGAYSINH FROM vwchungchi WHERE MSSV like '%".$key."%'
 	UNION
-	SELECT DISTINCT HOTEN, CMND, MSSV,IDHV,SBD FROM vwDiemThi WHERE HOTEN like '%".$key."%'
+	SELECT DISTINCT HOTEN, IDDKTHV, NGAYSINH FROM vwchungchi WHERE HOTEN like '%".$key."%'
 	UNION
-	SELECT DISTINCT HOTEN, CMND, MSSV,IDHV,SBD FROM vwDiemThi WHERE SBD like '%".$key."%' ORDER BY SBD DESC LIMIT 0,50;
+	SELECT DISTINCT HOTEN, IDDKTHV, NGAYSINH FROM vwchungchi WHERE SBD like '%".$key."%' LIMIT 0,50;
 ";
 $danhsach = $kn->query($sql);
 $ds = null;

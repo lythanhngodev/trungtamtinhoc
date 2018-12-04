@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Tra cứu văn bằng - VLUTE CI</title>
   <meta name="description" content="VLUTE CI - Quản lý thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long">
+  <link rel="stylesheet" type="text/css" href="/lab/css/datatables.min.2.css">
   <?php require_once 'header.php'; ?>
 </head>
 <body class="sidebar-mini skin-yellow-light">
@@ -72,9 +73,15 @@
     </section>
     <section class="content">
         <div class="row">
-            <div class="form-group col-md-12">
-                <input id="tukhoa" name="tukhoa" type="text" class="form-control" placeholder="CMND, Số báo danh, Họ tên ...">
+            <div class="form-group col-md-4">
+                <div class="input-group">
+                    <input id="tukhoa" type="text" class="form-control" placeholder="CMND, Số báo danh, Họ tên ...">
+                    <div class="input-group-btn">
+                        <button class="btn btn-success" id="xemchungchi"><i class="fa fa-search"></i> Tra cứu</button>
+                    </div>
+                </div>
             </div>
+            <!--
             <div class="form-group col-md-12">
                 <input id="sovaoso" name="sovaoso" type="text" class="form-control" placeholder="Số vào sổ ...">
             </div>
@@ -85,7 +92,7 @@
                 <div class="input-group">
                     <button class="btn btn-success" id="xemlich"><i class="fa fa-search"></i> Tra cứu</button>
                 </div>
-            </div>
+            </div>-->
         </div>
         <div class="box box-solid" id="khungthongtin">
             <!-- /.box-body -->
@@ -107,59 +114,39 @@
 
 <!-- jQuery 3 -->
 <script src="/lte/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/lab/js/datatables.min.js" type="text/javascript"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="/lte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
 <script src="/lte/dist/js/adminlte.min.js"></script>
-<script type="text/javascript" src="/lab/js/jquery-ui.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/lab/css/jquery-ui.min.css">
-<script type="text/javascript" src="/lab/js/select2.full.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/lab/css/select2.css">
  <script type="text/javascript">
-$(document).ready(function(){
-  $('#dotthi').select2({width: '100%'});
-});
-$(document).ready(function(){
-  $( "#tukhoa" ).autocomplete({
-      source: function( request, response ) {
-          $.ajax({
-              dataType: "json",
-              type : 'POST',
-              url: 'api/ajDiemHocVien.php',
-              data: {key:$('#tukhoa').val()},
-              success: function(data) {
-                  $('#tukhoa').removeClass('ui-autocomplete-loading');  
-                  response( $.map( data, function(item) {
-                    return {
-                        label: item[4] + ' - ' + item[0],
-                        value: item[3]
-                    }
-                  }));
-              },
-              error: function(data) {
-                  $('#tukhoa').removeClass('ui-autocomplete-loading');  
-              }
-          });
-      },
-      minLength: 3,
-      select: function (event, ui) {
-          $('#idso').val(ui.item.value);
-          $('#tukhoa').val(ui.item.label);
-          return false;
-      },
-  });
-});
-$(document).on('click','#xemlich',function(){
+$(document).on('click','#xemchungchi',function(){
   $('#khungthongtin').empty();
   $.ajax({
-    url: 'api/ajXemlichthi.php',
+    url: 'api/ajXemchungchi.php',
     type: 'POST',
     beforeSend: function () { tbinfo("Đang tra cứu..."); },
-    data: { d:$('#dotthi').val(),s:$('#idso').val()},
+    data: { s:$('#tukhoa').val()},
     success: function (data) {
       tban();
       (jQuery.isEmptyObject(data)) ? tbdanger('Không có dữ liệu') : tbsuccess('Tải xong');
       $('#khungthongtin').html(data);
+          $('#tabledata').DataTable();
+    },
+    error: function(){
+      tbdanger('Không tìm thấy dữ liệu!');
+    }
+  });
+});
+$(document).on('click','#xemchitiet',function(){
+  $.ajax({
+    url: 'api/ajXemchungchichitiet.php',
+    type: 'POST',
+    data: { s:$(this).attr('ltn')},
+    success: function (data) {
+      tban();
+      (jQuery.isEmptyObject(data)) ? tbdanger('Không có dữ liệu') : tbsuccess('Tải xong');
+      $('#khungthongtin').html(data);
+          $('#tabledata').DataTable();
     },
     error: function(){
       tbdanger('Không tìm thấy dữ liệu!');

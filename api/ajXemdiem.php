@@ -81,9 +81,9 @@ if (count($row)==0) {
                         <th class="text-center">Kết quả</th>
                     </tr>
                     <tr class="text-center">
-                        <th class="text-center"><?php echo $row['DIEMLT'] ?></th>
-                        <th class="text-center"><?php echo $row['DIEMTH'] ?></th>
-                        <th class="text-center"><?php echo $row['TONGDIEM'] ?></th>
+                        <th class="text-center"><?php echo number_format($row['DIEMLT'],1) ?></th>
+                        <th class="text-center"><?php echo number_format($row['DIEMTH'],1) ?></th>
+                        <th class="text-center"><?php echo number_format($row['TONGDIEM'],1) ?></th>
                         <th class="text-danger text-center"><?php if($row['DIEMLT']>=5 && $row['DIEMTH']>=5) echo 'ĐẠT'; else echo 'KHÔNG ĐẠT'; ?></th>
                     </tr>
                     <tr>

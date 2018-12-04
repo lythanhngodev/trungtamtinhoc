@@ -88,10 +88,11 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                 </li>
                 <li class="nav-item dropdown" id="capchungchi">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Cấp chứng chỉ
+                        Chứng chỉ
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" id="denghicapchungchi" href="?p=denghicapchungchi">DS đề nghị cấp chứng chỉ</a>
+                        <a class="dropdown-item" id="nhapchungchi" href="?p=nhapchungchi">Nhập chứng chỉ</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" id="thongbao">
@@ -170,6 +171,9 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                     break;
                 case 'thongtintaikhoan':
                     require_once './c/c.thongtintaikhoan.php';
+                    break;
+                case 'nhapchungchi':
+                    require_once './c/c.nhapchungchi.php';
                     break;
 				default:
 					require './c/c.trangchu.php';
