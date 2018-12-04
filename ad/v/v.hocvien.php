@@ -445,7 +445,6 @@ $(document).on('click','.luutatcathongtin',function(){
 			else{
 				tbdanger(kq.thongbao);
 			}
-			$('body').append(data);
 		},
 	    complete: function () {
 		        $("#daluot").css("width","0%");
