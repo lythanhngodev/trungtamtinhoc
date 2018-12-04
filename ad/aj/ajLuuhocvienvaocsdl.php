@@ -9,12 +9,11 @@ if (!isset($_SESSION['_token']) || empty($_SESSION['_token'])) {
 	die();
 }
 $_token = $_SESSION['_token'];
-if (isset($_POST['bhv']) && !empty($_POST['bhv']) && isset($_POST['_token']) && !empty($_POST['_token']) && isset($_POST['lop']) && !empty($_POST['lop'])) {
+if (isset($_POST['bhv']) && !empty($_POST['bhv']) && isset($_POST['_token']) && !empty($_POST['_token'])) {
 	if ($_token==$_POST['_token']) {
 		$_SESSION['_token']=_token(256);
 		$kn = new clsKetnoi();
 		$bhv = $_POST['bhv'];
-		$lop = intval($_POST['lop']);
 		// Cập nhật thông tin học viên
 		for ($i=0; $i < count($bhv); $i++) {
 			$MSSV = $bhv[$i][5];
@@ -44,15 +43,25 @@ if (isset($_POST['bhv']) && !empty($_POST['bhv']) && isset($_POST['_token']) && 
 			WHERE
 				IDHV = '".$bhv[$i][0]."'
 				;";
-			$sua_hocvien = $kn->editdata($qr_hocvien);
-			$qr_lop = "
-			UPDATE hocvien_lop
-			SET
-				CAMTHI = b'".$bhv[$i][2]."'
-			WHERE
-				IDL = '$lop' AND IDHV = '".$bhv[$i][0]."';
-			";
-			$sua_lop = $kn->editdata($qr_lop);
+			if (strlen($CMND)==0) {
+				$qr_hocvien= "UPDATE hocvien
+				SET 
+					MSSV='$MSSV',
+					HO='$HO',
+					TEN='$TEN',
+					CMND=NULL,
+					NGAYSINH='$NGAYSINH',
+					GIOITINH='$GIOITINH',
+					NOISINH='$NOISINH',
+					SDT='$SDT',
+					MASOBIENLAI='$MASOBIENLAI',
+					NGAYGHIBIENLAI='$NGAYGHIBIENLAI',
+					GHICHU='$GHICHU'
+				WHERE
+					IDHV = '".$bhv[$i][0]."'
+					;";
+			}
+			$kn->editdata($qr_hocvien);
 		}
 		$ketqua['thongbao'] = "Đã lưu thông tin học viên";
 		$ketqua['trangthai'] = 1;

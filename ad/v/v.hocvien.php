@@ -44,18 +44,6 @@
 							</select>
 						</div>
 						<div class="form-group col-md-4" style="float: left;">
-							<label><b>Chọn lớp học</b></label>
-							<select class="form-control" id="chonlophoc">
-								<option value="0">--- Chọn lớp học ---</option>
-								<?php 
-								$lh = laylophoc();
-								while ($row = mysqli_fetch_assoc($lh)) { ?>
-								<option value="<?php echo $row['IDL'] ?>"><?php echo $row['TENLOP'] ?></option>
-								<?php }
-								 ?>
-							</select>
-						</div>
-						<div class="form-group col-md-4" style="float: left;">
 							<label><b>Xem kết quả</b></label><br>
 							<button class="btn btn-dark" id="xemhocvien">Xem danh sách học viên</button>
 						</div>
@@ -226,15 +214,13 @@ $(document).on('change','#chonkhoahoc',function(){
 	});
 });
 $(document).on('click','#xemhocvien',function(){
-	$('#tenkhoahoc,#tenlophoc').text('');
+	$('#tenkhoahoc').text('');
 	var khoahoc = $('#chonkhoahoc').val();
-	var lophoc = $('#chonlophoc').val();
-	if (jQuery.isEmptyObject(lophoc) || lophoc=='0') {
-		tbdanger('Chưa chọn lớp học');
+	if (jQuery.isEmptyObject(khoahoc) || lophoc=='0') {
+		tbdanger('Chưa chọn khóa học');
 		return 0;
 	}
 	$('#tenkhoahoc').text(($('#chonkhoahoc').val()!='0') ? $('#chonkhoahoc :selected').text() : '');
-	$('#tenlophoc').text(($('#chonlophoc').val()!='0') ? $('#chonlophoc :selected').text() : '');
 	$.ajax({
 		url: 'aj/ajLaydanhsachhocvien.php',
 		type: 'POST',
@@ -242,7 +228,7 @@ $(document).on('click','#xemhocvien',function(){
                 tbinfo("Vui lòng chờ...");
         },
 		data: {
-			lophoc:lophoc
+			khoahoc:khoahoc
 		},
 		xhr: function () {
 	        var xhr = new window.XMLHttpRequest();
@@ -304,8 +290,11 @@ $(document).on('click','#xemtatcahocvien',function(){
 			$('#khunghocvien').show( 'fold', {percent: 50}, 567 );
 			$('#khunghocvien').html(data);
 		    $('#banglophoc').DataTable({
-	    		"aLengthMenu": [15,20,40,50,100],
-			  "scrollX": true
+			  "scrollY": "450px",
+			  "scrollCollapse": true,
+			  "paging": false,
+			  "scrollX": true,
+			  "ordering": false
 			});
 		},
 	    complete: function () {
@@ -357,7 +346,7 @@ $(document).on('click','.luuthongtin',function(){
 	  $(this).find('td').each(function(i, col) {
 	  	if (dem==0) {
 	  		cols.push($(this).attr('mahv'));
-	  		cols.push($(this).attr('idds'));
+	  		cols.push("");
 	  		var dau = "0";
 	  		if ($(this).find('input').is(':checked')) {dau="1"}
 	  			cols.push(dau);
@@ -456,6 +445,7 @@ $(document).on('click','.luutatcathongtin',function(){
 			else{
 				tbdanger(kq.thongbao);
 			}
+			$('body').append(data);
 		},
 	    complete: function () {
 		        $("#daluot").css("width","0%");

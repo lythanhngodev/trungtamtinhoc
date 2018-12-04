@@ -34,9 +34,25 @@ if (isset($_POST['bhv']) && !empty($_POST['bhv']) && isset($_POST['_token']) && 
 				NGAYGHIBIENLAI='$NGAYGHIBIENLAI',
 				GHICHU='$GHICHU'
 			WHERE
-				IDHV = '".$bhv[$i][1]."'
-				;";
-			$sua_hocvien = $kn->editdata($qr_hocvien);
+				IDHV = '".$bhv[$i][1]."';";
+			if (strlen($CMND)==0) {
+				$qr_hocvien= "UPDATE hocvien
+				SET 
+					MSSV='$MSSV',
+					HO='$HO',
+					TEN='$TEN',
+					CMND=NULL,
+					NGAYSINH='$NGAYSINH',
+					GIOITINH='$GIOITINH',
+					NOISINH='$NOISINH',
+					SDT='$SDT',
+					MASOBIENLAI='$MASOBIENLAI',
+					NGAYGHIBIENLAI='$NGAYGHIBIENLAI',
+					GHICHU='$GHICHU'
+				WHERE
+					IDHV = '".$bhv[$i][1]."';";
+			}
+			$kn->editdata($qr_hocvien);
 		}
 		$ketqua['thongbao'] = "Đã lưu thông tin học viên";
 		$ketqua['trangthai'] = 1;

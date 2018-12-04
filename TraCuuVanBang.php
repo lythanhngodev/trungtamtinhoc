@@ -8,9 +8,21 @@
   <meta name="description" content="VLUTE CI - Quản lý thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long">
   <link rel="stylesheet" type="text/css" href="/lab/css/datatables.min.2.css">
   <?php require_once 'header.php'; ?>
+  <style type="text/css">
+    canvas{
+      max-width: 400px;
+      height: auto;
+      width: 100%;
+      border-radius: 10px;
+    }
+    .lammo{
+          filter: blur(6px);
+          -webkit-filter: blur(6px);
+    }
+  </style>
 </head>
 <body class="sidebar-mini skin-yellow-light">
-<div class="wrapper">
+<div class="wrapper" id="chinh">
   <!-- Main Header -->
   <header class="main-header">
     <!-- Logo -->
@@ -94,6 +106,9 @@
                 </div>
             </div>-->
         </div>
+        <div class="box box-solid" id="khungchitiet" style="z-index: -100;float: left;position: absolute;height: 0px;">
+            <!-- /.box-body -->
+        </div>
         <div class="box box-solid" id="khungthongtin">
             <!-- /.box-body -->
         </div>
@@ -101,15 +116,15 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
   <!-- Main Footer -->
 <?php require_once 'footer.php'; ?>
   <!-- Add the sidebar's background. This div must be placed
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
-<!-- ./wrapper -->
 
+<!-- ./wrapper -->
+<div id="img-out" style="z-index: 9999999;width: 100%;position: fixed;top: 0;text-align: center;padding-top: 6%;height: 100%;display: none;background:rgba(33, 33, 33, 0.52)"></div>
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
@@ -118,6 +133,7 @@
 <!-- Bootstrap 3.3.7 -->
 <script src="/lte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/lte/dist/js/adminlte.min.js"></script>
+<script src="/lab/js/html2canvas.min.js"></script>
  <script type="text/javascript">
 $(document).on('click','#xemchungchi',function(){
   $('#khungthongtin').empty();
@@ -137,21 +153,32 @@ $(document).on('click','#xemchungchi',function(){
     }
   });
 });
-$(document).on('click','#xemchitiet',function(){
+$(document).on('click','.xemchitiet',function(){
+  $('#img-out').empty();
   $.ajax({
     url: 'api/ajXemchungchichitiet.php',
     type: 'POST',
     data: { s:$(this).attr('ltn')},
     success: function (data) {
       tban();
-      (jQuery.isEmptyObject(data)) ? tbdanger('Không có dữ liệu') : tbsuccess('Tải xong');
-      $('#khungthongtin').html(data);
-          $('#tabledata').DataTable();
+      (jQuery.isEmptyObject(data)) ? tbdanger('Không có dữ liệu') : '';
+      $('#khungchitiet').html(data);
+        html2canvas(document.querySelector("#hinhanh")).then(canvas => {
+            $('#img-out').html(canvas);
+        });
+        $('#img-out').fadeIn(200);
+        $('#chinh').addClass('lammo');
     },
     error: function(){
       tbdanger('Không tìm thấy dữ liệu!');
     }
   });
+});
+$(document).on('click','#img-out',function(){
+  $(this).fadeOut(200);
+  $('#khungchitiet').empty();
+  $('#img-out').empty();
+  $('#chinh').removeClass('lammo');
 });
  </script>
  <?php require_once 'script.php' ?>
