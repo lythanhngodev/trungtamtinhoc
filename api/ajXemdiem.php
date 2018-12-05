@@ -28,8 +28,8 @@ $key = mysqli_real_escape_string($kn->conn,$_POST['d']);
 if (strlen($key)==0) {
     die();
 }
-$hk = intval($_POST['k']);
-$sql = "SELECT DISTINCT * FROM vwDiemThi WHERE BINARY (IDHV = '$key') AND BINARY (IDDS='$hk') LIMIT 0,1;";
+$hk = mysqli_real_escape_string($kn->conn,$_POST['k']);
+$sql = "SELECT DISTINCT * FROM vwDiemThi WHERE BINARY (sha2(sha2(IDHV,256),224) = '$key') AND BINARY (sha2(sha2(IDDS,256),224)='$hk') LIMIT 0,1;";
 $danhsach = $kn->query($sql);
 $row = mysqli_fetch_assoc($danhsach);
 if (count($row)==0) {

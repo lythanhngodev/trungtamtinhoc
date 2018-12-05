@@ -1,6 +1,6 @@
 <?php require_once '_xl_.php'; ?>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
   <meta name="description" content="VLUTE CI - Quản lý thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long">
   <?php require_once 'header.php'; ?>
 </head>
-<body class="sidebar-mini skin-yellow-light">
+<body class="sidebar skin-yellow-light">
 <div class="wrapper">
   <!-- Main Header -->
   <header class="main-header">
@@ -49,9 +49,9 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="LichThi.php"><i class="fa fa-calendar"></i> Lịch thi HV</a></li>
-            <li><a href="DiemThi.php"><i class="fa fa-graduation-cap"></i> Điểm thi</a></li>
-            <li><a href="TraCuuVanBang.php"><i class="fa fa-graduation-cap"></i> Tra cứu văn bằng</a></li>
+            <li><a href="LichThi"><i class="fa fa-calendar"></i> Lịch thi HV</a></li>
+            <li><a href="DiemThi"><i class="fa fa-graduation-cap"></i> Điểm thi</a></li>
+            <li><a href="TraCuuVanBang"><i class="fa fa-graduation-cap"></i> Tra cứu văn bằng</a></li>
           </ul>
         </li>
       </ul>
@@ -171,6 +171,7 @@ $(document).ready(function(){
       minLength: 3,
       select: function (event, ui) {}
   });
+
 });
 function showhinh(_h){
   var width=$(window).width(),height=$(window).height();

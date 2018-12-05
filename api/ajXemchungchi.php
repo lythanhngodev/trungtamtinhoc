@@ -26,11 +26,11 @@ if (strlen($key)==0) {
     die();
 }
 $sql = "
-    SELECT DISTINCT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha1(IDDKTHV) AS 'IDDKTHV' FROM vwChungChi WHERE HOTEN like '%".$key."%'
+    SELECT DISTINCT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha2(sha2(IDDKTHV,256),224) AS 'IDDKTHV' FROM vwChungChi WHERE HOTEN like '%".$key."%'
     UNION
-    SELECT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha1(IDDKTHV) AS 'IDDKTHV' FROM vwChungChi WHERE CMND like '%".$key."%'
+    SELECT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha2(sha2(IDDKTHV,256),224) AS 'IDDKTHV' FROM vwChungChi WHERE CMND like '%".$key."%'
     UNION
-    SELECT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha1(IDDKTHV) AS 'IDDKTHV' FROM vwChungChi WHERE SBD like '%".$key."%'
+    SELECT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha2(sha2(IDDKTHV,256),224) AS 'IDDKTHV' FROM vwChungChi WHERE SBD like '%".$key."%'
 ";
 $danhsach = $kn->query($sql);
 $row = mysqli_fetch_assoc($danhsach);
@@ -45,7 +45,7 @@ $danhsach = $kn->query($sql);
             <img class="pull-left" src="/lab/i/vlute_icon36.png"><span class="text-blue">TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT VĨNH LONG<br><span class="text-sm">www.vlute.edu.vn</span></span>
         </div>    
         <div class="box-body">        
-            <table class="table table-hover table-bordered" id="tabledata" style="width: 100%;">
+            <table class="table table-hover table-bordered" id="tabledata" style="width: 100%;box-shadow: rgb(191, 191, 191) 0px 0px 6px 0px;border-radius: 15px;">
                 <thead>
                     <tr>
                         <th>Họ và tên</th>

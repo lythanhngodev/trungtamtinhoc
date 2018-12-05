@@ -33,7 +33,7 @@ $sql = "
 	UNION
 	SELECT DISTINCT HOTEN, IDDKTHV, NGAYSINH FROM vwchungchi WHERE HOTEN like '%".$key."%'
 	UNION
-	SELECT DISTINCT HOTEN, IDDKTHV, NGAYSINH FROM vwchungchi WHERE SBD like '%".$key."%' LIMIT 0,50;
+	SELECT DISTINCT HOTEN, IDDKTHV, NGAYSINH FROM vwchungchi WHERE SBD like '%".$key."%';
 ";
 $danhsach = $kn->query($sql);
 $ds = null;

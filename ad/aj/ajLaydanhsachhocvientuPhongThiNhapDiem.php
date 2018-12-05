@@ -10,7 +10,8 @@ require_once '../../__.php';
 $kn = new clsKetnoi();
 $phongthi = intval($_POST['phongthi']);
 $tends = '';
-$qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS,pt.TENTHUCTE,pt.TENGOINHO FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV LEFT JOIN danhsachphongthi pt ON dh.IDPT=pt.IDPT WHERE dh.IDPT='$phongthi'"); ?>
+$hoanthanh ='';
+$qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS,pt.TENTHUCTE,pt.TENGOINHO,ds.HOANTHANH FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV LEFT JOIN danhsachphongthi pt ON dh.IDPT=pt.IDPT WHERE dh.IDPT='$phongthi'"); ?>
 
 <table id="banglophoc" class="table table-hover table-bordered display nowrap" style="width: 100%">
     <thead>
@@ -31,7 +32,7 @@ $qr_hv = $kn->query("SELECT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.
     <tbody>
 <?php
 $stt = 0;
-while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
+while ($row = mysqli_fetch_assoc($qr_hv)) { $hoanthanh=$row['HOANTHANH']; ?>
     	<tr>
     		<td ly='stt' class="text-center" idpt="<?php echo $row['IDPT'] ?>" idds="<?php echo $row['IDDS'] ?>" idhv="<?php echo $row['IDHV'] ?>" sbd="<?php echo $row['SBD'] ?>"><?php echo (++$stt);$tends=$row['TENTHUCTE']." - ".$row['TENGOINHO'] ?></td>
             <td ly='stt' class="text-center"><?php echo $row['SBD'] ?></td>
@@ -51,13 +52,18 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
         <div class="form-group col-md-3">
             <label><b>Danh sách thí sinh phòng thi:</b> <i><?php echo $tends; ?></i></label>
         </div>
+        <?php if ($hoanthanh=='0') { ?>
         <div class="col-md-12 khungbtn">
             <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
         </div>
+        <?php } ?>
         <br>
     </center>
 </table>
-<center><div class="col-md-12 khungbtn">
-    <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
-</div>
+<center>
+    <?php if ($hoanthanh=='0') { ?>
+    <div class="col-md-12 khungbtn">
+        <button class='btn btn-dark luubangdiem'><i class='fas fa-save'></i> Lưu bảng điểm</button>
+    </div>
+    <?php } ?>
 </center>

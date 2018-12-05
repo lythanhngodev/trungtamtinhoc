@@ -13,6 +13,14 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 		$_SESSION['_token']=_token(256);
 		$kn = new clsKetnoi();
 		$bhv = $_POST['bhv'];
+
+		// Chuẩn hóa chuôi
+		
+		for ($i=0; $i < count($bhv); $i++) {
+		    for ($j=0; $j < count($bhv[$i]); $j++) {
+		    	$bhv[$i][$j] = mysqli_real_escape_string($kn->conn,$bhv[$i][$j]);
+		    }
+		}
 		///////////////////////////////////////
 		for ($i=0; $i < count($bhv)-1; $i++) {
 		    for ($j=$i+1; $j < count($bhv); $j++) {
@@ -29,17 +37,17 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 		$khoahoc = trim(mysqli_real_escape_string($kn->conn,$_POST['khoahoc']));
 		$tenkhoahoc = trim(mysqli_real_escape_string($kn->conn,$_POST['tenkhoahoc']));
 		$stt_lop = 0;
-		$tenlopngan[$stt_lop] = $bhv[0][11];
+		$tenlopngan[$stt_lop] = $bhv[0][9];
 		for ($i=1; $i < count($bhv); $i++) { 
 			$ktlop = 0;
 			for ($j=0; $j < count($tenlopngan); $j++) { 
-				if ($tenlopngan[$j]==$bhv[$i][11]) {
+				if ($tenlopngan[$j]==$bhv[$i][9]) {
 					$ktlop = 1;
 					break;
 				}
 			}
 			if ($ktlop==0) {
-				$tenlopngan[++$stt_lop]=$bhv[$i][11];
+				$tenlopngan[++$stt_lop]=$bhv[$i][9];
 			}
 		}
 		for ($i=0; $i < count($tenlopngan); $i++) { 
@@ -90,24 +98,21 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 			$NOISINH = $bhv[$i][6];
 			$SDT = $bhv[$i][7];
 			///////////////////////////////
-			$MASOBIENLAI = $bhv[$i][8];
-			$NGAYGHIBIENLAI = $bhv[$i][9];
-			///////////////////////////////
-			$GHICHU = $bhv[$i][10];
+			$GHICHU = $bhv[$i][8];
 
 	    	$tenlop = "CB"; // thieu 3
-	    	switch (strlen($bhv[$i][11])) {
+	    	switch (strlen($bhv[$i][9])) {
 	    		case 1:
-	    			$tenlop.="00".substr($bhv[$i][11], 0, strlen($bhv[$i][11])-1);
+	    			$tenlop.="00".substr($bhv[$i][9], 0, strlen($bhv[$i][9])-1);
 	    			break;
 	    		case 2:
-	    			$tenlop.="0".substr($bhv[$i][11], 0, strlen($bhv[$i][11])-1);
+	    			$tenlop.="0".substr($bhv[$i][9], 0, strlen($bhv[$i][9])-1);
 	    			break;
 	    		default:
-	    			$tenlop.=substr($bhv[$i][11], 0, strlen($bhv[$i][11])-1);
+	    			$tenlop.=substr($bhv[$i][9], 0, strlen($bhv[$i][9])-1);
 	    			break;
 	    	}
-	    	switch (strlen($khoahoc)) {
+	    	switch (strlen($tenkhoahoc)) {
 	    		case 1:
 	    			$tenlop.="K00".$tenkhoahoc;
 	    			break;
@@ -118,8 +123,10 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 	    			$tenlop.="K".$tenkhoahoc;
 	    			break;
 	    	}
-
-			$qr_hocvien= "INSERT INTO hocvien(MSSV,HO,TEN,CMND,NGAYSINH,GIOITINH,NOISINH,SDT,MASOBIENLAI,NGAYGHIBIENLAI,GHICHU) VALUES ('$MSSV','$HO','$TEN','$CMND','$NGAYSINH','$GIOITINH','$NOISINH','$SDT','$MASOBIENLAI','$NGAYGHIBIENLAI','$GHICHU');";
+			$qr_hocvien= "INSERT INTO hocvien(MSSV,HO,TEN,CMND,NGAYSINH,GIOITINH,NOISINH,SDT,GHICHU) VALUES ('$MSSV','$HO','$TEN','$CMND','$NGAYSINH','$GIOITINH','$NOISINH','$SDT','$GHICHU');";
+			if (strlen($CMND)==0) {
+				$qr_hocvien= "INSERT INTO hocvien(MSSV,HO,TEN,CMND,NGAYSINH,GIOITINH,NOISINH,SDT,GHICHU) VALUES ('$MSSV','$HO','$TEN',NULL,'$NGAYSINH','$GIOITINH','$NOISINH','$SDT','$GHICHU');";
+			}
 			$them_hocvien = $kn->adddata($qr_hocvien);
 
 			$qr_hocvien_qr = "SELECT IDHV FROM hocvien WHERE CMND = '$CMND' LIMIT 0,1;";
@@ -133,7 +140,8 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 			$idlop = $rs_idlop[0];
 			if ($idlop > 0) {
 				if (!($kn->tontai("SELECT * FROM hocvien_lop WHERE IDHV = '$idhocvien_qr' AND IDL = '$idlop'"))) {
-					$them_hocvien_lop = $kn->adddata("INSERT INTO hocvien_lop(IDL,IDHV,THOIGIANTHEM,MASOBIENLAI,NGAYGHIBIENLAI) VALUES ('$idlop','$idhocvien_qr','".time()."','$MASOBIENLAI','$NGAYGHIBIENLAI')");
+					$them_hocvien_lop = $kn->adddata("INSERT INTO hocvien_lop(IDL,IDHV,THOIGIANTHEM) VALUES ('$idlop','$idhocvien_qr','".time()."');");
+					//echo "INSERT INTO hocvien_lop(IDL,IDHV,THOIGIANTHEM) VALUES ('$idlop','$idhocvien_qr','".time()."');";
 				}
 			}
 		}

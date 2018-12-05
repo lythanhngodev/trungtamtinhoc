@@ -4,7 +4,14 @@
 	
 	function laydanhsachdotthi(){
 		$kn = new clsKetnoi();
-		$query = "SELECT DISTINCT ds.IDDS,ds.TENDS,ds.TUNGAY,ds.DENNGAY,ds.LOAITHI FROM danhsachdangkyduthi ds ORDER BY IDDS DESC;";
+		$query = "SELECT DISTINCT * FROM danhsachdangkyduthi ds WHERE HOANTHANH=b'0' ORDER BY IDDS DESC;";
+		echo "SELECT DISTINCT * FROM danhsachdangkyduthi ds WHERE HOANTHANH=b'0' ORDER BY IDDS DESC;";
+		$result = $kn->query($query);
+		return $result;
+	}
+	function laydanhsachdotthi_all(){
+		$kn = new clsKetnoi();
+		$query = "SELECT DISTINCT * FROM danhsachdangkyduthi ds ORDER BY IDDS DESC;";
 		$result = $kn->query($query);
 		return $result;
 	}

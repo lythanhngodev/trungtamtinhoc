@@ -29,11 +29,12 @@
 	                            <th class="text-center">Tổng Lớp</th>
 	                            <th class="text-center">Loại khóa</th>
 	                            <th>#</th>
+	                            <th>Khóa</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
 	                    <?php
-	                    $khoahoc = laykhoahoc();
+	                    $khoahoc = laykhoahoc_all();
 	                    $stt = 1;
 	                    while ($row = mysqli_fetch_assoc($khoahoc)) { ?>
 	                        <tr>
@@ -44,6 +45,13 @@
 	                            <td class="text-center"><?php echo $row['SOLOP']; ?></td>
 	                            <td class="text-center"><?php echo $row['LOAIKHOA']; ?></td>
 	                            <td><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton>&ensp;<bunton class="btn btn-sm btn-dark"><i class="fas fa-times"></i></bunton></td>
+	                            <td>
+	                            	<?php if($row['HOANTHANH']==1){ ?>
+	                            		<bunton class="btn btn-sm btn-danger mokhoa" ltn="<?php echo $row['IDKH'] ?>"><i class="fas fa-lock"></i></bunton>
+		                            <?php }else{ ?>
+		                            	<bunton class="btn btn-sm btn-success khoa" ltn="<?php echo $row['IDKH'] ?>"><i class="fas fa-lock-open"></i></bunton>
+		                            <?php } ?>
+	                            </td>
 	                        </tr>
 	                    <?php ++$stt;} ?>
 	                    </tbody>
@@ -132,6 +140,52 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
         <button type="button" class="btn btn-primary" id="btnsuakhoahoc">Điều chỉnh</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalkhoa" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">Điều gì xảy ra khi khóa khóa học?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<div class="form-group">
+      		<label>Khi khóa <span><b id="xoatendanhsach"></b></span>, chỉ có thể xem thông tin liên quan khóa học, nhưng không được thao tác dữ liệu liên quan khóa.</label>
+      	</div>
+      	<input type="text" id="khoaid" hidden="hidden">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-danger" id="btnkhoakhoahoc">Có, Khóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalmokhoa" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">Điều gì xảy ra khi mở khóa khóa học?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<div class="form-group">
+      		<label>Khi mở khóa <span><b id="mokhoaten"></b></span>, được thao tác dữ liệu liên quan khóa.</label>
+      	</div>
+      	<input type="text" id="mokhoaid" hidden="hidden">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-danger" id="btnmokhoakhoahoc">Có, Mở khóa</button>
       </div>
     </div>
   </div>
@@ -239,6 +293,94 @@ $(document).on('click','#btnsuakhoahoc',function(){
 			if (kq.trangthai) {
 				$('#modalsua').modal('hide');
 				tbsuccess('Đã điều chỉnh khoá học');
+				setTimeout(function(){
+			        location.reload();
+			    }, 2000);
+			}
+			else{
+				tbdanger('Lỗi!, Vui lòng thử lại sau');
+			}
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
+		}
+	});
+});
+$(document).on('click','.khoa',function(){
+	$('#xoatendanhsach').text($(this).parent('td').parent('tr').find('td:nth-child(2)').text().trim());
+	$('#khoaid').val($(this).attr('ltn'));
+	$('#modalkhoa').modal('show');
+});
+$(document).on('click','.mokhoa',function(){
+	$('#mokhoaten').text($(this).parent('td').parent('tr').find('td:nth-child(2)').text().trim());
+	$('#mokhoaid').val($(this).attr('ltn'));
+	$('#modalmokhoa').modal('show');
+});
+$(document).on('click','#btnkhoakhoahoc',function(){
+	$.ajax({
+		url: 'aj/ajKhoakhoahoc.php',
+		type: 'POST',
+		data: {
+			khoahoc:$('#khoaid').val()
+		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
+		success: function (data) {
+			var kq = $.parseJSON(data);
+			if (kq.trangthai) {
+				$('#modalkhoa').modal('hide');
+				tbsuccess('Đã khóa khoá học');
+				setTimeout(function(){
+			        location.reload();
+			    }, 2000);
+			}
+			else{
+				tbdanger('Lỗi!, Vui lòng thử lại sau');
+			}
+		},
+	    complete: function () {
+		        $("#daluot").css("width","0%");
+		},
+		error: function(){
+			tbdanger('Lỗi, Vui lòng thử lại!');
+		}
+	});
+});
+$(document).on('click','#btnmokhoakhoahoc',function(){
+	$.ajax({
+		url: 'aj/ajMoKhoakhoahoc.php',
+		type: 'POST',
+		data: {
+			khoahoc:$('#mokhoaid').val()
+		},
+		xhr: function () {
+	        var xhr = new window.XMLHttpRequest();
+	        //Download progress
+	        xhr.upload.addEventListener("progress", function (evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                $("#daluot").css("width",(Math.round(percentComplete * 100) + "%"));
+	            }
+	        }, false);
+	        return xhr;
+	    },
+		success: function (data) {
+			var kq = $.parseJSON(data);
+			if (kq.trangthai) {
+				$('#modalmokhoa').modal('hide');
+				tbsuccess('Đã mở khóa khoá học');
 				setTimeout(function(){
 			        location.reload();
 			    }, 2000);

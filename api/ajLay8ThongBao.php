@@ -8,7 +8,7 @@
       <div class="box box-widget">
             <div class="box-header with-border">
               <div class="user-block">
-                <span class="username" style="margin-left: 0;"><a href="XemThongBao.php?id=<?php echo $ro['IDBV'] ?>&link=<?php echo $ro['LINK'] ?>"><?php echo $ro['TENTB']; ?></a></span>
+                <span class="username" style="margin-left: 0;"><a href="<?php echo $ro['LINK'] ?>.ltn.<?php echo $ro['IDBV'] ?>"><?php echo $ro['TENTB']; ?></a></span>
                 <span class="description" style="margin-left: 0;"><i class='fa fa-comments'></i>&ensp;<?php echo $ro['NGUOIDANG'] ?>&ensp;&ensp;<?php echo "<i class='fa fa-calendar'></i>&ensp;".date_format(date_create_from_format('Y/m/d', $ro['NGAYDANG']), 'd-m-Y'); ?>&ensp;&ensp;<i class="fa fa-eye"></i>&ensp;<?php echo $ro['LUOTXEM'] ?></span>
               </div>
               <!-- /.user-block -->

@@ -24,12 +24,12 @@ if (!isset($_POST['d'])) {
 }
 require_once '../__.php';
 $kn = new clsKetnoi();
-$ds = intval($_POST['d']);
-$idhv = intval($_POST['s']);
+$ds = mysqli_real_escape_string($kn->conn,$_POST['d']);
+$idhv = mysqli_real_escape_string($kn->conn,$_POST['s']);
 if (strlen($idhv)==0) {
     die();
 }
-$sql = "SELECT DISTINCT * FROM vwLichThi WHERE BINARY (IDDS='$ds') AND BINARY (IDHV='$idhv');";
+$sql = "SELECT DISTINCT * FROM vwLichThi WHERE BINARY (sha2(sha2(IDDS,256),224)='$ds') AND BINARY (sha2(sha2(IDHV,256),224)='$idhv');";
 $danhsach = $kn->query($sql);
 $row = mysqli_fetch_assoc($danhsach);
 if (count($row)==0) {

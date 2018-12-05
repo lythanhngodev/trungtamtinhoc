@@ -3,7 +3,7 @@
 	require_once "m.khoahoc.php"; 
 	function laydanhsachdangkyduthi(){
 		$kn = new clsKetnoi();
-		$query = "SELECT * FROM danhsachdangkyduthi ORDER BY IDDS DESC;";
+		$query = "SELECT * FROM danhsachdangkyduthi WHERE HOANTHANH=b'0' ORDER BY IDDS DESC;";
 		$result = $kn->query($query);
 		return $result;
 	}

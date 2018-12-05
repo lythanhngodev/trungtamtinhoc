@@ -1,6 +1,6 @@
 <?php require_once '_xl_.php'; ?>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,7 @@
   <?php require_once 'header.php'; ?>
   <style type="text/css">#footer{display: none;}</style>
 </head>
-<body class="sidebar-mini skin-yellow-light">
+<body class="sidebar skin-yellow-light">
 <div class="wrapper" id="wrapper">
   <!-- Main Header -->
   <header class="main-header">

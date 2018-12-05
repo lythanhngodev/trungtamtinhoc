@@ -61,6 +61,15 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                         <a class="dropdown-item" id="nhaphocvien" href="?p=nhaphocvien">Nhập học viên từ Excel</a>
                     </div>
                 </li>
+                <li class="nav-item dropdown" id="lephi">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Lệ phí
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" id="lephihoc" href="?p=lephihoc">Lệ phí học</a>
+                        <a class="dropdown-item" id="lephithi" href="?p=lephithi">Lệ phí thi</a>
+                    </div>
+                </li>
                 <li class="nav-item" id="phanconggiangday">
                     <a class="nav-link" href="?p=phanconggiangday">PC giảng dạy</a>
                 </li>
@@ -72,9 +81,6 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                         <a class="dropdown-item" id="danhsachcacdotthi" href="?p=danhsachcacdotthi">Danh sách các đợt thi</a>
                         <a class="dropdown-item" id="thisinhdangkyduthi" href="?p=thisinhdangkyduthi">Lập DS thí sinh đăng ký dự thi</a>
                         <a class="dropdown-item" id="thisinhphongthi" href="?p=thisinhphongthi">Quản lý phòng thi</a>
-                        <a class="dropdown-item" href="#">DS đề nghị cấp chứng chỉ</a>
-                        <a class="dropdown-item" href="#">DS nộp lệ phí cấp chứng chỉ</a>
-
                     </div>
                 </li>
                 <li class="nav-item dropdown" id="ketqua">
@@ -174,6 +180,12 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                     break;
                 case 'nhapchungchi':
                     require_once './c/c.nhapchungchi.php';
+                    break;
+                case 'lephihoc':
+                    require_once './c/c.lephihoc.php';
+                    break;
+                case 'lephithi':
+                    require_once './c/c.lephithi.php';
                     break;
 				default:
 					require './c/c.trangchu.php';

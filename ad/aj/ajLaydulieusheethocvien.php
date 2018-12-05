@@ -7,30 +7,36 @@ $file = $_FILES['file']['tmp_name'];
 $objReader = PHPExcel_IOFactory::createReaderForFile($file);
 $listWorkSheets = $objReader->listWorksheetNames($file);
 $danhsach = null;
+$kn = new clsKetnoi();
 for($s=0;$s<count($listWorkSheets);$s++){
     $objReader->setLoadSheetsOnly($listWorkSheets[$s]);
     $objExcel = $objReader->load($file);
     $sheetData = $objExcel->getActiveSheet()->toArray('null',true,true,true);
     $hightsRow = $objExcel->setActiveSheetIndex()->getHighestRow();
-    $tennganlop = $sheetData[1]['K'];
-    $ghichulop = $sheetData[1]['M'];
-    
     for ($i=2; $i <=$hightsRow; $i++) { 
     	$mssv = trim($sheetData[$i]['B']);
+        $mssv = mysqli_real_escape_string($kn->conn,$mssv);
     	$ho = trim($sheetData[$i]['C']);
+        $ho = mysqli_real_escape_string($kn->conn,$ho);
         $ten = trim($sheetData[$i]['D']);
+        $ten = mysqli_real_escape_string($kn->conn,$ten);
         $cmnd = trim($sheetData[$i]['E']);
+        $cmnd = mysqli_real_escape_string($kn->conn,$cmnd);
         $ngaysinh = trim($sheetData[$i]['F']);
+        $ngaysinh = mysqli_real_escape_string($kn->conn,$ngaysinh);
         $gioitinh = trim($sheetData[$i]['G']);
+        $gioitinh = mysqli_real_escape_string($kn->conn,$gioitinh);
         $noisinh = trim($sheetData[$i]['H']);
+        $noisinh = mysqli_real_escape_string($kn->conn,$noisinh);
         $sdt = trim($sheetData[$i]['I']);
-        $sobienlai = trim($sheetData[$i]['J']);
-        $ngaybienlai = trim($sheetData[$i]['K']);
-        $ghichu = trim($sheetData[$i]['L']);
-        $lop = trim($sheetData[$i]['M']); // là tên lớp CB01K009
+        $sdt = mysqli_real_escape_string($kn->conn,$sdt);
+        $ghichu = trim($sheetData[$i]['J']);
+        $ghichu = mysqli_real_escape_string($kn->conn,$ghichu);
+        $lop = trim($sheetData[$i]['K']); // là tên lớp CB01K009
+        $lop = mysqli_real_escape_string($kn->conn,$lop);
         if ($ten=='' || $cmnd=='' || empty($ten) || empty($cmnd) || $ten=='null' || $cmnd=='null')
             continue;
-        $t_ds = [$mssv,$ho,$ten,$cmnd,$ngaysinh,$gioitinh,$noisinh,$sdt,$sobienlai,$ngaybienlai,$ghichu,$tennganlop,$ghichulop,$lop];
+        $t_ds = [$mssv,$ho,$ten,$cmnd,$ngaysinh,$gioitinh,$noisinh,$sdt,$ghichu,$lop];
         $danhsach[] = $t_ds;
     }
 }
@@ -67,8 +73,6 @@ for ($i=0; $i < count($danhsach)-1; $i++) {
             <th>Giới tính</th>
             <th>Nơi sinh</th>
             <th>Số điện thoại</th>
-            <th>Mã số biên lai</th>
-            <th>Ngày ghi biên lai</th>
             <th>Ghi chú</th>
             <th>Sheet</th>
             <th>#</th>
@@ -88,10 +92,8 @@ for ($i=0; $i < count($danhsach)-1; $i++) {
     		<td class="text-center"><?php echo $danhsach[$i][5]; ?></td>
     		<td><?php echo $danhsach[$i][6]; ?></td>
     		<td><?php echo $danhsach[$i][7]; ?></td>
-    		<td class="text-center"><?php echo $danhsach[$i][8]; ?></td>
-    		<td class="text-right"><?php echo $danhsach[$i][9]; ?></td>
-    		<td><?php echo $danhsach[$i][10]; ?></td>
-            <td ly='stt'><?php echo $danhsach[$i][13]; ?></td>
+    		<td><?php echo $danhsach[$i][8]; ?></td>
+            <td ly='stt'><?php echo $danhsach[$i][9]; ?></td>
             <td ly='stt'><a class="xoadong text-danger"><u>Xóa</u></a></td>
     	</tr>
     	<?php $stt++;} ?>

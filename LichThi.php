@@ -1,6 +1,6 @@
-<?php require_once '_xl_.php'; ?>
+<?php require_once '_xl_.php';$_dotthi=idtudong(10);$_idso=idtudong(8); ?>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
   <meta name="description" content="VLUTE CI - Quản lý thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long">
   <?php require_once 'header.php'; ?>
 </head>
-<body class="sidebar-mini skin-yellow-light">
+<body class="sidebar skin-yellow-light">
 <div class="wrapper">
   <!-- Main Header -->
   <header class="main-header">
@@ -49,9 +49,9 @@
               </span>
           </a>
           <ul class="treeview-menu" style="display: block;">
-            <li class="active"><a href="LichThi.php"><i class="fa fa-calendar"></i> Lịch thi HV</a></li>
-            <li><a href="DiemThi.php"><i class="fa fa-graduation-cap"></i> Điểm thi</a></li>
-            <li><a href="TraCuuVanBang.php"><i class="fa fa-graduation-cap"></i> Tra cứu văn bằng</a></li>
+            <li class="active"><a href="LichThi"><i class="fa fa-calendar"></i> Lịch thi HV</a></li>
+            <li><a href="DiemThi"><i class="fa fa-graduation-cap"></i> Điểm thi</a></li>
+            <li><a href="TraCuuVanBang"><i class="fa fa-graduation-cap"></i> Tra cứu văn bằng</a></li>
           </ul>
         </li>
       </ul>
@@ -81,15 +81,9 @@
                 </div>
             </div>
             <div class="form-group col-md-4">
-                <select class="form-control" id="dotthi">
-                  <?php 
-                  $dotthi = laydotthi();
-                  while ($row = mysqli_fetch_assoc($dotthi)) { ?>
-                    <option value="<?php echo $row['IDDS'] ?>"><?php echo $row['TENDS'].'  ( '.date_format(date_create_from_format('Y-m-d', $row['TUNGAY']), 'd/m/Y').' đến '.date_format(date_create_from_format('Y-m-d', $row['DENNGAY']), 'd/m/Y')." )" ?></option>
-                  <?php }
-                   ?>
+                <select class="form-control" id="<?php echo $_dotthi ?>">
                 </select>
-                <input type="text" hidden="hidden" id="idso">
+                <input type="text" hidden="hidden" id="<?php echo $_idso ?>">
             </div>
         </div>
         <div class="box box-solid" id="khungthongtin">
@@ -123,14 +117,14 @@
 <link rel="stylesheet" type="text/css" href="/lab/css/select2.css">
  <script type="text/javascript">
 $(document).ready(function(){
-  $('#dotthi').select2({width: '100%'});});
+  $('#<?php echo $_dotthi ?>').select2({width: '100%'});});
 $(document).ready(function(){
   $( "#tukhoa" ).autocomplete({
       source: function( request, response ) {
           $.ajax({
               dataType: "json",
               type : 'POST',
-              url: 'api/ajDiemHocVien.php',
+              url: 'ly_api_dhv',
               data: {key:$('#tukhoa').val()},
               success: function(data) {
                   $('#tukhoa').removeClass('ui-autocomplete-loading');  
@@ -148,19 +142,29 @@ $(document).ready(function(){
       },
       minLength: 3,
       select: function (event, ui) {
-          $('#idso').val(ui.item.value);
+          $('#<?php echo $_idso ?>').val(ui.item.value);
           $('#tukhoa').val(ui.item.label);
           return false;
       },
+  });
+  $.ajax({
+      url: 'ly_api_dt',
+      dataType: "json",
+      success: function (data) {
+          console.log(data);
+          $.map(data, function(d) {
+              $('#<?php echo $_dotthi ?>').append($('<option></option>').val(d[1]).html(d[0]+' ( '+d[2]+' đến '+d[3]+' )'));
+          });
+      }
   });
 });
 $(document).on('click','#xemlich',function(){
   $('#khungthongtin').empty();
   $.ajax({
-    url: 'api/ajXemlichthi.php',
+    url: 'ly_api_xlt',
     type: 'POST',
     beforeSend: function () { tbinfo("Đang tra cứu..."); },
-    data: { d:$('#dotthi').val(),s:$('#idso').val()},
+    data: { d:$('#<?php echo $_dotthi ?>').val(),s:$('#<?php echo $_idso ?>').val()},
     success: function (data) {
       tban();
       (jQuery.isEmptyObject(data)) ? tbdanger('Không có dữ liệu') : tbsuccess('Tải xong');

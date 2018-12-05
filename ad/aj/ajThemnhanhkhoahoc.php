@@ -10,7 +10,7 @@ if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']
 		$batdau = mysqli_real_escape_string($kn->conn,$_POST['batdau']);
 		$ketthuc = mysqli_real_escape_string($kn->conn,$_POST['ketthuc']);
 		$kiemtra = $kn->adddata("INSERT INTO khoahoc (TENKHOA,TGBATDAU,TGKETTHUC) VALUES ('$khoahoc','$batdau','$ketthuc');");
-		$khoc = $kn->query("SELECT * FROM khoahoc ORDER BY IDKH DESC;");
+		$khoc = $kn->query("SELECT * FROM khoahoc WHERE HOANTHANH=b'0' ORDER BY IDKH DESC;");
 		$option = "<label><b>Chọn khoá học</b></label><select class='form-control' id='chonkhoahoc'><option value='0'>--- Chọn khoá học ---</option><option value='taokhoahoc'>++ Tạo nhanh khóa mới ++</option>";
 		while ($row = mysqli_fetch_assoc($khoc)) {
 			$option.="<option value='".$row['IDKH']."'>".$row['TENKHOA']."</option>";
