@@ -14,6 +14,12 @@ if (isset($_POST['bhv']) && !empty($_POST['bhv']) && isset($_POST['_token']) && 
 		$_SESSION['_token']=_token(256);
 		$kn = new clsKetnoi();
 		$bhv = $_POST['bhv'];
+		// Chuẩn hóa chuôi
+		for ($i=0; $i < count($bhv); $i++) {
+		    for ($j=0; $j < count($bhv[$i]); $j++) {
+		    	$bhv[$i][$j] = mysqli_real_escape_string($kn->conn,$bhv[$i][$j]);
+		    }
+		}
 		// Cập nhật thông tin học viên
 		for ($i=0; $i < count($bhv); $i++) {
 			$MSSV = $bhv[$i][5];

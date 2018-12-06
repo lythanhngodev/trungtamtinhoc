@@ -26,8 +26,13 @@
   <header class="main-header">
     <!-- Logo -->
     <a class="logo" href="/">
-        <span class="logo-mini"><img src="/lab/i/vlute_icon36.png" /></span>
-        <span class="logo-lg"><img src="/lab/i/vlute_icon36.png" /> <b>VLUTE CI</b></span>
+                <?php 
+                $path = $ttth['HOST']."/lab/i/vlute_icon36.png";
+                $type = pathinfo($path, PATHINFO_EXTENSION);
+                $data = file_get_contents($path);
+                $base64 = 'data:image/'.$type.';base64,'.base64_encode($data); ?>
+        <span class="logo-mini"><img src="<?php echo $base64 ?>" /></span>
+        <span class="logo-lg"><img src="<?php echo $base64 ?>" /> <b>VLUTE CI</b></span>
     </a>
     <!-- Header Navbar -->
             <nav class="navbar navbar-static-top">
@@ -91,6 +96,7 @@
                         <button class="btn btn-success" id="xemchungchi"><i class="fa fa-search"></i> Tra cứu</button>
                     </div>
                 </div>
+                <span style="color: #777">&ensp;Ô tìm kiếm không phân biệt Hoa, thường, số và chữ có dấu.</span>
             </div>
             <!--
             <div class="form-group col-md-12">
@@ -134,12 +140,13 @@
 <script src="/lte/dist/js/adminlte.min.js"></script>
 <!--<script src="/lab/js/html2canvas.min.js" defer="defer"></script>-->
  <script type="text/javascript">
+  var chieucao=window.innerHeight;
 $(document).on('click','#xemchungchi',function(){
   $('#khungthongtin').empty();
   $.ajax({
-    url: 'api/ajXemchungchi.php',
+    url: 'ly_api_xcc',
     type: 'POST',
-    beforeSend: function () { tbinfo("Đang tra cứu..."); },
+    beforeSend: tbinfo("Đang tra cứu..."),
     data: { s:$('#tukhoa').val()},
     success: function (data) {
       tban();
@@ -155,19 +162,25 @@ $(document).on('click','#xemchungchi',function(){
 $(document).on('click','.xemchitiet',function(){
   $('#img-out').empty();
   $.ajax({
-    url: 'api/ajXemchungchichitiet.php',
+    url: 'ly_api_ctcc',
+    datatype: 'text',
     type: 'POST',
     data: { s:$(this).attr('ltn')},
+    beforeSend: function () { tbinfo("Đang tra cứu..."); },
     success: function (data) {
       tban();
       (jQuery.isEmptyObject(data)) ? tbdanger('Không có dữ liệu') : '';
       $('#khungchitiet').html(data);
-        html2canvas(document.querySelector("#hinhanh")).then(canvas => {
+        html2canvas(document.querySelector("#hinhanh")).then(function(canvas) {
             $('#img-out').html(canvas);
         });
+        $('#img-out').css('padding-top',(Math.ceil((chieucao-325)/2))+'px')
+    },
+    complete: function(){
         $('#img-out').fadeIn(200);
         $('#chinh').addClass('lammo');
-    },
+    }
+    ,
     error: function(){
       tbdanger('Không tìm thấy dữ liệu!');
     }

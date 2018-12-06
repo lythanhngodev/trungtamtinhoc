@@ -15,7 +15,6 @@ if (isset($_POST['khoahoc']) && !empty($_POST['khoahoc']) && isset($_POST['bhv']
 		$bhv = $_POST['bhv'];
 
 		// Chuẩn hóa chuôi
-		
 		for ($i=0; $i < count($bhv); $i++) {
 		    for ($j=0; $j < count($bhv[$i]); $j++) {
 		    	$bhv[$i][$j] = mysqli_real_escape_string($kn->conn,$bhv[$i][$j]);

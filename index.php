@@ -15,8 +15,13 @@
   <header class="main-header">
     <!-- Logo -->
     <a class="logo" href="/">
-        <span class="logo-mini"><img src="/lab/i/vlute_icon36.png" /></span>
-        <span class="logo-lg"><img src="/lab/i/vlute_icon36.png" /> <b>VLUTE CI</b></span>
+                <?php 
+                $path = $ttth['HOST']."/lab/i/vlute_icon36.png";
+                $type = pathinfo($path, PATHINFO_EXTENSION);
+                $data = file_get_contents($path);
+                $base64 = 'data:image/'.$type.';base64,'.base64_encode($data); ?>
+        <span class="logo-mini"><img src="<?php echo $base64 ?>" /></span>
+        <span class="logo-lg"><img src="<?php echo $base64 ?>" /> <b>VLUTE CI</b></span>
     </a>
     <!-- Header Navbar -->
             <nav class="navbar navbar-static-top">
@@ -94,14 +99,14 @@
 <!-- ./wrapper -->
 <div id="xemhinh">
   <div style="position: fixed;top: 0;right: 0;" id="donghinh"><i class="fa fa-times" style="font-size: 18pt;border-radius: 35px;color: #212121;padding: 5px 7px;" tooltip="Đóng cửa sổ"></i></div>
-  <div class="cthinh" style="width: 100%;float: left;text-align: center;">
+  <div class="cthinh" id="hinhct" style="text-align: center;margin: 1em 0;display: table-cell;vertical-align: middle;">
+    <img src="" id="hinhanhct" style="display: block;margin: 0 auto;">
   </div>
-  <div style="margin: 0.22rem;position: fixed;bottom: 0;width: 100%;">
+  <div style="position: fixed;bottom: 0;width: 100%;height: 85px;">
     <ul id="danhsachhinh"></ul>
   </div>
 </div>
 <!-- REQUIRED JS SCRIPTS -->
-
 <!-- jQuery 3 -->
 <script src="/lte/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -111,6 +116,10 @@
 <script type="text/javascript" src="/lab/js/jquery-ui.min.js" defer="defer"></script>
 <link rel="stylesheet" type="text/css" href="/lab/css/jquery-ui.min.css">
  <script type="text/javascript">
+document.getElementById('hinhct').style.width = window.innerWidth+'px';
+document.getElementById('hinhct').style.height = window.innerHeight+'px';
+document.getElementById('hinhanhct').style.maxWidth = window.innerWidth+'px';
+document.getElementById('hinhanhct').style.maxHeight = window.innerHeight+'px';
 function showhinh(_h){
   var width=$(window).width(),height=$(window).height();
   var pic_real_width;
@@ -120,29 +129,8 @@ function showhinh(_h){
   pic_real_width=tmpImg.width;
   pic_real_height=tmpImg.height;
   $('.cthinh').fadeOut(0);
-  $('.cthinh').html("<img class='hinhhienthi' src='"+_h+"'>");
+  $('.cthinh img').attr('src',_h);
   $('#xemhinh,.cthinh').fadeIn(350);
-  // màn hình ngang // hình show dọc
-  if ((($(window).width()>$(window).height()))&&(pic_real_height>=pic_real_width)) {
-    $('.cthinh img').css('height',($(window).height()-107)+'px');
-  }else
-  // màn hình ngang // hình show ngang
-  if ((width>height)&&(pic_real_height<pic_real_width)) {
-      if (pic_real_height>$(window).height()) {
-        $('.cthinh img').css('height',(($(window).height())-107)+'px');
-      }else
-      $('.cthinh img').css('height',(pic_real_height-107)+'px');
-  }else
-  // màn hình dọc // hình dọc
-  if (($(window).width()<$(window).height())&&(pic_real_height>=pic_real_width)) {
-    $('.cthinh img').css('width',$(window).width()+'px');
-    $('.cthinh img').css('margin-top',((($(window).height()-$('.cthinh img').height())/2)-45)+'px');
-  }
-  // màn hình dọc // hình ngang
-  else{
-    $('.cthinh img').css('width',width+'px');
-    $('.cthinh img').css('margin-top',((($(window).height()-$('.cthinh img').height())/2)-45)+'px');
-  }
 }
 $(document).on('click','.hinhcon',function(){
   var _t = $(this);
@@ -185,10 +173,9 @@ $(document).ready(function(){
           $.ajax({
               dataType: "json",
               type : 'POST',
-              url: 'api/ajTimthongbao.php',
+              url: 'ly_api_ttb',
               data: {key:$('#tukhoa').val()},
-              success: function(data) {
-                  $('#tukhoa').removeClass('ui-autocomplete-loading');  
+              success: function(data) { 
                   response( $.map( data, function(item) {
                     return {
                         label: item.TENTB,
@@ -197,7 +184,7 @@ $(document).ready(function(){
                   }));
               },
               error: function(data) {
-                  $('#tukhoa').removeClass('ui-autocomplete-loading');  
+                tbdanger('Lỗi kết nối');
               }
           });
       },
@@ -224,6 +211,5 @@ $(document).on('click','#donghinh',function(e) {
 });
  </script>
  <?php require_once 'script.php' ?>
-  <script type="text/javascript">$('#footer').fadeIn(2000);</script>
 </body>
 </html>

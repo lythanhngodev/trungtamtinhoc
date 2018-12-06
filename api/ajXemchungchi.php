@@ -31,6 +31,12 @@ $sql = "
     SELECT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha2(sha2(IDDKTHV,256),224) AS 'IDDKTHV' FROM vwChungChi WHERE CMND like '%".$key."%'
     UNION
     SELECT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha2(sha2(IDDKTHV,256),224) AS 'IDDKTHV' FROM vwChungChi WHERE SBD like '%".$key."%'
+    UNION
+    SELECT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha2(sha2(IDDKTHV,256),224) AS 'IDDKTHV' FROM vwChungChi WHERE SOGHISO like '%".$key."%'
+    UNION
+    SELECT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha2(sha2(IDDKTHV,256),224) AS 'IDDKTHV' FROM vwChungChi WHERE SOHIEU like '%".$key."%'
+    UNION
+    SELECT HOTEN,NGAYSINH,SOHIEU,SOGHISO,NGAYVAOSO, sha2(sha2(IDDKTHV,256),224) AS 'IDDKTHV' FROM vwChungChi WHERE NGAYVAOSO like '%".$key."%'
 ";
 $danhsach = $kn->query($sql);
 $row = mysqli_fetch_assoc($danhsach);
@@ -45,7 +51,7 @@ $danhsach = $kn->query($sql);
             <img class="pull-left" src="/lab/i/vlute_icon36.png"><span class="text-blue">TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT VĨNH LONG<br><span class="text-sm">www.vlute.edu.vn</span></span>
         </div>    
         <div class="box-body">        
-            <table class="table table-hover table-bordered" id="tabledata" style="width: 100%;box-shadow: rgb(191, 191, 191) 0px 0px 6px 0px;border-radius: 15px;">
+            <table class="table table-hover table-bordered" id="tabledata" style="width: 100%;box-shadow: rgb(191, 191, 191) 0px 0px 6px 0px;border-radius: 15px;margin-top: 1rem;">
                 <thead>
                     <tr>
                         <th>Họ và tên</th>

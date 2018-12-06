@@ -21,7 +21,13 @@
               <?php $hinh = layhinhthongbao($ro['IDBV']);
               $delay=0;
               while ($r=mysqli_fetch_assoc($hinh)) { ?>
-                <a><div class="hinhcon animated fadeIn" style="background-image:url('<?php echo $ttth['HOST']."/_thumbs/".$r['HINHANH'] ?>');animation-delay: <?php echo $delay;$delay+=80; ?>ms;" data="<?php echo $ttth['HOST']."/".$r['HINHANH'] ?>"></div></a>
+                <?php 
+                $path = $ttth['HOST']."/_thumbs/".$r['HINHANH'];
+                $type = pathinfo($path, PATHINFO_EXTENSION);
+                $data = file_get_contents($path);
+                $base64 = 'data:image/'.$type.';base64,'.base64_encode($data);
+                //echo $ttth['HOST']."/_thumbs/".$r['HINHANH'] ?>
+                <a><div class="hinhcon animated fadeIn" style="background-image:url('<?php echo $base64 ?>');animation-delay: <?php echo $delay;$delay+=80; ?>ms;" data="<?php echo $ttth['HOST']."/".$r['HINHANH'] ?>"></div></a>
               <?php } ?>
           </div>
           <!--<a class="pull-right text-muted" href="XemThongBao.php?id=<?php echo $ro['IDBV'] ?>&link=<?php echo $ro['LINK'] ?>">Xem thêm</a>-->

@@ -21,6 +21,12 @@ if (isset($_POST['bhv']) && !empty($_POST['bhv'])) {
 	$kn = new clsKetnoi();
 	$bhv = $_POST['bhv'];
 	// Cập nhật thông tin học viên
+	// Chuẩn hóa chuôi
+	for ($i=0; $i < count($bhv); $i++) {
+	    for ($j=0; $j < count($bhv[$i]); $j++) {
+	    	$bhv[$i][$j] = mysqli_real_escape_string($kn->conn,$bhv[$i][$j]);
+	    }
+	}
 	for ($i=0; $i < count($bhv); $i++) {
 		$IDPT = $bhv[$i][0];
 		$IDDS = $bhv[$i][1];

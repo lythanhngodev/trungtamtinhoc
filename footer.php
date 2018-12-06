@@ -1,4 +1,4 @@
-<footer class="main-footer" id="footer">
+<footer class="main-footer">
     <div class="pull-right text-sm text-right">
         <br>
         v.05.12.2018<br>

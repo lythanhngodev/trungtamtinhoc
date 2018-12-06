@@ -14,8 +14,13 @@
   <header class="main-header">
     <!-- Logo -->
     <a class="logo" href="/">
-        <span class="logo-mini"><img src="/lab/i/vlute_icon36.png" /></span>
-        <span class="logo-lg"><img src="/lab/i/vlute_icon36.png" /> <b>VLUTE CI</b></span>
+                <?php 
+                $path = $ttth['HOST']."/lab/i/vlute_icon36.png";
+                $type = pathinfo($path, PATHINFO_EXTENSION);
+                $data = file_get_contents($path);
+                $base64 = 'data:image/'.$type.';base64,'.base64_encode($data); ?>
+        <span class="logo-mini"><img src="<?php echo $base64 ?>" /></span>
+        <span class="logo-lg"><img src="<?php echo $base64 ?>" /> <b>VLUTE CI</b></span>
     </a>
     <!-- Header Navbar -->
             <nav class="navbar navbar-static-top">
@@ -145,10 +150,7 @@ $(document).ready(function(){
       },
   });
   $.ajax({
-      url: 'ly_api_dt',
-      dataType: "json",
-      success: function (data) {
-          console.log(data);
+      url: 'ly_api_dt',dataType:"json",success:function(data){
           $.map(data, function(d) {
               $('#<?php echo $_dotthi ?>').append($('<option></option>').val(d[1]).html(d[0]+' ( '+d[2]+' đến '+d[3]+' )'));
           });

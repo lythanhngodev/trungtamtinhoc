@@ -17,6 +17,12 @@ $tg = time();
 $dem=0;
 $stt = 1;
 $kn->deletedata("DELETE FROM danhsachdangkyduthi_hocvien WHERE IDDS = '$idds';");
+// Chuẩn hóa chuôi
+for ($i=0; $i < count($bhv); $i++) {
+    for ($j=0; $j < count($bhv[$i]); $j++) {
+    	$bhv[$i][$j] = mysqli_real_escape_string($kn->conn,$bhv[$i][$j]);
+    }
+}
 for ($i=0; $i < count($bhv); $i++) { 
 	// xử lý số báo danh
     /*

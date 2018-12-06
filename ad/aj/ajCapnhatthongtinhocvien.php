@@ -8,6 +8,12 @@ if (isset($_POST['bhv']) && !empty($_POST['bhv']) && isset($_POST['_token']) && 
 		$kn = new clsKetnoi();
 		$bhv = $_POST['bhv'];
 		// Cập nhật thông tin học viên
+		// Chuẩn hóa chuôi
+		for ($i=0; $i < count($bhv); $i++) {
+		    for ($j=0; $j < count($bhv[$i]); $j++) {
+		    	$bhv[$i][$j] = mysqli_real_escape_string($kn->conn,$bhv[$i][$j]);
+		    }
+		}
 		for ($i=0; $i < count($bhv); $i++) {
 			$MSSV = $bhv[$i][2];
 			$HO = $bhv[$i][3];

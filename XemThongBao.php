@@ -14,8 +14,13 @@
   <header class="main-header">
     <!-- Logo -->
     <a class="logo" href="/">
-        <span class="logo-mini"><img src="/lab/i/vlute_icon36.png" /></span>
-        <span class="logo-lg"><img src="/lab/i/vlute_icon36.png" /> <b>VLUTE CI</b></span>
+                <?php 
+                $path = $ttth['HOST']."/lab/i/vlute_icon36.png";
+                $type = pathinfo($path, PATHINFO_EXTENSION);
+                $data = file_get_contents($path);
+                $base64 = 'data:image/'.$type.';base64,'.base64_encode($data); ?>
+        <span class="logo-mini"><img src="<?php echo $base64 ?>" /></span>
+        <span class="logo-lg"><img src="<?php echo $base64 ?>" /> <b>VLUTE CI</b></span>
     </a>
     <!-- Header Navbar -->
             <nav class="navbar navbar-static-top">
@@ -126,10 +131,11 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <div id="xemhinh">
-  <div style="position: fixed;top: 0;right: 0;" id="donghinh"><i class="fa fa-times" style="font-size: 18pt;border-radius: 35px;color: #4c4c4c;padding: 5px 7px;"></i></div>
-  <div class="cthinh" style="width: 100%;float: left;text-align: center;">
+  <div style="position: fixed;top: 0;right: 0;" id="donghinh"><i class="fa fa-times" style="font-size: 18pt;border-radius: 35px;color: #212121;padding: 5px 7px;" tooltip="Đóng cửa sổ"></i></div>
+  <div class="cthinh" id="hinhct" style="text-align: center;margin: 1em 0;display: table-cell;vertical-align: middle;">
+    <img src="" id="hinhanhct" style="display: block;margin: 0 auto;">
   </div>
-  <div style="margin: 0.22rem;position: fixed;bottom: 0;width: 100%;">
+  <div style="position: fixed;bottom: 0;width: 100%;height: 85px;">
     <ul id="danhsachhinh"></ul>
   </div>
 </div>
@@ -173,39 +179,21 @@ $(document).ready(function(){
   });
 
 });
+document.getElementById('hinhct').style.width = window.innerWidth+'px';
+document.getElementById('hinhct').style.height = window.innerHeight+'px';
+document.getElementById('hinhanhct').style.maxWidth = window.innerWidth+'px';
+document.getElementById('hinhanhct').style.maxHeight = window.innerHeight+'px';
 function showhinh(_h){
   var width=$(window).width(),height=$(window).height();
   var pic_real_width;
   var pic_real_height;
   var tmpImg = new Image();
-  tmpImg.src=_h; //or  document.images[i].src;
+  tmpImg.src=_h;
   pic_real_width=tmpImg.width;
   pic_real_height=tmpImg.height;
   $('.cthinh').fadeOut(0);
-  $('.cthinh').html("<img class='hinhhienthi' src='"+_h+"'>");
+  $('.cthinh img').attr('src',_h);
   $('#xemhinh,.cthinh').fadeIn(350);
-  // trường hợp 1
-  // màn hình ngang // hình show dọc
-  if ((width>height)&&(pic_real_height>=pic_real_width)) {
-    $('.cthinh img').css('height',(height-107)+'px');
-  }else
-  // màn hình ngang // hình show ngang
-  if ((width>height)&&(pic_real_height<pic_real_width)) {
-      if (pic_real_height>height) {
-        $('.cthinh img').css('height',(height-107)+'px');
-      }else
-      $('.cthinh img').css('height',(pic_real_height-107)+'px');
-  }else
-  // màn hình dọc // hình dọc
-  if ((width<height)&&(pic_real_height>=pic_real_width)) {
-    $('.cthinh img').css('width',width+'px');
-    $('.cthinh img').css('margin-top',(($(window).height()-$('.cthinh img').height())/2)+'px');
-  }
-  // màn hình dọc // hình ngang
-  else{
-    $('.cthinh img').css('width',width+'px');
-    $('.cthinh img').css('margin-top',(($(window).height()-$('.cthinh img').height())/2)+'px');
-  }
 }
 $(document).on('click','.hinhcon',function(){
   var _t = $(this);
