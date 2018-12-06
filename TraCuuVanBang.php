@@ -96,7 +96,7 @@
                         <button class="btn btn-success" id="xemchungchi"><i class="fa fa-search"></i> Tra cứu</button>
                     </div>
                 </div>
-                <span style="color: #777">&ensp;Ô tìm kiếm không phân biệt Hoa, thường, số và chữ có dấu.</span>
+                <span style="color: #777">&ensp;Không phân biệt Hoa, thường, số và chữ có dấu.</span>
             </div>
             <!--
             <div class="form-group col-md-12">
