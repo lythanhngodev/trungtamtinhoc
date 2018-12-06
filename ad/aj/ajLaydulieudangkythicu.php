@@ -18,6 +18,7 @@ for($s=0;$s<count($listWorkSheets);$s++){
     $sheetData = $objExcel->getActiveSheet()->toArray('null',true,true,true);
     $hightsRow = $objExcel->setActiveSheetIndex()->getHighestRow();
     for ($i=2; $i <=$hightsRow; $i++) { 
+
     	$sbd = trim($sheetData[$i]['B']);
         $ho = trim($sheetData[$i]['C']);
         $ten = trim($sheetData[$i]['D']);
@@ -48,7 +49,7 @@ for ($i=0; $i < count($danhsach); $i++) {
     $kn->adddata("INSERT INTO hocvien(HO,TEN,NGAYSINH,GIOITINH,NOISINH,CMND,MSSV) VALUES ('".$danhsach[$i][1]."','".$danhsach[$i][2]."','".$danhsach[$i][3]."','".$danhsach[$i][4]."','".$danhsach[$i][5]."','".$danhsach[$i][6]."','".$danhsach[$i][7]."');");
 }
 for ($i=0; $i < count($danhsach); $i++) {
-    $hoi = $kn->query("SELECT IDHV FROM hocvien WHERE CMND='".$danhsach[$i][6]."' AND TEN = '".$danhsach[$i][2]."'");
+    $hoi = $kn->query("SELECT IDHV FROM hocvien WHERE CMND='".$danhsach[$i][6]."'");
     $row = mysqli_fetch_array($hoi);
     $danhsach[$i][12] = $row[0];
 }

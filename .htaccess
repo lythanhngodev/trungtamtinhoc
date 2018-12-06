@@ -1,2 +1,10 @@
 RewriteEngine On
 RewriteRule ^/lg/_(.*)o(.*)$ /lg/@l.php?cip=$1&cpi=$2
+RewriteRule ^DiemThi$ DiemThi.php
+RewriteRule ^LichThi$ LichThi.php
+RewriteRule ^TraCuuVanBang$ TraCuuVanBang.php
+RewriteRule ^ly_api_dt$ /api/ajDotthi.php
+RewriteRule ^ly_api_dhv$ /api/ajDiemHocVien.php
+RewriteRule ^ly_api_xlt$ /api/ajXemlichthi.php
+RewriteRule ^ly_api_xd$ /api/ajXemdiem.php
+RewriteRule ^(.*).ltn.(.*)$ XemThongBao.php?id=$2&link=$1

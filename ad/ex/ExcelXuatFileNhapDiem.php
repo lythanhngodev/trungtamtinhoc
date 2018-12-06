@@ -169,21 +169,13 @@ $ds = null;
 while ($row = mysqli_fetch_assoc($diemkhoa)){
     $ds[] = $row;
 }
-
 $dong = 9;
 $sokhongdat=0;
 $sodat=0;
+
 for ($i=0; $i < count($ds); $i++) { 
     $ngaythang = $ds[$i]['NGAYSINH'];
-    if (strlen($ngaythang)==4) {
-        $ngaythang = date_format(date_create_from_format('Y', $ngaythang), 'Y');
-    } else
-    if (strlen($ngaythang)>4&&strlen($ngaythang)<=7) {
-        $ngaythang = date_format(date_create_from_format('m/Y', $ngaythang), 'm/Y');
-    }
-    else{
-        $ngaythang = date_format(date_create_from_format('d/m/Y', $ngaythang), 'd/m/Y');
-    }
+
     $sheet->setCellValue("A".$dong,$i+1);
     $sheet->setCellValue("B".$dong,$ds[$i]['SBD']);
     $sheet->setCellValue("C".$dong,$ds[$i]['CMND']);
@@ -202,7 +194,6 @@ $sheet->getStyle('A9:M'.($dong-1))
             )
         )
     ));
-
 $objPHPExcel->getActiveSheet()->getStyle('I9:K'.($dong-1))->getNumberFormat() ->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 $objPHPExcel->getActiveSheet()->getStyle('I9:K'.($dong-1))->getNumberFormat() ->setFormatCode('#,##0.0'); // kết quả dạng 36,774.2
 $sheet->getStyle('A7:C'.($dong-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);

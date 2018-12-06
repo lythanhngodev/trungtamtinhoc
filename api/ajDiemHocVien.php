@@ -27,14 +27,17 @@ require_once '../__.php';
 $kn = new clsKetnoi();
 $key = mysqli_real_escape_string($kn->conn,$_POST['key']);
 $sql = "
-	SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE CMND like '%".$key."%'
-	UNION
-	SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE MSSV like '%".$key."%'
-	UNION
-	SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE HOTEN like '%".$key."%'
-	UNION
 	SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE SBD like '%".$key."%' ORDER BY SBD DESC LIMIT 0,50;
-";
+";/*
+$sql = "
+    SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE CMND like '%".$key."%'
+    UNION
+    SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE MSSV like '%".$key."%'
+    UNION
+    SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE HOTEN like '%".$key."%'
+    UNION
+    SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE SBD like '%".$key."%' ORDER BY SBD DESC LIMIT 0,50;
+";*/
 $danhsach = $kn->query($sql);
 $ds = null;
 while ($row = mysqli_fetch_row($danhsach)) {

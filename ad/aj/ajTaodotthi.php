@@ -9,7 +9,7 @@ if (!isset($_SESSION['_checkpage']) || (!isset($_SERVER['HTTP_X_REQUESTED_WITH']
 		$batdau = mysqli_real_escape_string($kn->conn,$_POST['batdau']);
 		$ketthuc = mysqli_real_escape_string($kn->conn,$_POST['ketthuc']);
 		$khoahoc = mysqli_real_escape_string($kn->conn,$_POST['khoahoc']);
-		$loaithi = mysqli_real_escape_string($kn->conn,$_POST['loaithi']);
+		//$loaithi = mysqli_real_escape_string($kn->conn,$_POST['loaithi']);
 		$kiemtra = $kn->adddata("INSERT INTO danhsachdangkyduthi (TENDS,TUNGAY,DENNGAY,IDKH,LOAITHI) VALUES ('$tendot','$batdau','$ketthuc','$khoahoc','$loaithi');");
 		$khoc = $kn->query("SELECT * FROM danhsachdangkyduthi WHERE HOANTHANH=b'0' ORDER BY IDDS DESC;");
 		$option = "<label><b>Chọn danh sách</b></label><select class='form-control' id='chondanhsach'><option value='0'>--- Chọn khoá học ---</option><option value='taodotthi'>++ Tạo mới đợt thi ++</option>";

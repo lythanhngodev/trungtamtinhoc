@@ -53,7 +53,7 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
 <center><div class="col-md-12 khungbtn">
     <a class='btn btn-warning xuatdanhsachphongthi'>Lập DS phòng thi</a>
     <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachAnhDuThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS ảnh dự thi</a>
-    <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachTheDuThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS thẻ dự thi</a>
+    <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachTheDuThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS cấp thẻ dự thi</a>
     <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachphongthiLyThuyet.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS thi LT</a>
     <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachphongthiThucHanh.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS thi TH</a>
 </div>
@@ -63,7 +63,7 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
 <center><div class="col-md-12 khungbtn">
     <a class='btn btn-warning xuatdanhsachphongthi'>Lập DS phòng thi</a>
     <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachAnhDuThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS ảnh dự thi</a>
-    <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachTheDuThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS thẻ dự thi</a>
+    <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachTheDuThi.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS cấp thẻ dự thi</a>
     <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachphongthiLyThuyet.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS thi LT</a>
     <a class='btn btn-warning xuatthongtin' href='./ex/xuatdanhsachphongthiThucHanh.php?idds=<?php echo $danhsach ?>' target='_blank'><i class='fas fa-file-word'></i> Xuất DS thi TH</a>
 </div>

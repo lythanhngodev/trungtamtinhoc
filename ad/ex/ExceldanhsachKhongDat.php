@@ -175,15 +175,6 @@ $sokhongdat=0;
 $sodat=0;
 for ($i=0; $i < count($ds); $i++) { 
     $ngaythang = $ds[$i]['NGAYSINH'];
-    if (strlen($ngaythang)==4) {
-        $ngaythang = date_format(date_create_from_format('Y', $ngaythang), 'Y');
-    } else
-    if (strlen($ngaythang)>4&&strlen($ngaythang)<=7) {
-        $ngaythang = date_format(date_create_from_format('m/Y', $ngaythang), 'm/Y');
-    }
-    else{
-        $ngaythang = date_format(date_create_from_format('d/m/Y', $ngaythang), 'd/m/Y');
-    }
     $sheet->setCellValue("A".$dong,$i+1);
     $sheet->setCellValue("B".$dong,$ds[$i]['SBD']);
     $sheet->setCellValue("C".$dong,$ds[$i]['CMND']);
