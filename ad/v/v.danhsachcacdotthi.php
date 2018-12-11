@@ -23,6 +23,7 @@
 	                            <th class="text-center">Từ ngày</th>
 	                            <th class="text-center">Đến ngày</th>
 	                            <th class="text-center">Loại thi</th>
+	                            <th class="text-center">Số TS</th>
 	                            <th>#</th>
 	                            <th>#</th>
 	                            <th>Khóa</th>
@@ -39,6 +40,7 @@
 	                            <td class="text-center"><?php echo $row['TUNGAY']; ?></td>
 	                            <td class="text-center"><?php echo $row['DENNGAY']; ?></td>
 	                            <td class="text-center"><?php echo $row['LOAITHI']; ?></td>
+	                            <td class="text-center"><?php echo $row['SOTS']; ?></td>
 	                            <td><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton>&ensp;<bunton class="btn btn-sm btn-dark xoa"><i class="fas fa-times"></i></bunton></td>
 	                            <td><center><a class='btn btn-warning btn-sm' href='./ex/xuatthisinhdangkyduthi.php?idds=<?php echo $row['IDDS'] ?>' target='_blank'><i class='fas fa-file-word'></i></a></center></td>
 	                            <td>

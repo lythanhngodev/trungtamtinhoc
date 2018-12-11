@@ -90,5 +90,4 @@
 		        </div>
 			</div>	
 </div>
-<div style="position: fixed;margin-bottom: 0;left: 0;right:0;bottom: 0;height: 20px;width: 100%;background: #232323;color: #adadad;line-height: 20px;font-size: 90%;padding-left: 1rem;font-family: monospace;text-align: center;">© Copyright of Ngô Thanh Lý (Faculty of Information Technology 2014) | Phone: (+84) 794 967 197</div>
 <script type="text/javascript" src="../lab/js/bootstrap.min.js"></script>

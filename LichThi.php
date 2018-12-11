@@ -66,7 +66,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="min-height: 100%;">
     <!-- Main content -->
     <section class="content container-fluid">
       <section class="content-header">

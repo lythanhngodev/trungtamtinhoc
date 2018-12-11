@@ -260,12 +260,12 @@ $(document).on('change','#chonkhoahoc',function(){
 $(document).on('click','.checkall',function(){
 	if($(this).is(':checked')){
 		$('[type="checkbox"]').each(function(){
-			$(this).attr('checked',true);
+			$(this).prop('checked',true);
 		});
 	}
 	else{
 		$('[type="checkbox"]').each(function(){
-			$(this).attr('checked',false);
+			$(this).prop('checked',false);
 		});
 	}
 });

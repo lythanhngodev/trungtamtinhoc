@@ -19,7 +19,6 @@
 	                <h4>QUẢN LÝ PHÒNG THI &AMP; THÍ SINH</h4>
 	                <h6>Lập danh sách phòng thi cho thí sinh đã đăng ký dự thi</h6>
 	                <h6>Xuất word các tài liệu có liên quan</h6>
-	                <h6 class="text-danger">Thí sinh sẽ được đánh số báo danh tự động sau khi tạo phòng thi</h6>
 				</div>
 			</div>
 		</div>
@@ -91,7 +90,6 @@
       <div class="modal-body">
         <p>Từ <b><span id="sohocvien"></span></b> học viên chia làm <b><span id="sophong"></span></b> phòng.</p>
         <p>Vui lòng điền đầy đủ thông tin các phòng bên dưới</p>
-        <p class="text-danger">Khi tạo danh sách SBD thí sinh sẽ được đánh lại từ đầu và đánh tự động.</p>
       	<table class="table table-bordered" id="bangphongthi">
       		<tr>
       			<th>Tên phòng gợi nhớ</th>

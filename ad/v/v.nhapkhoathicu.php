@@ -103,6 +103,16 @@
       		<label>Thời gian kết thúc</label>
       		<input type="date" id="ketthuc" class="form-control">
       	</div>
+      	<div class="form-group">
+      		<label>Loại đợt thi</label>
+      		<select id="loaithi" class="form-control">
+      			<?php 
+      			$loaikhoa = layloaikhoa();
+      			while ($row = mysqli_fetch_assoc($loaikhoa)) { ?>
+      			<option value="<?php echo $row['TENLK'] ?>"><?php echo $row['TENLK'] ?></option>
+      			<?php } ?>
+      		</select>
+      	</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-dark" id="btnthemdotthi"><i class="fas fa-check"></i> Thêm</button>
@@ -131,6 +141,7 @@ $(document).on('click','#btnthemdotthi',function(){
 	var batdau = $('#batdau').val();
 	var ketthuc = $('#ketthuc').val();
 	var khoahoc = $('#khoahocchon').val();
+	var loaithi = $('#loaithi').val();
 	if (jQuery.isEmptyObject(tendot)) {
 		tbdanger('Chưa nhập tên đợt thi');
 		return 0;
@@ -156,7 +167,8 @@ $(document).on('click','#btnthemdotthi',function(){
 			tendot:tendot,
 			batdau:batdau,
 			ketthuc:ketthuc,
-			khoahoc: khoahoc
+			khoahoc: khoahoc,
+			loaithi:loaithi
 		},
 		success: function (data) {
 			$('#khungchondanhsach').html(data);

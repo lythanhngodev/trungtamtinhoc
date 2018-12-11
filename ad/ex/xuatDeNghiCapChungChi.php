@@ -12,7 +12,7 @@ if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die()
 	$qr_l = $kn->query("SELECT TENDS FROM danhsachdangkyduthi WHERE IDDS = '$idds' LIMIT 0,1;");
 	$row = mysqli_fetch_assoc($qr_l);
 	$tenlop = $row['TENDS'];
-	$tenfile = "DS de nghi cap chung chi $tenlop";
+	$tenfile = "BM-IC-26-00 - DE NGHI CAP CHUNG CHI $tenlop";
  ?>
  <?php 
 	 header("Content-Type: application/vnd.ms-word");

@@ -22,7 +22,7 @@ $danhsach = intval($_GET['idds']);
 $objPHPExcel = new PHPExcel;
 $numberSheet = 0;
 $objPHPExcel->setActiveSheetIndex($numberSheet);
-$tenfile = "KQHT DAT ".date('d-m-Y');
+$tenfile = "BM-IC-20-00 - DANH SACH DAT ".date('d-m-Y');
 $sheet = $objPHPExcel->getActiveSheet()->setTitle($tenfile);
 $objPHPExcel->getActiveSheet()->getDefaultStyle()->getFill()->applyFromArray(array(
     'type' => PHPExcel_Style_Fill::FILL_SOLID,

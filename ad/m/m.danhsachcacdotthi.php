@@ -11,7 +11,7 @@
 	}
 	function laydanhsachdotthi_all(){
 		$kn = new clsKetnoi();
-		$query = "SELECT DISTINCT * FROM danhsachdangkyduthi ds ORDER BY IDDS DESC;";
+		$query = "SELECT DISTINCT *, (SELECT COUNT(*) FROM danhsachdangkyduthi_hocvien dh WHERE dh.IDDS=ds.IDDS) AS SOTS FROM danhsachdangkyduthi ds ORDER BY TUNGAY DESC, IDDS DESC;";
 		$result = $kn->query($query);
 		return $result;
 	}

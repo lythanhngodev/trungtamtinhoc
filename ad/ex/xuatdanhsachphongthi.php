@@ -40,6 +40,7 @@ if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die()
 		die();
 	}
 #############
+	/*
 	for ($i=0; $i < count($ds_hv)-1; $i++) {
 	    for ($j=$i+1; $j < count($ds_hv); $j++) {
 	        $listFullName = array($ds_hv[$i]['HO']." ".$ds_hv[$i]['TEN'],$ds_hv[$j]['HO']." ".$ds_hv[$j]['TEN']);
@@ -51,6 +52,7 @@ if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die()
 	        }
 	    }
 	}
+	
 	for ($i=0; $i < count($ds_hv); $i++) {
 		#xử lý số báo danh
 		$skhoa = "K"; // thieu 3
@@ -78,8 +80,8 @@ if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die()
 				break;
 		}
 		$sbd = $skhoa.$sso;
-		$kn->editdata("UPDATE danhsachdangkyduthi_hocvien SET SBD = '$sbd' WHERE IDDS='$idds' AND IDHV='".$ds_hv[$i]['IDHV']."'");
-	}
+		$kn->editdata("UPDATE danhsachdangkyduthi_hocvien SET SBD = '$sbd' WHERE IDDS='$idds' AND IDHV='".$ds_hv[$i]['IDHV']."' AND (SBD IS NULL OR CHAR_LENGTH(SBD)=0)");
+	}*/
  ?>
  <?php
 	 header("Content-Type: application/vnd.ms-word");
