@@ -22,7 +22,7 @@ $danhsach = intval($_GET['idds']);
 $objPHPExcel = new PHPExcel;
 $numberSheet = 0;
 $objPHPExcel->setActiveSheetIndex($numberSheet);
-$tenfile = "BM-IC-19-00 - KET QUA ".date('d-m-Y');
+$tenfile = "BM-IC-19-00 - KQ ".date('d-m-Y');
 $sheet = $objPHPExcel->getActiveSheet()->setTitle($tenfile);
 $objPHPExcel->getActiveSheet()->getDefaultStyle()->getFill()->applyFromArray(array(
     'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -161,7 +161,13 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(6);
 $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(6);
 $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(14);
 
-$diemkhoa = $kn->query("SELECT DISTINCT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS,dh.GHICHUD FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach' ORDER BY dh.SBD ASC;");
+$diemkhoa = $kn->query("
+    SELECT DISTINCT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS,dh.GHICHUD,dk.THILT,dk.THITH,dk.DIEMLTPK,dk.DIEMTHPK
+    FROM danhsachdangkyduthi ds 
+        LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS
+        LEFT JOIN danhsachphuckhao_hocvien dk ON dh.IDDKTHV=dk.IDDKTHV 
+        LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV 
+    WHERE dh.IDDS='$danhsach' ORDER BY dh.SBD ASC;");
 $ds = null;
 while ($row = mysqli_fetch_assoc($diemkhoa)){
     $ds[] = $row;
@@ -181,9 +187,28 @@ for ($i=0; $i < count($ds); $i++) {
     $sheet->setCellValue("F".$dong,$ngaythang);
     $sheet->setCellValue("G".$dong,$ds[$i]['GIOITINH']);
     $sheet->setCellValue("H".$dong,$ds[$i]['NOISINH']);
-    $sheet->setCellValue("I".$dong,$ds[$i]['DIEMLT']);
-    $sheet->setCellValue("J".$dong,$ds[$i]['DIEMTH']);
-    $sheet->setCellValue("K".$dong,$ds[$i]['TONGDIEM']);
+    $diemlt = null;
+    if ($ds[$i]['THILT']==1) {
+        $diemlt = $ds[$i]['DIEMLTPK'];
+    }else{
+        $diemlt = $ds[$i]['DIEMLT'];
+    }
+    $diemth = null;
+    if ($ds[$i]['THITH']==1) {
+        $diemth = $ds[$i]['DIEMTHPK'];
+    }
+    else{
+        $diemth = $ds[$i]['DIEMTH'];
+    }
+    if (floatval($diemlt) < 5.0 && floatval($diemth) < 5.0) {
+        $sokhongdat++;
+    }
+    else{
+        $sodat++;
+    }
+    $sheet->setCellValue("I".$dong,$diemlt);
+    $sheet->setCellValue("J".$dong,$diemth);
+    $sheet->setCellValue("K".$dong,($diemlt+$diemth));
     $sheet->setCellValue("L".$dong,$ds[$i]['GHICHUD']);
     $dong++;
 }
@@ -200,8 +225,10 @@ $objPHPExcel->getActiveSheet()->getStyle('I9:K'.($dong-1))->getNumberFormat() ->
 $objPHPExcel->getActiveSheet()->getStyle('I9:K'.($dong-1))->getNumberFormat() ->setFormatCode('#,##0.0'); // kết quả dạng 36,774.2
 $sheet->getStyle('A7:C'.($dong-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 $sheet->getStyle('A7:C'.($dong-1))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$sheet->getStyle('F7:L'.($dong-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$sheet->getStyle('F7:L'.($dong-1))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 $objPHPExcel->getActiveSheet()->getStyle('A7:L'.($dong+5))->getFont()->setSize(12);
-
+$objPHPExcel->getActiveSheet()->getStyle('I7:K'.($dong-1))->getFont()->setBold(true);
 // Phần tổng kết
 $objPHPExcel->getActiveSheet()->getRowDimension($dong)->setRowHeight(60);
 $objPHPExcel->setActiveSheetIndex($numberSheet)->mergeCells('A'.$dong.':L'.$dong);

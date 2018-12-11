@@ -22,7 +22,7 @@ $danhsach = intval($_GET['idds']);
 $objPHPExcel = new PHPExcel;
 $numberSheet = 0;
 $objPHPExcel->setActiveSheetIndex($numberSheet);
-$tenfile = "BM-IC-20-00 - DANH SACH DAT ".date('d-m-Y');
+$tenfile = "BM-IC-20-00 - DSD ".date('d-m-Y');
 $sheet = $objPHPExcel->getActiveSheet()->setTitle($tenfile);
 $objPHPExcel->getActiveSheet()->getDefaultStyle()->getFill()->applyFromArray(array(
     'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -164,7 +164,13 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(6);
 $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(12);
 $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(10);
 
-$diemkhoa = $kn->query("SELECT DISTINCT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS,dh.GHICHUD FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$danhsach' AND (dh.DIEMLT >= 5.0 AND dh.DIEMTH >=5.0) ORDER BY dh.SBD ASC;");
+$diemkhoa = $kn->query("
+    SELECT DISTINCT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS,dh.GHICHUD,dk.THILT,dk.THITH,dk.DIEMLTPK,dk.DIEMTHPK
+    FROM danhsachdangkyduthi ds 
+        LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS
+        LEFT JOIN danhsachphuckhao_hocvien dk ON dh.IDDKTHV=dk.IDDKTHV 
+        LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV 
+    WHERE dh.IDDS='$danhsach' ORDER BY dh.SBD ASC;");
 $ds = null;
 while ($row = mysqli_fetch_assoc($diemkhoa)){
     $ds[] = $row;
@@ -173,6 +179,22 @@ $dong = 9;
 $sokhongdat=0;
 $sodat=0;
 for ($i=0; $i < count($ds); $i++) { 
+    $diemlt = null;
+    if ($ds[$i]['THILT']==1) {
+        $diemlt = $ds[$i]['DIEMLTPK'];
+    }else{
+        $diemlt = $ds[$i]['DIEMLT'];
+    }
+    $diemth = null;
+    if ($ds[$i]['THITH']==1) {
+        $diemth = $ds[$i]['DIEMTHPK'];
+    }
+    else{
+        $diemth = $ds[$i]['DIEMTH'];
+    }
+    if (floatval($diemlt) <5 || floatval($diemth) <5) {
+        continue;
+    }
     $ngaythang = $ds[$i]['NGAYSINH'];
     $sheet->setCellValue("A".$dong,$i+1);
     $sheet->setCellValue("B".$dong,$ds[$i]['SBD']);
@@ -182,11 +204,11 @@ for ($i=0; $i < count($ds); $i++) {
     $sheet->setCellValue("F".$dong,$ngaythang);
     $sheet->setCellValue("G".$dong,$ds[$i]['GIOITINH']);
     $sheet->setCellValue("H".$dong,$ds[$i]['NOISINH']);
-    $sheet->setCellValue("I".$dong,$ds[$i]['DIEMLT']);
-    $sheet->setCellValue("J".$dong,$ds[$i]['DIEMTH']);
-    $sheet->setCellValue("K".$dong,$ds[$i]['TONGDIEM']);
+    $sheet->setCellValue("I".$dong,$diemlt);
+    $sheet->setCellValue("J".$dong,$diemth);
+    $sheet->setCellValue("K".$dong,($diemlt+$diemth));
     $dat = "Không đạt";
-    if (floatval($ds[$i]['DIEMLT']) >= 5.0 && floatval($ds[$i]['DIEMTH']) >=5.0) {
+    if (floatval($diemlt) >= 5.0 && floatval($diemth) >=5.0) {
         $dat = "Đạt";$sodat++;
     }
     else{

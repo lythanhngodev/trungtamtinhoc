@@ -84,8 +84,8 @@
 <script type="text/javascript" src="../lab/js/jquery-ui.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../lab/css/jquery-ui.min.css">
 <script type="text/javascript">
-document.getElementById('ketqua').classList.add("active");
-document.getElementById('diem').classList.add("active");
+document.getElementById('phuckhao').classList.add("active");
+document.getElementById('ketquaphuckhao').classList.add("active");
 $(document).ready(function() {
     $('#banglophoc').DataTable({
 	  "scrollY": "300px",
