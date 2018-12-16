@@ -42,7 +42,7 @@ if (count($row)==0) {
             <img class="pull-left" src="/lab/i/vlute_icon36.png"><span class="text-blue">TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT VĨNH LONG<br><span class="text-sm">www.vlute.edu.vn</span></span>
         </div>    
     <div class="box-body">        
-        <table class="table">
+        <table class="table" style="min-width: 500px;">
             <thead>
                 <tr class="text-center"><td colspan="8"><h3>LỊCH THI TIN HỌC</h3></td></tr>
             </thead>
@@ -51,7 +51,7 @@ if (count($row)==0) {
                     <td colspan="4">Số báo danh: <b class="text-primary"><?php echo $row['SBD'] ?></b></td>
                 </tr>
                 <tr>
-                    <th>Tên học viên</th>
+                    <th>Tên thí sinh</th>
                     <td><?php echo $row['HOTEN'] ?></td>
                     <th>Giới tính</th>
                     <td><?php echo $row['GIOITINH'] ?></td>
@@ -69,30 +69,28 @@ if (count($row)==0) {
                     <td><?php echo $row['TENDS'] ?></td>
                 </tr>
                 <tr>
-                    <th>Ngày thi</th>
-                    <td>
-<?php 
-$date1=date_create($row['NGAYTHI']);
-$date2=date_create(date('Y-m-d'));
-$diff=date_diff($date1,$date2);
-$songay = intval($diff->format("%R%a"));
-if ($row['NGAYTHI']==NULL) {
-    echo "...";
-}else
-if ($songay<0) {
-    echo date_format(date_create_from_format('Y-m-d', $row['NGAYTHI']), 'd/m/Y')."&ensp;<b class='label label-info'>đếm ngược ".$songay." ngày<b>";
-}else
-if ($songay==0) {
-    echo date_format(date_create_from_format('Y-m-d', $row['NGAYTHI']), 'd/m/Y')."&ensp;<b class='label label-success'>hôm nay</b>";
-}else
-if ($songay>0) {
-    echo date_format(date_create_from_format('Y-m-d', $row['NGAYTHI']), 'd/m/Y')."&ensp;<b class='label label-danger'>đã thi</b>";
-}
-
- ?>
+                    <th rowspan="2">Ngày thi</th>
+                    <td rowspan="2">
+                        <?php $date1=date_create($row['NGAYTHI']);$date2=date_create(date('Y-m-d'));$diff=date_diff($date1,$date2);$songay = intval($diff->format("%R%a"));
+                        if ($row['NGAYTHI']==NULL) {echo "...";}
+                        else
+                        if ($songay<0) {echo date_format(date_create_from_format('Y-m-d', $row['NGAYTHI']), 'd/m/Y')."<br><b class='label label-info'>còn ".abs($songay)." ngày<b>";}
+                        else
+                        if ($songay==0) {echo date_format(date_create_from_format('Y-m-d', $row['NGAYTHI']), 'd/m/Y')."&ensp;<b class='label label-success'>hôm nay</b>";}
+                        else
+                        if ($songay>0) {echo date_format(date_create_from_format('Y-m-d', $row['NGAYTHI']), 'd/m/Y')."&ensp;<b class='label label-danger'>đã thi</b>";}
+                         ?>
                     </td>
+                    <th>Giờ thi lý thuyết</th>
+                    <td><?php echo $row['GIOLT'] ?></td>
+                </tr>
+                <tr>
+                    <th>Giờ thi thực hành</th>
+                    <td><?php echo $row['GIOTH'] ?></td>
+                </tr>
+                <tr>
                     <th>Địa điểm</th>
-                    <td><?php echo 'STT phòng thi <b>'.(($row['TENGOINHO']==NULL)?'...':$row['TENGOINHO']).'</b> ( Phòng thực tế <b>'.(($row['TENGOINHO']==NULL)?'...':$row['TENTHUCTE']).'</b> )'; ?></td>
+                    <td colspan="3"><?php echo 'Phòng thi số <b>'.(($row['TENGOINHO']==NULL)?'...':$row['TENGOINHO']).'</b> ( Phòng thực tế <b>'.(($row['TENGOINHO']==NULL)?'...':$row['TENTHUCTE']).'</b> )'; ?></td>
                 </tr>
             </tbody>
         </table>

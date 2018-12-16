@@ -30,7 +30,7 @@ function sanitize_output($buffer) {
 ob_start("sanitize_output");
  ?>
 
-<style>.login-box {background: #fff;width: 400px;height: 500px;margin-top: 5%;border-radius: 6px;}.form-box {width: 400px;padding: 55px 40px;border-radius: 0 10px 10px 0;float: left;}.form-box i {font-size: 50px;margin-bottom: 15px;}.form-box h2 {margin-bottom: 25px;}</style>
+<style>.login-box {background: transparent;width: 400px;height: 500px;margin-top: 5%;border-radius: 6px}.form-box {width: 400px;padding: 55px 40px;border-radius: 0 10px 10px 0;float: left}.form-box i {font-size: 50px;margin-bottom: 15px;background:transparent;}.form-box h2 {margin-bottom: 25px}.form-control{background:transparent !important;border-radius: 15px;}.btn-block{border-radius: 15px}</style>
   <div class="container">
     <div class="login-box mx-auto">
       <div class="form-box float-md-left text-md-center">
@@ -51,4 +51,3 @@ ob_start("sanitize_output");
       </div>
     </div>
   </div>
-  <div style="position: fixed;bottom: 0;height: 20px;width: 100%;background: #28a745;color: #fff;line-height: 20px;font-size: 90%;padding-left: 1rem;font-family: monospace;text-align: center;">© Copyright of Ngô Thanh Lý (Faculty of Information Technology 2014) | Phone: (+84) 794 967 197</div>

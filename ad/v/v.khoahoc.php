@@ -28,6 +28,7 @@
 	                            <th class="text-center">TG Kết thúc</th>
 	                            <th class="text-center">Tổng Lớp</th>
 	                            <th class="text-center">Loại khóa</th>
+	                            <th>Học phí</th>
 	                            <th>#</th>
 	                            <th>Khóa</th>
 	                        </tr>
@@ -44,6 +45,7 @@
 	                            <td class="text-center" ly="<?php echo $row['TGKETTHUC'] ?>"><?php echo date_format(date_create_from_format('Y-m-d', $row['TGKETTHUC']), 'd/m/Y'); ?></td>
 	                            <td class="text-center"><?php echo $row['SOLOP']; ?></td>
 	                            <td class="text-center"><?php echo $row['LOAIKHOA']; ?></td>
+	                            <td class="text-center"><a class="btn btn-sm btn-warning" href="ex/xuatdanhsachhocphi.php?khoa=<?php echo $row['IDKH'] ?>" target="_blank"><i class="fas fa-file-word"></i></a></td>
 	                            <td><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton>&ensp;<bunton class="btn btn-sm btn-dark"><i class="fas fa-times"></i></bunton></td>
 	                            <td>
 	                            	<?php if($row['HOANTHANH']==1){ ?>

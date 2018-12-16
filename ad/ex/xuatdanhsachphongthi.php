@@ -16,12 +16,14 @@ if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die()
 	$ao = $_POST['ao'];
 	$thuc = $_POST['thuc'];
 	$ngaythi = $_POST['ngaythi'];
+	$giolt = $_POST['giolt'];
+	$gioth = $_POST['gioth'];
 	$tong = count($ao);
 	$kn->deletedata("DELETE FROM danhsachphongthi WHERE IDDS = '$idds';");
 	$hs = 0;
 	$idpt = [];
 	for ($i=0; $i < $tong; $i++) { 
-		$kn->adddata("INSERT INTO danhsachphongthi(IDDS,TENGOINHO,TENTHUCTE,NGAYTHI) VALUES ('$idds','".$ao[$i]."','".$thuc[$i]."','".$ngaythi[$i]."');");
+		$kn->adddata("INSERT INTO danhsachphongthi(IDDS,TENGOINHO,TENTHUCTE,NGAYTHI,GIOLT,GIOTH) VALUES ('$idds','".$ao[$i]."','".$thuc[$i]."','".$ngaythi[$i]."','".$giolt[$i]."','".$gioth[$i]."');");
 		++$hs;
 	}
 	$phongthi = $kn->query("SELECT IDPT FROM danhsachphongthi WHERE IDDS = '$idds' ORDER BY IDPT ASC;");
@@ -39,51 +41,6 @@ if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die()
 		echo "Đợt thi này chưa có thí sinh nào.";
 		die();
 	}
-#############
-	/*
-	for ($i=0; $i < count($ds_hv)-1; $i++) {
-	    for ($j=$i+1; $j < count($ds_hv); $j++) {
-	        $listFullName = array($ds_hv[$i]['HO']." ".$ds_hv[$i]['TEN'],$ds_hv[$j]['HO']." ".$ds_hv[$j]['TEN']);
-	        $listFullName2 = sortFullName($listFullName);
-	        if ($listFullName[0]!=$listFullName2[0]) {
-	            $temp = $ds_hv[$i];
-	            $ds_hv[$i] = $ds_hv[$j];
-	            $ds_hv[$j] = $temp;
-	        }
-	    }
-	}
-	
-	for ($i=0; $i < count($ds_hv); $i++) {
-		#xử lý số báo danh
-		$skhoa = "K"; // thieu 3
-		switch (strlen($khoahoc)) {
-			case 1:
-				$skhoa.="00".$khoahoc;
-				break;
-			case 2:
-				$skhoa.="0".$khoahoc;
-				break;
-			default:
-				$skhoa.=$khoahoc;
-				break;
-		}
-		$sso = "CB"; // thieu 3
-		switch (strlen($i+1)) {
-			case 1:
-				$sso.="00".($i+1);
-				break;
-			case 2:
-				$sso.="0".($i+1);
-				break;
-			default:
-				$sso.=($i+1);
-				break;
-		}
-		$sbd = $skhoa.$sso;
-		$kn->editdata("UPDATE danhsachdangkyduthi_hocvien SET SBD = '$sbd' WHERE IDDS='$idds' AND IDHV='".$ds_hv[$i]['IDHV']."' AND (SBD IS NULL OR CHAR_LENGTH(SBD)=0)");
-	}*/
- ?>
- <?php
 	 header("Content-Type: application/vnd.ms-word");
 	 header("Expires: 0");
 	 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");

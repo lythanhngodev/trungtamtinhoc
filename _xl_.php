@@ -2,7 +2,7 @@
 require_once '__.php';
 function laydotthi(){
 	$kn = new clsKetnoi();
-	$query = "SELECT DISTINCT vwD.TENDS,sha2(sha2(vwD.IDDS,256),224) AS IDDS, vwD.TUNGAY, vwD.DENNGAY FROM vwdiemthi vwD ORDER BY TENDS DESC;";
+	$query = "SELECT DISTINCT vwD.TENDS,sha2(sha2(vwD.IDDS,256),224) AS IDDS, vwD.TUNGAY, vwD.DENNGAY FROM vwdiemthi vwD ORDER BY vwD.TUNGAY DESC, TENDS DESC;";
 	$result = $kn->query($query);
 	return $result;
 }

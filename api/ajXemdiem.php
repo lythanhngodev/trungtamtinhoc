@@ -42,19 +42,19 @@ if (count($row)==0) {
             <img class="pull-left" src="/lab/i/vlute_icon36.png"><span class="text-blue">TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT VĨNH LONG<br><span class="text-sm">www.vlute.edu.vn</span></span>
         </div>    
         <div class="box-body">        
-            <table class="table">
+            <table class="table" style="min-width: 500px;">
                 <thead>
                     <tr class="text-center"><td colspan="4" style="width: 100%;"><h3>BẢNG ĐIỂM TIN HỌC</h3></td></tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="4" style="border-left: 3px solid #f29c24;background-color: #ecf6ff;padding: 0.2rem 1rem;"><h5>THÔNG TIN HỌC VIÊN</h5></td>
+                        <td colspan="4" style="border-left: 3px solid #f29c24;background-color: #ecf6ff;padding: 0.2rem 1rem;"><h5>THÔNG TIN THÍ SINH</h5></td>
                     </tr>
                     <tr>
                         <td colspan="4">Số báo danh: <b class="text-primary"><?php echo $row['SBD'] ?></b></td>
                     </tr>
                     <tr>
-                        <th>Tên học viên</th>
+                        <th>Tên thí sinh</th>
                         <td><?php echo $row['HOTEN'] ?></td>
                         <th>Giới tính</th>
                         <td><?php echo $row['GIOITINH'] ?></td>

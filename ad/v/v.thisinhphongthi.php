@@ -77,6 +77,35 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="modaltheduthi" role="dialog" data-keyboard="false" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+  	<form action="./ex/xuatTheDuThi.php" method="POST" target="_blank">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Xuất thẻ dự thi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Vui lòng điền đầy đủ thông tin các phòng bên dưới</p>
+      	<div class="form-group">
+      		<label>Ngày Tháng Năm ký</label>
+      		<input type="date" id="ngaythangnamky" name="ngaythangnamky" class="form-control">
+      	</div>
+      	<div class="form-group">
+      		<label>Ngày có kết quả thi</label>
+      		<input type="date" id="ngayketquathi" name="ngayketquathi" class="form-control">
+      	</div>
+      	<input type="text" hidden="hidden" name="idds" id="idthe">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning"><i class="fas fa-file-word"></i> Xuất thẻ dự thi</button>
+      </div>
+      </form>
+    </div>
+</div>
+</div>
 <div class="modal fade" id="modallapphongthi" role="dialog" data-keyboard="false" data-backdrop="static" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
   	<form action="./ex/xuatdanhsachphongthi.php" method="POST" target="_blank">
@@ -91,10 +120,6 @@
         <p>Từ <b><span id="sohocvien"></span></b> học viên chia làm <b><span id="sophong"></span></b> phòng.</p>
         <p>Vui lòng điền đầy đủ thông tin các phòng bên dưới</p>
       	<table class="table table-bordered" id="bangphongthi">
-      		<tr>
-      			<th>Tên phòng gợi nhớ</th>
-      			<th>Tên phòng thực tế</th>
-      		</tr>
       	</table>
       	<input type="text" hidden="hidden" name="idds" id="iddanhsach">
       </div>
@@ -103,7 +128,7 @@
       </div>
       </form>
     </div>
-  </div>
+</div>
 </div>
 <link rel="stylesheet" type="text/css" href="../lab/css/datatables.min.css">
 <script src="../lab/js/datatables.min.js" type="text/javascript"></script>
@@ -225,7 +250,7 @@ $(document).on('click','.xuatdanhsachphongthi',function(){
 	    },
 		success: function (data) {
 			$('#bangphongthi').empty();
-			$('#bangphongthi').append("<tr class='text-center'><th>Số TT phòng</th><th>Tên phòng thực tế</th><th>Ngày thi</th></tr>");
+			$('#bangphongthi').append("<tr class='text-center'><th>Số TT phòng</th><th>Tên phòng thực tế</th><th>Giờ thi LT</th><th>Giờ thi TH</th><th>Ngày thi</th></tr>");
 			$('#bangphongthi').append(data);
 		},
 	    complete: function () {
@@ -237,7 +262,9 @@ $(document).on('click','.xuatdanhsachphongthi',function(){
 	});
 	$('#modallapphongthi').modal('show');
 });
-$(document).on('click','#btnxuatdanhsachphongthi',function(){
-
+$(document).on('click','.xuatheduthi',function(){
+	var data = $(this).attr('data');
+	$('#idthe').val(data);
+	$('#modaltheduthi').modal('show');
 });
 </script>
