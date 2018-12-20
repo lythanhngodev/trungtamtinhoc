@@ -55,7 +55,7 @@ for ($i=0; $i < $demdong ; $i++) {
 		<div style="margin: 0;box-shadow: 0;font-size: 12px;">
 			<table border="1" style="border-collapse: collapse;width: 100%;">
 				<tr>
-					<td style="text-align: center;width: 20mm"><img src="<?php echo $ttth['HOST'] ?>ex/logo.png" width="70" height="70" /></td>
+					<td style="text-align: center;width: 20mm"><img src="<?php echo $ttth['HOST'] ?>/ex/logo.png" width="70" height="70" /></td>
 					<td style="font-size: 18.5px;text-align: center;"><b>DANH SÁCH THÍ<br>DỰ THI THỰC HÀNH</b><br><i>(Hồ sơ phòng thi, HS-IC-01)</i></td>
 					<td style="padding-left: 5mm;width: 55mm;">Mã số: BM-IC-10-00<br>Ngày hiệu lực: 04/7/2018<br>Lần soát xét: 00</td>
 				</tr>

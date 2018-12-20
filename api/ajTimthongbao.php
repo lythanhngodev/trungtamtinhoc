@@ -25,7 +25,7 @@ if (!isset($_POST['key'])) {
 }
 require_once '../__.php';
 $kn = new clsKetnoi();
-$key = mysqli_real_escape_string($kn->conn,$_POST['key']);
+$key = mysqli_real_escape_string($kn->conn,strip_tags($_POST['key']));
 $sql = "
 	SELECT DISTINCT TENTB FROM thongbao WHERE TENTB like '%".$key."%' ORDER BY IDBV DESC LIMIT 0,10;
 ";

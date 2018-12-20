@@ -10,7 +10,7 @@ require_once '../../__.php';
 $kn = new clsKetnoi();
 $khoahoc = intval($_POST['khoahoc']);
 $tends = '';
-$qr_hv = $kn->query("SELECT DISTINCT kh.IDKH,kh.TENKHOA,l.IDL,l.MALOP,pc.TENCB,pc.TUNGAY,pc.DENNGAY,pc.BUOIDAY,pc.DIADIEM FROM lop l LEFT JOIN khoahoc_lop kl ON l.IDL=kl.IDL LEFT JOIN khoahoc kh ON kl.IDKH=kh.IDKH LEFT JOIN phanconggiangday pc ON pc.MALOP=l.MALOP WHERE kh.IDKH='$khoahoc' ORDER BY l.MALOP ASC");
+$qr_hv = $kn->query("SELECT DISTINCT kh.IDKH,kh.TENKHOA,l.IDL,l.MALOP,pc.TENCB,pc.TUNGAY,pc.DENNGAY,pc.BUOIDAY,pc.DIADIEM,pc.SOTIET FROM lop l LEFT JOIN khoahoc_lop kl ON l.IDL=kl.IDL LEFT JOIN khoahoc kh ON kl.IDKH=kh.IDKH LEFT JOIN phanconggiangday pc ON pc.MALOP=l.MALOP WHERE kh.IDKH='$khoahoc' ORDER BY l.MALOP ASC");
 if (mysqli_num_rows($qr_hv)==0) {
     echo "Không có thông tin";
     die();
@@ -21,6 +21,7 @@ if (mysqli_num_rows($qr_hv)==0) {
         <tr style="text-align: center;">
             <th>Mã lớp</th>
             <th>GV giảng dạy</th>
+            <th>Số tiết</th>
             <th>Từ ngày</th>
             <th>Đến ngày</th>
             <th>Buổi dạy</th>
@@ -34,6 +35,7 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
     	<tr>
     		<td ly='stt' class="text-center" malop="<?php echo $row['MALOP'] ?>"><?php echo $row['MALOP'];$tends=$row['TENKHOA'] ?></td>
             <td><input type="text" class="form-control aucanbo" value="<?php echo $row['TENCB'] ?>"></td>
+            <td><input type="number" class="form-control text-center" value="<?php echo $row['SOTIET'] ?>"></td>
     		<td><input type="text" class="form-control ngayday" value="<?php echo $row['TUNGAY'] ?>"></td>
             <td><input type="text" class="form-control ngayday" value="<?php echo $row['DENNGAY'] ?>"></td>
             <td><input type="text" class="form-control aubuoiday" value="<?php echo $row['BUOIDAY'] ?>"></td>

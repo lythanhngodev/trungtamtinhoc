@@ -29,6 +29,10 @@ ob_start("sanitize_output");
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<?php 
+  header("X-Frame-Options: DENY");
+  header("Content-Security-Policy: frame-ancestors 'none'", false);
+ ?>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="icon" href="/lab/i/favicon.ico" type="image/x-icon">

@@ -23,16 +23,22 @@ require_once '_ckl.php';
 <html>
 <head>
 	<title>PHẦN MỀM QUẢN LÝ TRUNG TÂM TIN HỌC - VLUTE</title>
+    <?php 
+      header("X-Frame-Options: DENY");
+      header("Content-Security-Policy: frame-ancestors 'none'", false);
+     ?>
     <base href="<?php echo $ttth['HOST']."/ad/"; ?>">
     <link rel="shortcut icon" href="../lab/i/favicon.ico" />
     <link rel="stylesheet" href="../lab/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lab/css/style.css">
     <script type="text/javascript" src="../lab/js/jquery-3.3.1.min.js"></script>
     <script async="async" type="text/javascript" src="../lab/js/fontawesome-all.min.js" defer="defer"></script>
+    <style type="text/css">*{user-select: none;}</style>
 <?php 
 $_SESSION['_token'] = _token(256);
 $checkpage = $_SESSION['_token'];
 $_SESSION['_checkpage'] = $_SESSION['_token'];
+$xacthuc = _token(234);
  ?>
 </head>
 <body>
@@ -47,18 +53,18 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
             </a>
 	        <ul class="navbar-nav mr-auto">
 	            <li class="nav-item" id="khoahoc">
-	                <a class="nav-link" href="?p=khoahoc">Khoá học</a>
+	                <a class="nav-link" href="?p=khoahoc&_token=<?php echo $xacthuc ?>">Khoá học</a>
 	            </li>
                 <li class="nav-item" id="lophoc">
-                    <a class="nav-link" href="?p=lophoc">Lớp học</a>
+                    <a class="nav-link" href="?p=lophoc&_token=<?php echo $xacthuc ?>">Lớp học</a>
                 </li>
                 <li class="nav-item dropdown" id="hocvien">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Học viên
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="hocvien1" href="?p=hocvien">Học viên</a>
-                        <a class="dropdown-item" id="nhaphocvien" href="?p=nhaphocvien">Nhập học viên từ Excel</a>
+                        <a class="dropdown-item" id="hocvien1" href="?p=hocvien&_token=<?php echo $xacthuc ?>">Học viên</a>
+                        <a class="dropdown-item" id="nhaphocvien" href="?p=nhaphocvien&_token=<?php echo $xacthuc ?>">Nhập học viên từ Excel</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" id="lephi">
@@ -66,22 +72,22 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                         Lệ phí
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="lephihoc" href="?p=lephihoc">Lệ phí học</a>
-                        <a class="dropdown-item" id="lephithi" href="?p=lephithi">Lệ phí thi</a>
+                        <a class="dropdown-item" id="lephihoc" href="?p=lephihoc&_token=<?php echo $xacthuc ?>">Lệ phí học</a>
+                        <a class="dropdown-item" id="lephithi" href="?p=lephithi&_token=<?php echo $xacthuc ?>">Lệ phí thi</a>
                     </div>
                 </li>
                 <li class="nav-item" id="phanconggiangday">
-                    <a class="nav-link" href="?p=phanconggiangday">PC giảng dạy</a>
+                    <a class="nav-link" href="?p=phanconggiangday&_token=<?php echo $xacthuc ?>">PC giảng dạy</a>
                 </li>
                 <li class="nav-item dropdown" id="tochucthi">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Tổ chức thi
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="danhsachcacdotthi" href="?p=danhsachcacdotthi">Danh sách các đợt thi</a>
-                        <a class="dropdown-item" id="thisinhdangkyduthi" href="?p=thisinhdangkyduthi">Lập DS thí sinh đăng ký dự thi</a>
-                        <a class="dropdown-item" id="thisinhphongthi" href="?p=thisinhphongthi">Quản lý phòng thi</a>
-                        <a class="dropdown-item" id="danhsobaodanh" href="?p=danhsobaodanh">Đánh số báo danh &amp; Điều chỉnh thí sinh</a>
+                        <a class="dropdown-item" id="danhsachcacdotthi" href="?p=danhsachcacdotthi&_token=<?php echo $xacthuc ?>">Danh sách các đợt thi</a>
+                        <a class="dropdown-item" id="thisinhdangkyduthi" href="?p=thisinhdangkyduthi&_token=<?php echo $xacthuc ?>">Lập DS thí sinh đăng ký dự thi</a>
+                        <a class="dropdown-item" id="thisinhphongthi" href="?p=thisinhphongthi&_token=<?php echo $xacthuc ?>">Quản lý phòng thi</a>
+                        <a class="dropdown-item" id="danhsobaodanh" href="?p=danhsobaodanh&_token=<?php echo $xacthuc ?>">Đánh số báo danh &amp; Điều chỉnh thí sinh</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" id="phuckhao">
@@ -89,8 +95,8 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                         Phúc khảo
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="lapdanhsachphuckhao" href="?p=lapdanhsachphuckhao">Lập DS phúc khảo</a>
-                        <a class="dropdown-item" id="ketquaphuckhao" href="?p=ketquaphuckhao">Kết quả phúc khảo</a>
+                        <a class="dropdown-item" id="lapdanhsachphuckhao" href="?p=lapdanhsachphuckhao&_token=<?php echo $xacthuc ?>">Lập DS phúc khảo</a>
+                        <a class="dropdown-item" id="ketquaphuckhao" href="?p=ketquaphuckhao&_token=<?php echo $xacthuc ?>">Kết quả phúc khảo</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" id="ketqua">
@@ -98,7 +104,7 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                         Kết quả
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="diem" href="?p=diem">Kết quả thi</a>
+                        <a class="dropdown-item" id="diem" href="?p=diem&_token=<?php echo $xacthuc ?>">Kết quả thi</a>
                         
                     </div>
                 </li>
@@ -107,8 +113,8 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                         Chứng chỉ
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="denghicapchungchi" href="?p=denghicapchungchi">DS đề nghị cấp chứng chỉ</a>
-                        <a class="dropdown-item" id="nhapchungchi" href="?p=nhapchungchi">Nhập chứng chỉ</a>
+                        <a class="dropdown-item" id="denghicapchungchi" href="?p=denghicapchungchi&_token=<?php echo $xacthuc ?>">DS đề nghị cấp chứng chỉ</a>
+                        <a class="dropdown-item" id="nhapchungchi" href="?p=nhapchungchi&_token=<?php echo $xacthuc ?>">Nhập chứng chỉ</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" id="thongbao">
@@ -116,8 +122,8 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                         Thông báo
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="themthongbao" href="?p=themthongbao">Thêm thông báo</a>
-                        <a class="dropdown-item" id="quanlythongbao" href="?p=quanlythongbao">Quản lý thông báo</a>
+                        <a class="dropdown-item" id="themthongbao" href="?p=themthongbao&_token=<?php echo $xacthuc ?>">Thêm thông báo</a>
+                        <a class="dropdown-item" id="quanlythongbao" href="?p=quanlythongbao&_token=<?php echo $xacthuc ?>">Quản lý thông báo</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" id="taikhoan">
@@ -125,12 +131,12 @@ $_SESSION['_checkpage'] = $_SESSION['_token'];
                         Tài khoản
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" id="thongtintaikhoan" href="?p=thongtintaikhoan">Thông tin tài khoản</a>
-                        <a class="dropdown-item" id="dangxuat" href="./lo.php">Đăng xuất</a>
+                        <a class="dropdown-item" id="thongtintaikhoan" href="?p=thongtintaikhoan&_token=<?php echo $xacthuc ?>">Thông tin tài khoản</a>
+                        <a class="dropdown-item" id="dangxuat" href="./lo.php?_token=<?php echo $xacthuc ?>">Đăng xuất</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" id="nhapkhoathicu">
-                    <a class="nav-link" href="?p=nhapkhoathicu">
+                    <a class="nav-link" href="?p=nhapkhoathicu&_token=<?php echo $xacthuc ?>">
                         <span class="badge badge-warning">Nhập khóa thi cũ</span>
                     </a>
                 </li>

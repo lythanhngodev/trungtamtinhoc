@@ -196,13 +196,15 @@ $(document).on('click','#danhsotudong',function(){
 			tbdanger('Số kháo chỉ nhập lớn hơn 0 và bé hơn 999');
 			return 0;
 		}
+	}else{
+			tbdanger('Số kháo chỉ nhập lớn hơn 0 và bé hơn 999');
+			return 0;
 	} 
 	$('#banglophoc').find('tr:not(:first)').each(function(i, row) {
 	  var cols = [];
 	  $(this).find('td:nth-child(3)').each(function(i, col) {
 	      if(!jQuery.isEmptyObject($(this).text().trim())){
 	      	sbd.push(parseInt($(this).text().split('CB')[1]));
-	      	tiento=$(this).text().split('CB')[0];
 	      }
 	  });
 	});

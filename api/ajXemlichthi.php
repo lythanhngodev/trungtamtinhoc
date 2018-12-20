@@ -24,8 +24,8 @@ if (!isset($_POST['d'])) {
 }
 require_once '../__.php';
 $kn = new clsKetnoi();
-$ds = mysqli_real_escape_string($kn->conn,$_POST['d']);
-$idhv = mysqli_real_escape_string($kn->conn,$_POST['s']);
+$ds = mysqli_real_escape_string($kn->conn,strip_tags($_POST['d']));
+$idhv = mysqli_real_escape_string($kn->conn,strip_tags($_POST['s']));
 if (strlen($idhv)==0) {
     die();
 }

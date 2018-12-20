@@ -17,12 +17,13 @@ for ($i=0; $i < count($bhv); $i++) {
 for ($i=0; $i < count($bhv); $i++) {
 	$MALOP = $bhv[$i][0];
 	$CANBO = $bhv[$i][1];
-	$TU = $bhv[$i][2];
-	$DEN = $bhv[$i][3];
-	$BUOI = $bhv[$i][4];
-	$DIADIEM = $bhv[$i][5];
+	$SOTIET = $bhv[$i][2];
+	$TU = $bhv[$i][3];
+	$DEN = $bhv[$i][4];
+	$BUOI = $bhv[$i][5];
+	$DIADIEM = $bhv[$i][6];
 	$qr_hocvien.="DELETE FROM phanconggiangday WHERE MALOP IN (SELECT MALOP FROM phanconggiangday WHERE MALOP='$MALOP');";
-	$qr_hocvien.= "INSERT INTO phanconggiangday(MALOP,TUNGAY, DENNGAY, TENCB, BUOIDAY, DIADIEM) VALUES ('$MALOP','$TU','$DEN','$CANBO','$BUOI','$DIADIEM');";
+	$qr_hocvien.= "INSERT INTO phanconggiangday(MALOP,TUNGAY, DENNGAY, TENCB, BUOIDAY, DIADIEM,SOTIET) VALUES ('$MALOP','$TU','$DEN','$CANBO','$BUOI','$DIADIEM','$SOTIET');";
 }
 mysqli_multi_query($kn->conn,$qr_hocvien);
 $ketqua['thongbao'] = "Đã lưu";

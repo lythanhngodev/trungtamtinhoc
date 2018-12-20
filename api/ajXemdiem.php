@@ -24,11 +24,11 @@ if (!isset($_POST['d'])) {
 }
 require_once '../__.php';
 $kn = new clsKetnoi();
-$key = mysqli_real_escape_string($kn->conn,$_POST['d']);
+$key = mysqli_real_escape_string($kn->conn,strip_tags($_POST['d']));
 if (strlen($key)==0) {
     die();
 }
-$hk = mysqli_real_escape_string($kn->conn,$_POST['k']);
+$hk = mysqli_real_escape_string($kn->conn,strip_tags($_POST['k']));
 $sql = "SELECT DISTINCT * FROM vwDiemThi WHERE BINARY (sha2(sha2(IDHV,256),224) = '$key') AND BINARY (sha2(sha2(IDDS,256),224)='$hk') LIMIT 0,1;";
 $danhsach = $kn->query($sql);
 $row = mysqli_fetch_assoc($danhsach);

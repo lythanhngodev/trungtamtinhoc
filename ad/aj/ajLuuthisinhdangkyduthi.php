@@ -12,50 +12,61 @@ require_once '../../__.php';
 $kn = new clsKetnoi();
 $idds = $_POST['idds'];
 $bhv = $_POST['bhv'];
-$tg = time();
-//$them_danhsach = $kn->query("SELECT kh.TENKHOA FROM danhsachdangkyduthi dk LEFT JOIN khaohoc kh ON dk.IDKH=kh.IDKH WHERE dk.IDDS = '$idds';");
 $dem=0;
 $stt = 1;
-$kn->deletedata("DELETE FROM danhsachdangkyduthi_hocvien WHERE IDDS = '$idds';");
 // Chuẩn hóa chuôi
 for ($i=0; $i < count($bhv); $i++) {
     for ($j=0; $j < count($bhv[$i]); $j++) {
     	$bhv[$i][$j] = mysqli_real_escape_string($kn->conn,$bhv[$i][$j]);
     }
 }
-for ($i=0; $i < count($bhv); $i++) { 
-	// xử lý số báo danh
-    /*
-	$skhoa = "K"; // thieu 3
-	switch (strlen($tenkh)) {
-		case 1:
-			$skhoa.="00".$tenkh;
-			break;
-		case 2:
-			$skhoa.="0".$tenkh;
-			break;
-		default:
-			$skhoa.=$tenkh;
-			break;
-	}
-	$sso = "CB"; // thieu 3
-	switch (strlen($stt)) {
-		case 1:
-			$sso.="00".$stt;
-			break;
-		case 2:
-			$sso.="0".$stt;
-			break;
-		default:
-			$sso.=$stt;
-			break;
-	}
-	$sbd = $skhoa.$sso;*/
-    $hoi="INSERT INTO danhsachdangkyduthi_hocvien(IDDS,IDHV,GHICHU) VALUES ('$idds','".$bhv[$i][0]."','".$bhv[$i][1]."');";
-    if (mysqli_query($kn->conn,$hoi)===TRUE){
-        $dem++;$stt++;
-    }
+// lấy danh sách thí sinh từ csdl
+$str = "SELECT IDDKTHV,IDDS,IDHV FROM danhsachdangkyduthi_hocvien WHERE IDDS='$idds'";
+$dulieu = $kn->query($str);
+$mangdl = null;
+while ($row = mysqli_fetch_assoc($dulieu)) {
+	$mangdl[]=$row;
 }
+$khongcsdl = null;
+// có trong csdl nhưng ko có trong danh sách
+for ($i=0; $i < count($mangdl); $i++) { 
+	$kt = 0;
+	for ($j=0; $j < count($bhv); $j++) { 
+		if ($mangdl[$i]['IDHV']==$bhv[$j][0]) {
+			$kt++;
+		}
+	}
+	if ($kt==0) {
+		$kn->deletedata("DELETE FROM danhsachdangkyduthi_hocvien WHERE IDDS = '$idds' AND IDHV = '".$mangdl[$i]['IDHV']."';");
+		$dem++;
+	}
+}
+
+
+$str = "SELECT IDDKTHV,IDDS,IDHV FROM danhsachdangkyduthi_hocvien WHERE IDDS='$idds'";
+$dulieu = $kn->query($str);
+$mangdl = null;
+while ($row = mysqli_fetch_assoc($dulieu)) {
+	$mangdl[]=$row;
+}
+$khongcsdl = null;
+// có trong danh sách nhưng không có trong csdl
+for ($i=0; $i < count($bhv); $i++) { 
+	$kt = 0;
+	for ($j=0; $j < count($mangdl); $j++) { 
+		if ($bhv[$i][0]==$mangdl[$j]['IDHV']) {
+			$kt++;
+		}
+	}
+	if ($kt==0) {
+		// trường hợp KHÔNG có trong csdl
+	    $hoi="INSERT INTO danhsachdangkyduthi_hocvien(IDDS,IDHV,GHICHU) VALUES ('$idds','".$bhv[$i][0]."','".$bhv[$i][1]."');";
+	    if (mysqli_query($kn->conn,$hoi)===TRUE){
+	        $dem++;$stt++;
+	    }
+	}
+}
+
 if ($dem>0) {
     $kq['trangthai'] = 1;
     echo json_encode($kq);

@@ -52,7 +52,7 @@ while ($row = mysqli_fetch_assoc($qr_hv)) {
 		<div style="margin: 0;box-shadow: 0;font-size: 18px;">
 			<table id="bangheader" border="1" style="border-collapse: collapse;width: 100%;">
 				<tr>
-					<td style="text-align: center;width: 20mm"><img src="<?php echo $ttth['HOST'] ?>ex/logo.png" width="70" height="70"></td>
+					<td style="text-align: center;width: 20mm"><img src="<?php echo $ttth['HOST'] ?>/ex/logo.png" width="70" height="70"></td>
 					<th style="font-size: 18.5px;text-align: center;">DANH SÁCH THÍ SINH ĐĂNG KÝ DỰ THI<br>CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN</th>
 					<td style="padding-left: 5mm;width: 45mm;">Mã số: BM-IC-02-00<br>Ngày hiệu lực: 04/7/2018<br>Lần soát xét: 00</td>
 				</tr>

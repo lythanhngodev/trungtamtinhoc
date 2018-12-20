@@ -1,10 +1,18 @@
 <?php if (!isset($checkpage)) {echo "<h2>Đâu dễ phá vậy</2>";die();} ?>
+<style type="text/css">
+	.col-md-2{
+		margin-bottom: 1.5rem;
+	}
+	.col-12 img{
+		width: 60%;
+	}
+</style>
 <div class="background-container container-fluid">
 	<div class="row">
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-	                <h4>PHẦN MỀM QUẢN LÝ TRUNG TÂM TIN HỌC - VLUTE</h4>
+	                <h4>TRANG QUẢN LÝ TRUNG TÂM TIN HỌC - VLUTE</h4>
 	                <hr>
 	                <h6>
 					    <?php
@@ -40,7 +48,7 @@
 	</div>
 	<br>
 	<div class="row">
-		        <div class="col-md-3">
+		        <div class="col-md-2">
 					<center>
 			            <div class="card" style="background-color: #fff !important;">
 			              <div class="card-body">
@@ -52,7 +60,19 @@
 			            </div>
 					</center>
 		        </div>
-		        <div class="col-md-3">
+		        <div class="col-md-2">
+					<center>
+			            <div class="card" style="background-color: #fff !important;">
+			              <div class="card-body">
+			                <a href="?p=phanconggiangday" class="col-12"><img src="../lab/i/phancong.png"></a>
+			              </div>
+			              <div class="card-header">
+			                <h4>PC Giảng dạy</h4>
+			              </div>
+			            </div>
+					</center>
+		        </div>
+		        <div class="col-md-2">
 					<center>
 			            <div class="card" style="background-color: #fff !important;">
 			              <div class="card-body">
@@ -64,7 +84,7 @@
 			            </div>
 					</center>
 		        </div>
-		        <div class="col-md-3">
+		        <div class="col-md-2">
 					<center>
 			            <div class="card" style="background-color: #fff !important;">
 			              <div class="card-body">
@@ -76,7 +96,7 @@
 			            </div>
 					</center>
 		        </div>
-		        <div class="col-md-3">
+		        <div class="col-md-2">
 					<center>
 			            <div class="card" style="background-color: #fff !important;">
 			              <div class="card-body">

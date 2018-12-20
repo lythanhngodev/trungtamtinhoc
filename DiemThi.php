@@ -148,6 +148,11 @@ $(document).ready(function(){
           $('#tukhoa').val(ui.item.label);
           return false;
       },
+      focus: function(event, ui){
+        event.preventDefault();
+        $('#tukhoa').val(ui.item.label);
+        $('#<?php echo $_idso ?>').val(ui.item.value);
+      }
   });
   $.ajax({
       url: 'ly_api_dt',dataType:"json",success:function(data){

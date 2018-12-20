@@ -21,7 +21,7 @@ function sanitize_output($buffer) {
 ob_start("sanitize_output");
 require_once '../__.php';
 $kn = new clsKetnoi();
-$key = mysqli_real_escape_string($kn->conn,$_POST['s']);
+$key = mysqli_real_escape_string($kn->conn,strip_tags($_POST['s']));
 if (strlen($key)==0) {
     die();
 }

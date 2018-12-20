@@ -1,4 +1,6 @@
 <?php 
+  header("X-Frame-Options: DENY");
+  header("Content-Security-Policy: frame-ancestors 'none'", false);
 	require_once '../__.php';
 	session_start();
 	$kn = new clsKetnoi();

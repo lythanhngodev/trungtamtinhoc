@@ -20,12 +20,12 @@ function sanitize_output($buffer) {
 }
 ob_start("sanitize_output");
 if (!isset($_POST['key'])) {
-	echo "Không có thông tin";
+	echo "<h2>Đâu dễ phá vậy</2>";
 	die();
 }
 require_once '../__.php';
 $kn = new clsKetnoi();
-$key = mysqli_real_escape_string($kn->conn,$_POST['key']);
+$key = mysqli_real_escape_string($kn->conn,strip_tags($_POST['key']));
 /*$sql = "
 	SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE SBD like '%".$key."%' ORDER BY SBD DESC LIMIT 0,50;
 ";*/

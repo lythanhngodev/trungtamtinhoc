@@ -53,6 +53,7 @@
 							<tr style="text-align: center;">
 								<th>Mã lớp</th>
 								<th>GV giảng dạy</th>
+								<th>Số tiết</th>
 					            <th>Từ ngày</th>
 					            <th>Đến ngày</th>
 								<th>Buổi dạy</th>

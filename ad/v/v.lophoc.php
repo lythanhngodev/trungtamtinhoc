@@ -23,7 +23,8 @@
 	                            <th class="text-center">Thuộc khoá học</th>
 	                            <th>Diễn giải</th>
 	                            <th style="width: 80px;">#</th>
-	                            <th style="width: 80px;">Xuất DS</th>
+	                            <th style="width: 80px;">DS lớp</th>
+	                            <th style="width: 100px;">Phiếu điểm</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
@@ -37,7 +38,8 @@
 	                            <td ly="<?php echo $row['IDKH'] ?>" class="text-center"><?php echo $row['TENKHOA']; ?></td>
 	                            <td><?php echo $row['DIENGIAI'] ?></td>
 	                            <td class="text-center"><bunton class="btn btn-sm btn-dark sua"><i class="fas fa-pencil-alt"></i></bunton></td>
-	                            <td><center><a class="btn btn-sm btn-dark" href="ex/xuatdanhsachlop.php?idl=<?php echo $row['IDL'] ?>" target="_blank"><i class="fas fa-file-word"></i></a></center></td>
+	                            <td><center><a class="btn btn-sm btn-warning" href="ex/xuatdanhsachlop.php?idl=<?php echo $row['IDL'] ?>" target="_blank"><i class="fas fa-file-word"></i></a></center></td>
+	                            <td><center><a class="btn btn-sm btn-warning" href="ex/xuatphieudiem.php?idl=<?php echo $row['IDL'] ?>" target="_blank"><i class="fas fa-file-excel"></i></a></center></td>
 	                        </tr>
 	                    <?php ++$stt;} ?>
 	                    </tbody>

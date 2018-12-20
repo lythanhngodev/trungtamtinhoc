@@ -149,7 +149,7 @@ $(document).ready(function() {
 	  "ordering": false
 	});
 } );
-$('#chonkhoahoc').select2({
+$('#chondotthi,#chondotthilay').select2({
   width: '100%'
 });
 

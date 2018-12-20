@@ -1,3 +1,7 @@
+  <?php 
+  header("X-Frame-Options: DENY");
+  header("Content-Security-Policy: frame-ancestors 'none'", false);
+   ?>
   <meta name="keywords" content="VLUTE, VLUTE-CI, Trung tâm tin học, lịch thi, tra cứu điểm, thông báo, tra cứu văn bằng,lythanhngodev">
   <base href="<?php echo parse_ini_file('lythanhngo.config.ltn')['h_name']; ?>">
   <meta name="theme-color" content="#f39c12">
