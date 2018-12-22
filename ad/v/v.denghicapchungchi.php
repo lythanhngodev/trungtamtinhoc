@@ -10,8 +10,7 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-body">
-	                <h4>ĐIỂM THI</h4>
-	                <h6>Thông tin điểm thi học viên</h6>
+	                <h4>ĐỀ NGHỊ CẤP CHỨNG CHỈ</h4>
 				</div>
 			</div>
 		</div>

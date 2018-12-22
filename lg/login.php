@@ -4,6 +4,18 @@
 	require_once '../__.php';
 	session_start();
 	$kn = new clsKetnoi();
+	/*
+   if(isset($_POST['g-recaptcha-response'])){
+      $captcha = $_POST['g-recaptcha-response'];
+   }
+   if(!$captcha){
+      $kn->golink($ttth['HOST']."/lg");
+   }else{
+      $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LfUIoQUAAAAAI5BJ0dByFpYklozdetE4RU5Acsb&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
+      if($response.success == false){
+         $kn->golink($ttth['HOST']."/lg");
+      } // nguoc lại không phai ro bot
+   }*/
 	if (!isset($_SESSION['_us']) || !isset($_SESSION['_pa'])) {
 		if (!isset($_SESSION['_idus']) || !isset($_SESSION['_idpa'])) {
 			$kn->golink($ttth['HOST']."/lg");

@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 session_start();
 if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die();}
 if(!isset($_GET['khoa']) || empty($_GET['khoa'])){

@@ -14,13 +14,8 @@
   <header class="main-header">
     <!-- Logo -->
     <a class="logo" href="/">
-                <?php 
-                $path = $ttth['HOST']."/lab/i/vlute_icon36.png";
-                $type = pathinfo($path, PATHINFO_EXTENSION);
-                $data = file_get_contents($path);
-                $base64 = 'data:image/'.$type.';base64,'.base64_encode($data); ?>
-        <span class="logo-mini"><img src="<?php echo $base64 ?>" /></span>
-        <span class="logo-lg"><img src="<?php echo $base64 ?>" /> <b>VLUTE CI</b></span>
+        <span class="logo-mini"><img src="/lab/i/vlute_icon36.png" /></span>
+        <span class="logo-lg"><img src="/lab/i/vlute_icon36.png" /> <b>VLUTE CI</b></span>
     </a>
     <!-- Header Navbar -->
             <nav class="navbar navbar-static-top">

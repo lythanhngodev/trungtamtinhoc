@@ -31,7 +31,7 @@ for($s=0;$s<count($listWorkSheets);$s++){
         $ghichu = trim($sheetData[$i]['K']);
         if ($hoten=='' || empty($hoten) ||  $hoten=='null')
             continue;
-        $t_ds = [(++$stt),$hoten,$ngaysinh,$noisinh,$sohieu,$sovaoso,$ngayvaoso,$tracnghiem,$thuchanh,$sbd,$ghichu,-1]; // -1 là IDHV
+        $t_ds = [(++$stt),$hoten,$ngaysinh,$noisinh,$sohieu,$sovaoso,$ngayvaoso,$tracnghiem,$thuchanh,$sbd,$ghichu]; // -1 là IDHV
         $danhsach[] = $t_ds;
     }
 }
@@ -41,13 +41,6 @@ for ($i=0; $i < count($danhsach); $i++) {
 			$danhsach[$i][$j]='';
 		}
 	}
-}
-
-for ($i=0; $i < count($danhsach); $i++) {
-    $hoten = explode(" ",$danhsach[$i][1]);
-    $ten = $hoten[count($hoten)-1];
-    $ho = trim(substr($danhsach[$i][1], 0,strlen($danhsach[$i][1])-strlen($ten)));
-    $kn->adddata("INSERT INTO hocvien(HO,TEN,NGAYSINH,NOISINH) VALUES ('".$ho."','".$ten."','".$danhsach[$i][2]."','".$danhsach[$i][3]."');");
 }
 for ($i=0; $i < count($danhsach); $i++) {
     $kn->editdata("
@@ -101,8 +94,5 @@ for ($i=0; $i < count($danhsach); $i++) { ?>
         <div class="form-group col-md-3">
             <label><b>Danh sách học viên được cấp chứng chỉ</b></label>
         </div>
-<div class="col-md-12 khungbtn">
-    <button class='btn btn-dark luuthongtin'><i class='fas fa-save'></i> Lưu thông tin</button>
-</div><br>
     </center>
 </table>

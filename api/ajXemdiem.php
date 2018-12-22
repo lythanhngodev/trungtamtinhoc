@@ -81,10 +81,40 @@ if (count($row)==0) {
                         <th class="text-center">Kết quả</th>
                     </tr>
                     <tr class="text-center">
-                        <th class="text-center"><?php echo number_format($row['DIEMLT'],1) ?></th>
-                        <th class="text-center"><?php echo number_format($row['DIEMTH'],1) ?></th>
-                        <th class="text-center"><?php echo number_format($row['TONGDIEM'],1) ?></th>
-                        <th class="text-danger text-center"><?php if($row['DIEMLT']>=5 && $row['DIEMTH']>=5) echo 'ĐẠT'; else echo 'KHÔNG ĐẠT'; ?></th>
+                    <?php 
+                        $diemlt = 0;
+                        if ($row['THILT']==1) {
+                            $diemlt = $row['DIEMLTPK'];
+                        }else{
+                            $diemlt = $row['DIEMLT'];
+                        }
+                        $diemth = 0;
+                        if ($row['THITH']==1) {
+                            $diemth = $row['DIEMTHPK'];
+                        }
+                        else{
+                            $diemth = $row['DIEMTH'];
+                        }
+                        if(($row['DIEMLT']==null && $row['DIEMTH'] == null)){
+                     ?>
+                            <th class="text-center">-</th>
+                            <th class="text-center">-</th>
+                            <th class="text-center">-</th>
+                            <th class="text-danger text-center">CHƯA THI</th>
+                    <?php }else{ ?>
+                        <th class="text-center"><?php echo number_format($diemlt,1) ?></th>
+                        <th class="text-center"><?php echo number_format($diemth,1) ?></th>
+                        <th class="text-center"><?php echo number_format(($diemlt+$diemth),1) ?></th>
+                        <th class="text-danger text-center">
+                            <?php 
+                                if(($row['DIEMLT']==null && $row['DIEMTH'] == null)) 
+                                    echo 'CHƯA THI'; 
+                                else if($diemlt>=5 && $diemth>=5)
+                                    echo 'ĐẠT';
+                                else
+                                    echo "KHÔNG ĐẠT"; ?>
+                            </th>
+                    <?php } ?>
                     </tr>
                     <tr>
                         <td colspan="4"><b>Ghi chú:&ensp;</b> <span><?php echo $row['GHICHUD'] ?></span></td>

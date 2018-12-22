@@ -45,6 +45,9 @@ ob_start("sanitize_output");
                 <label for="exampleInputPassword1" class="sr-only">Password</label>
                 <input type="password" class="form-control" name="<?php echo $_SESSION['_idpa']; ?>" placeholder="Password" required="required" pattern=".{8,}" title="Mật khẩu trên 8 ký tự">
             </div>
+          <div class="form-group">
+            <div class="g-recaptcha" data-sitekey="6LdPI4QUAAAAAHMpzlLJ7UpfJVykNYcVU-X7YzWX"></div>
+          </div>
           <button type="submit" class="btn btn-success btn-block">Đăng nhập</button><br>
           <p><small class="text-muted"><a>Quên mật khẩu?</a></small></p>
         </form>

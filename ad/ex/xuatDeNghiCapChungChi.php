@@ -44,11 +44,17 @@ if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die()
 <body style="width: 26.7cm">
 	<div class="Section1">
 <?php 
-$qr_hv = $kn->query("SELECT DISTINCT pt.IDPT,pt.TENTHUCTE,pt.NGAYTHI,kh.TENKHOA,hv.IDHV FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV LEFT JOIN danhsachphongthi pt ON dh.IDDS=pt.IDDS AND dh.IDPT=pt.IDPT LEFT JOIN khoahoc kh ON ds.IDKH=kh.IDKH WHERE dh.IDDS='$idds';");
+$qr_hv = $kn->query("
+	SELECT DISTINCT kh.TENKHOA,ds.TUNGAY,ds.DENNGAY,UPPER(kh.LOAIKHOA) as LOAIKHOA1
+	FROM danhsachdangkyduthi ds 
+	  LEFT JOIN khoahoc kh ON ds.IDKH = kh.IDKH
+	WHERE ds.IDDS='$idds';
+");
+
 $demdong = mysqli_num_rows($qr_hv);
 $mangphong = null;
 while ($row = mysqli_fetch_assoc($qr_hv)) {
-	$mangphong[]=[$row['TENTHUCTE'],$row['NGAYTHI'],$row['TENKHOA']];
+	$mangphong[]=$row;
 }?>
 <br style="page-break-before: always;">
 <div style="margin: 0;box-shadow: 0;font-size: 12px;">
@@ -97,9 +103,17 @@ Căn cứ kết quả thi và kết quả phúc khảo của Kỳ thi cấp Ch�
 $stt = 1; ?>
 		<br style="page-break-before: always;">
 		<div style="margin: 0;box-shadow: 0;font-size: 12px;">
-			<p style="text-align: center;font-size: 14pt;"><b>DANH SÁCH THÍ SINH ĐẠT YÊU CẦU<br>CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN .................</b></p>
-			<p style="text-align: center;font-size: 14pt">Khoá <?php echo $mangphong[0][2] ?>, ngày thi <?php echo date_format(date_create_from_format('Y-m-d', $mangphong[0][1]), 'd/m/Y') ?> </p>
-			<p style="text-align: center;font-size: 12pt;"><i>(Kèm theo giấy đề nghị cấp Chứng chỉ ứng dụng Công nghệ thông tin (cơ bản/nâng cao) Khóa <?php echo $mangphong[0][2] ?>)</i></p>
+			<p style="text-align: center;font-size: 14pt;"><b>DANH SÁCH THÍ SINH ĐẠT YÊU CẦU<br>CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN <?php echo $mangphong[0]['LOAIKHOA1'] ?></b></p>
+			<p style="text-align: center;font-size: 14pt">Khoá <?php echo $mangphong[0]['TENKHOA'] ?>, ngày thi 
+				<?php 
+				if ($mangphong[0]['DENNGAY']==$mangphong[0]['TUNGAY']){
+					echo date_format(date_create_from_format('Y-m-d', $mangphong[0]['TUNGAY']), 'd/m/Y');
+				}
+				else{
+					echo date_format(date_create_from_format('Y-m-d', $mangphong[0]['TUNGAY']), 'd/m/Y')." đến ".date_format(date_create_from_format('Y-m-d', $mangphong[0]['DENNGAY']), 'd/m/Y');
+				}
+				 ?></p>
+			<p style="text-align: center;font-size: 12pt;"><i>(Kèm theo giấy đề nghị cấp Chứng chỉ ứng dụng Công nghệ thông tin (cơ bản/nâng cao))</i></p>
 			<table border="1" style="width: 100%;border-collapse: collapse;font-size: 16px;">
 				<tr style="background-color: #d9d9d9;text-align: center;">
 					<th style="width: 1.1cm;" rowspan="2">STT</th>
@@ -117,8 +131,31 @@ $stt = 1; ?>
 					<th>TH</th>
 				</tr>
 				<?php 
-				$qr = $kn->query("SELECT DISTINCT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS FROM danhsachdangkyduthi ds LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV WHERE dh.IDDS='$idds' AND (dh.DIEMLT >= 5.0 AND dh.DIEMTH >=5.0)");
-				while ($r = mysqli_fetch_assoc($qr)) { ?>
+				$qr = $kn->query("
+					SELECT DISTINCT hv.IDHV,hv.HO, hv.TEN, hv.NGAYSINH, hv.GIOITINH, hv.NOISINH, hv.CMND, hv.MSSV,ds.TENDS,dh.DIEMLT,dh.DIEMTH,dh.TONGDIEM,dh.SBD,dh.IDPT,dh.IDDS,dh.GHICHUD,dk.THILT,dk.THITH,dk.DIEMLTPK,dk.DIEMTHPK
+				    FROM danhsachdangkyduthi ds 
+				        LEFT JOIN danhsachdangkyduthi_hocvien dh ON ds.IDDS=dh.IDDS
+				        LEFT JOIN danhsachphuckhao_hocvien dk ON dh.IDDKTHV=dk.IDDKTHV 
+				        LEFT JOIN hocvien hv ON dh.IDHV=hv.IDHV 
+				    WHERE dh.IDDS='$idds' ORDER BY dh.SBD ASC;");
+				while ($r = mysqli_fetch_assoc($qr)) {
+				    $diemlt = null;
+				    if ($r['THILT']==1) {
+				        $diemlt = $r['DIEMLTPK'];
+				    }else{
+				        $diemlt = $r['DIEMLT'];
+				    }
+				    $diemth = null;
+				    if ($r['THITH']==1) {
+				        $diemth = $r['DIEMTHPK'];
+				    }
+				    else{
+				        $diemth = $r['DIEMTH'];
+				    }
+				    if (floatval($diemlt) <5 || floatval($diemth) <5) {
+				        continue;
+				    }
+				 ?>
 				<tr>
 					<td style="text-align: center;"><?php echo $stt; ?></td>
 					<td style="text-align: center;"><?php echo $r['SBD'] ?></td>
@@ -127,9 +164,9 @@ $stt = 1; ?>
 					<td style="text-align: center;"><?php echo $r['GIOITINH'] ?></td>
 					<td style="text-align: center;"><?php echo $r['NOISINH'] ?></td>
 					<td style="text-align: center;"><?php echo $r['MSSV'] ?></td>
-					<td style="text-align: center;"><?php echo number_format($r['DIEMLT'],1,".",",") ?></td>
-					<td style="text-align: center;"><?php echo number_format($r['DIEMTH'],1,".",",") ?></td>
-					<td style="text-align: center;"><?php echo number_format($r['TONGDIEM'],1,".",",") ?></td>
+					<td style="text-align: center;"><?php echo number_format($diemlt,1,".",",") ?></td>
+					<td style="text-align: center;"><?php echo number_format($diemth,1,".",",") ?></td>
+					<td style="text-align: center;"><?php echo number_format(($diemlt+$diemth),1,".",",") ?></td>
 				</tr>
 				<?php ++$stt; } ?>
 			</table>

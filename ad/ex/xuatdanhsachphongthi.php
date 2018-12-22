@@ -1,5 +1,20 @@
 <?php 
+error_reporting(0);
 session_start();
+function laykhoathi($idds){
+	$kn = new clsKetnoi();
+	$str = "
+		SELECT DISTINCT kh.TENKHOA
+		FROM danhsachdangkyduthi ds 
+			LEFT JOIN khoahoc kh ON ds.IDKH = kh.IDKH
+		WHERE ds.IDDS='12';";
+	$qr = $kn->query($str);
+	$row = mysqli_fetch_row($qr);
+	if (empty($row[0])) {
+		return "......";
+	}
+	return $row[0];
+}
 if (!isset($_SESSION['_checkpage'])) {echo "<h2>Đâu dễ phá vậy</2>";die();}
 	include_once("../../__.php");
 	if (!isset($_POST['idds']) || empty($_POST['idds'])) {
@@ -83,7 +98,7 @@ for ($i=0; $i < $tong ; $i++) {
 				</tr>
 			</table>
 			<p style="text-align: center;font-size: 20px;"><b>KỲ THI CẤP CHỨNG CHỈ ỨNG DỤNG CÔNG NGHỆ THÔNG TIN CƠ BẢN</b></p>
-			<p style="text-align: center;">Khoá ........, ngày thi <?php echo date_format(date_create_from_format('Y-m-d', $ngaythi[$i]), 'd/m/Y') ?> </p>
+			<p style="text-align: center;">Khoá <?php echo laykhoathi($idds); ?>, ngày thi <?php echo date_format(date_create_from_format('Y-m-d', $ngaythi[$i]), 'd/m/Y') ?> </p>
 			<table border="1" style="width: 100%;border-collapse: collapse;background-color: #b3b3b3;">
 				<tr style="padding-left: 0.5cm;font-size: 16pt;">
 					<td style="padding-left: 0.5cm;text-align: left !important;"><b>Chứng chỉ ứng dụng CNTT cơ bản</b></td>
@@ -111,7 +126,7 @@ for ($i=0; $i < $tong ; $i++) {
 					<td style="text-align: center;"><?php echo $stt; ?></td>
 					<td style="text-align: center;"><?php echo $r['SBD'] ?></td>
 					<td style="text-align: center;"><?php echo $r['CMND'] ?></td>
-					<td style="padding-left: 0.3cm"><?php echo $r['HO']." ".$r['TEN'] ?></td>
+					<td style="padding-left: 0.2cm"><?php echo $r['HO']." ".$r['TEN'] ?></td>
 					<td style="text-align: center;"><?php echo $r['NGAYSINH'] ?></td>
 					<td style="text-align: center;"><?php echo $r['GIOITINH'] ?></td>
 					<td style="text-align: center;"><?php echo $r['NOISINH'] ?></td>
