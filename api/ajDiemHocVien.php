@@ -36,7 +36,7 @@ $sql = "
     UNION
     SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE HOTEN like '%".$key."%'
     UNION
-    SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE SBD like '%".$key."%' ORDER BY SBD DESC LIMIT 0,50;
+    SELECT DISTINCT HOTEN, CMND, MSSV,sha2(sha2(IDHV,256),224),SBD FROM vwDiemThi WHERE SBD like '%".$key."%' ORDER BY SBD DESC LIMIT 0,20;
 ";
 $danhsach = $kn->query($sql);
 $ds = null;

@@ -47,7 +47,7 @@ $danhsach = $kn->query($sql);
 ?>
 <div class="box box-solid" id="HPDetail" style="display: none;">
     <div class="box-body table-responsive no-padding">    
-        <div class="box-header with-border">
+        <div class="box-header with-border" style="min-width: 500px;width: 100%;">
             <img class="pull-left" src="/lab/i/vlute_icon36.png"><span class="text-blue">TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT VĨNH LONG<br><span class="text-sm">www.vlute.edu.vn</span></span>
         </div>    
         <div class="box-body">        

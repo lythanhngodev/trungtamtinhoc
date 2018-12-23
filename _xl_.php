@@ -9,9 +9,17 @@ function laydotthi(){
 // lấy ra 8 bài đăng gần đây
 function laythongbao(){
 	$kn = new clsKetnoi();
-	$query = "SELECT DISTINCT * FROM thongbao WHERE HIENTHI = b'0' ORDER BY IDBV DESC LIMIT 0,8;";
+	$query = "SELECT DISTINCT * FROM thongbao WHERE HIENTHI = b'0' ORDER BY IDBV DESC LIMIT 0,5;";
 	$result = $kn->query($query);
 	return $result;
+}
+function laythemthongbao($so,$sobai){
+    $so = intval($so);
+    $sobai = intval($sobai);
+    $kn = new clsKetnoi();
+    $query = "SELECT DISTINCT * FROM thongbao WHERE HIENTHI = b'0' ORDER BY IDBV DESC LIMIT ".(($so-1)*$sobai).",$so;";
+    $result = $kn->query($query);
+    return $result;
 }
 function xemthongbao($id){
 	$kn = new clsKetnoi();

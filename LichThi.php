@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Lịch thi - VLUTE CI</title>
-  <meta name="description" content="VLUTE CI - Quản lý thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long">
+  <title>Lịch thi</title>
+  <meta name="description" content="VLUTE CI - Center for Informatics">
   <?php require_once 'header.php'; ?>
 </head>
 <body class="sidebar skin-yellow-light">
@@ -21,13 +21,6 @@
             <nav class="navbar navbar-static-top">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 </a>
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="./ad">Đăng nhập</a>
-                        </li>
-                    </ul>
-                </div>
             </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
@@ -51,8 +44,13 @@
           <ul class="treeview-menu" style="display: block;">
             <li class="active"><a href="LichThi"><i class="fa fa-calendar"></i> Lịch thi HV</a></li>
             <li><a href="DiemThi"><i class="fa fa-graduation-cap"></i> Điểm thi</a></li>
-            <li><a href="TraCuuVanBang"><i class="fa fa-graduation-cap"></i> Tra cứu văn bằng</a></li>
+            <li><a href="TraCuuVanBang"><i class="fa fa-graduation-cap"></i> Tra cứu chứng chỉ</a></li>
           </ul>
+        </li>
+        <li>
+            <a href="/ad">
+                <i class="fa fa-key"></i><span>Đăng nhập</span>
+            </a>
         </li>
       </ul>
       <!-- /.sidebar-menu -->
@@ -157,7 +155,7 @@ $(document).ready(function(){
       dataType: "json",
       success: function (data) {
           $.map(data, function(d) {
-              $('#<?php echo $_dotthi ?>').append($('<option></option>').val(d[1]).html(d[0]+' ( '+d[2]+' đến '+d[3]+' )'));
+              $('#<?php echo $_dotthi ?>').append($('<option></option>').val(d[1]).html(d[0]+' ('+d[2]+' - '+d[3]+')'));
           });
       }
   });

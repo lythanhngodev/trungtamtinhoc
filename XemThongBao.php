@@ -21,13 +21,6 @@
             <nav class="navbar navbar-static-top">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 </a>
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="./ad">Đăng nhập</a>
-                        </li>
-                    </ul>
-                </div>
             </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
@@ -51,8 +44,13 @@
           <ul class="treeview-menu">
             <li><a href="LichThi"><i class="fa fa-calendar"></i> Lịch thi HV</a></li>
             <li><a href="DiemThi"><i class="fa fa-graduation-cap"></i> Điểm thi</a></li>
-            <li><a href="TraCuuVanBang"><i class="fa fa-graduation-cap"></i> Tra cứu văn bằng</a></li>
+            <li><a href="TraCuuVanBang"><i class="fa fa-graduation-cap"></i> Tra cứu chứng chỉ</a></li>
           </ul>
+        </li>
+        <li>
+            <a href="/ad">
+                <i class="fa fa-key"></i><span>Đăng nhập</span>
+            </a>
         </li>
       </ul>
       <!-- /.sidebar-menu -->

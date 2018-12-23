@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>VLUTE CI - Trang thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long</title>
-  <meta name="description" content="VLUTE CI - Quản lý thông tin đào tạo tin học Đại học Sư phạm Kỹ thuật Vĩnh Long">
+  <title>VLUTE CI - Center for Informatics</title>
+  <meta name="description" content="VLUTE CI - Center for Informatics">
   <?php require_once 'header.php'; ?>
   <style type="text/css">#footer{display: none;}</style>
 </head>
@@ -15,30 +15,17 @@
   <header class="main-header">
     <!-- Logo -->
     <a class="logo" href="/">
-                <?php 
-                $path = $ttth['HOST']."/lab/i/vlute_icon36.png";
-                $type = pathinfo($path, PATHINFO_EXTENSION);
-                $data = file_get_contents($path);
-                $base64 = 'data:image/'.$type.';base64,'.base64_encode($data); ?>
-        <span class="logo-mini"><img src="<?php echo $base64 ?>" /></span>
-        <span class="logo-lg"><img src="<?php echo $base64 ?>" /> <b>VLUTE CI</b></span>
+        <span class="logo-mini"><img src="/lab/i/vlute_icon36.png" /></span>
+        <span class="logo-lg"><img src="/lab/i/vlute_icon36.png" /> <b>VLUTE CI</b></span>
     </a>
     <!-- Header Navbar -->
             <nav class="navbar navbar-static-top">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 </a>
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="./ad">Đăng nhập</a>
-                        </li>
-                    </ul>
-                </div>
             </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
-
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar Menu -->
@@ -55,10 +42,15 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="LichThi.php"><i class="fa fa-calendar"></i> Lịch thi HV</a></li>
-            <li><a href="DiemThi.php"><i class="fa fa-graduation-cap"></i> Điểm thi</a></li>
-            <li><a href="TraCuuVanBang.php"><i class="fa fa-graduation-cap"></i> Tra cứu văn bằng</a></li>
+            <li><a href="LichThi"><i class="fa fa-calendar"></i> Lịch thi HV</a></li>
+            <li><a href="DiemThi"><i class="fa fa-graduation-cap"></i> Điểm thi</a></li>
+            <li><a href="TraCuuVanBang"><i class="fa fa-graduation-cap"></i> Tra cứu chứng chỉ</a></li>
           </ul>
+        </li>
+        <li>
+            <a href="/ad">
+                <i class="fa fa-key"></i><span>Đăng nhập</span>
+            </a>
         </li>
       </ul>
       <!-- /.sidebar-menu -->
@@ -82,7 +74,17 @@
           </div>
           <div class="col-md-3 col-sm-2 col-lg-3"></div>
         </div>
-
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-3 col-sm-2 col-lg-3"></div>
+            <div class="form-group col-md-6 col-sm-8 col-lg-6">
+                <span class="linknhanh"><a href="LichThi">Lịch thi</a></span>
+                <span class="linknhanh"><a href="DiemThi">Điểm thi</a></span>
+                <span class="linknhanh"><a href="TraCuuVanBang">Tìm chứng chỉ</a></span>
+            </div>
+            <div class="col-md-3 col-sm-2 col-lg-3"></div>
+          </div>
+        </div>
         <div class="row" id="khungthongbao"></div>
     
     </section>
@@ -116,6 +118,7 @@
 <script type="text/javascript" src="/lab/js/jquery-ui.min.js" defer="defer"></script>
 <link rel="stylesheet" type="text/css" href="/lab/css/jquery-ui.min.css">
  <script type="text/javascript">
+  var sotb = 2;
 document.getElementById('hinhct').style.width = window.innerWidth+'px';
 document.getElementById('hinhct').style.height = window.innerHeight+'px';
 document.getElementById('hinhanhct').style.maxWidth = window.innerWidth+'px';
@@ -208,6 +211,27 @@ $(document).keyup(function(e) {
 });
 $(document).on('click','#donghinh',function(e) {
         $('#xemhinh').fadeOut(350);
+});
+$(window).scroll(function() {
+   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+      $.ajax({
+        url: 'api/ajLayThemThongBao.php',
+        type: 'POST',
+        data: {so:sotb},
+        success: function (data) {
+          if (!jQuery.isEmptyObject(data)) {
+            $('#khungthongbao').append(data);
+            ++sotb;
+          }
+          else{
+            tbinfo('Hết thông báo');
+          }
+        },
+        error: function(){
+          tbdanger('Không thể tải thông báo');
+        }
+      });
+   }
 });
  </script>
  <?php require_once 'script.php' ?>

@@ -1,6 +1,7 @@
 <?php
+  error_reporting(0);
   require_once '../_xl_.php'; 
-  $tb = laythongbao();
+  $tb = laythemthongbao(intval($_POST['so']),5);
   while ($ro = mysqli_fetch_assoc($tb)) { ?>
 <div class="row" style="margin: 0;">
   <div class="col-md-3 col-sm-2 col-lg-3"></div>

@@ -38,7 +38,7 @@ if (count($row)==0) {
 ?>
 <div class="box box-solid" id="HPDetail" style="display: none;">
     <div class="box-body table-responsive no-padding">    
-        <div class="box-header with-border">
+        <div class="box-header with-border" style="min-width: 500px;width: 100%;">
             <img class="pull-left" src="/lab/i/vlute_icon36.png"><span class="text-blue">TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT VĨNH LONG<br><span class="text-sm">www.vlute.edu.vn</span></span>
         </div>    
         <div class="box-body">        
@@ -100,7 +100,7 @@ if (count($row)==0) {
                             <th class="text-center">-</th>
                             <th class="text-center">-</th>
                             <th class="text-center">-</th>
-                            <th class="text-danger text-center">CHƯA THI</th>
+                            <th class="text-danger text-center">-</th>
                     <?php }else{ ?>
                         <th class="text-center"><?php echo number_format($diemlt,1) ?></th>
                         <th class="text-center"><?php echo number_format($diemth,1) ?></th>
