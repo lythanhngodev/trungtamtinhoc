@@ -34,7 +34,7 @@ if (count($row)==0) {
     die();
 }
 ?>
-<div id="hinhanh" style="width: 100%;max-width:500px;height: 325px;font-family: sans-serif;border-radius: 10px;background-image: url('./lab/i/khung.png');padding-top: 15px;background-size: cover;background-position: center;">
+<div id="hinhanh" style="width: 100%;max-width:500px;height: 325px;font-family: sans-serif;border-radius: 10px;padding-top: 15px;">
     <table style="text-align: center;width:100%;font-size: 15px;margin-top: 30px;border-radius: 10px;">
         <tr>
             <th style="padding: 4px 0px;color: #00a65a;text-transform: uppercase;font-size: 17px;">Chứng chỉ tin học ứng dụng cơ bản</th>
