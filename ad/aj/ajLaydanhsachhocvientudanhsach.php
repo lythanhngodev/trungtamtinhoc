@@ -55,3 +55,6 @@ while ($row = mysqli_fetch_assoc($qr_hv)) { ?>
     <button class='btn btn-success luuthongtin'><i class='fas fa-save'></i> Lưu danh sách</button>
 </div>
 </center>
+<script type="text/javascript">
+
+</script>

@@ -444,7 +444,9 @@ $(document).on('change','#chondanhsach',function(){
 	    },
 		success: function (data) {
 			$('#khunghocvien').html(data);
-		    $('#banglophoc').DataTable({
+			$('#khunghocvien').show();
+			tban();
+		    $(document).find('#banglophoc').DataTable({
 			  "scrollY": "300px",
 			  "scrollCollapse": true,
 			  "paging": false,

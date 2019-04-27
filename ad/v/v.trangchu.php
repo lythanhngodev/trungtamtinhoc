@@ -109,5 +109,36 @@
 					</center>
 		        </div>
 			</div>	
+		<div class="row">
+			<div class="col-md-12">
+				<hr>
+			</div>
+		</div>
+		<div class="row">
+		        <div class="col-md-2">
+					<center>
+			            <div class="card" style="background-color: #fff !important;">
+			              <div class="card-body">
+			                <a href="./backup.php" target="_blank" class="col-12"><img src="../lab/i/backup.png"></a>
+			              </div>
+			              <div class="card-header">
+			                <h4>Sao lưu</h4>
+			              </div>
+			            </div>
+					</center>
+		        </div>
+		        <div class="col-md-2">
+					<center>
+			            <div class="card" style="background-color: #fff !important;">
+			              <div class="card-body">
+			                <a href="?p=phuchoi" class="col-12"><img src="../lab/i/restore.png"></a>
+			              </div>
+			              <div class="card-header">
+			                <h4>Phục hồi</h4>
+			              </div>
+			            </div>
+					</center>
+		        </div>
+		</div>
 </div>
 <script type="text/javascript" src="../lab/js/bootstrap.min.js"></script>

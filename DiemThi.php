@@ -1,4 +1,5 @@
 <?php require_once '_xl_.php';$_dotthi=idtudong(10);$_idso=idtudong(8); ?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>

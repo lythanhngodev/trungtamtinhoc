@@ -369,6 +369,7 @@ $(document).on('click','#laydulieu',function(){
 	    var form_data = new FormData();
 	    //thêm files vào trong form data
 	    form_data.append('file', file_data);
+	    return;
         $.ajax({
             url: './aj/ajLaydulieusheethocvien.php', // gửi đến file upload.php
             dataType: 'text',

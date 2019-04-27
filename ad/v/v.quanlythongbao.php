@@ -24,39 +24,39 @@ input[type="checkbox"]{
 						<a class="btn btn-dark btn-sm" href="?p=themthongbao" ><i class="fa fa-plus"></i> Thêm mới</a>
 					</div>
 					<br>
-	                <table id="banglophoc" class="table table-hover table-bordered" >
-	                    <thead>
-	                        <tr>
-	                        	<th style="width: 90px;">Hiển thị</th>
-	                            <th class="text-center" style="width: 70px;">TT</th>
-	                            <th>Tên thông báo</th>
-	                            <th >Mô tả</th>
-	                            <th style="width: 120px;">Ngày đăng</th>
-	                            <th style="width: 100px;">#</th>
-	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                    <?php
-	                    $thongbao = laythongbao();
-	                    $stt = 1;
-	                    while ($row = mysqli_fetch_assoc($thongbao)) { ?>
-	                        <tr>
-	                        	<td class="text-center">
-	                        	<?php if ($row['HIENTHI']==0) {
-	                        		echo "<input type='checkbox' checked='checked' />";
-	                        	}else{
-	                        		echo "<input type='checkbox' />";
-	                        	}
-	                        	 ?></td>
-	                            <td class="text-center"><?php echo $stt; ?></td>
-	                            <td ly="<?php echo $row['IDL'] ?>"><?php echo $row['TENTB']; ?></td>
-	                            <td ly="<?php echo $row['IDKH'] ?>"><?php echo $row['MOTA']; ?></td>
-	                            <td><?php echo $row['NGAYDANG'] ?></td>
-	                            <td><center><a class="btn btn-sm btn-dark" href="?p=suathongbao&id=<?php echo $row['IDBV'] ?>"><i class="fas fa-pencil-alt"></i></a>&ensp;<button class="btn btn-sm btn-dark xoathongbao" ly='<?php echo $row['IDBV'] ?>'><i class="fas fa-times"></i></button></center></td>
-	                        </tr>
-	                    <?php ++$stt;} ?>
-	                    </tbody>
-	                </table>
+              <table id="banglophoc" class="table table-hover table-bordered" >
+                  <thead>
+                      <tr>
+                      	<th style="width: 90px;">Hiển thị</th>
+                          <th class="text-center" style="width: 70px;">TT</th>
+                          <th>Tên thông báo</th>
+                          <th >Mô tả</th>
+                          <th style="width: 120px;">Ngày đăng</th>
+                          <th style="width: 100px;">#</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  <?php
+                  $thongbao = laythongbao();
+                  $stt = 1;
+                  while ($row = mysqli_fetch_assoc($thongbao)) { ?>
+                      <tr>
+                      	<td class="text-center">
+                      	<?php if ($row['HIENTHI']==0) {
+                      		echo "<input type='checkbox' checked='checked' />";
+                      	}else{
+                      		echo "<input type='checkbox' />";
+                      	}
+                      	 ?></td>
+                          <td class="text-center"><?php echo $stt; ?></td>
+                          <td ><?php echo $row['TENTB']; ?></td>
+                          <td ><?php echo $row['MOTA']; ?></td>
+                          <td><?php echo $row['NGAYDANG'] ?></td>
+                          <td><center><a class="btn btn-sm btn-dark" href="?p=suathongbao&id=<?php echo $row['IDBV'] ?>"><i class="fas fa-pencil-alt"></i></a>&ensp;<button class="btn btn-sm btn-dark xoathongbao" ly='<?php echo $row['IDBV'] ?>'><i class="fas fa-times"></i></button></center></td>
+                      </tr>
+                  <?php ++$stt;} ?>
+                  </tbody>
+              </table>
 				</div>
 			</div>
 		</div>

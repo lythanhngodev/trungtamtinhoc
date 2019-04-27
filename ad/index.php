@@ -23,9 +23,13 @@ require_once '_ckl.php';
 <html>
 <head>
 	<title>PHẦN MỀM QUẢN LÝ TRUNG TÂM TIN HỌC - VLUTE</title>
-    <?php 
+    <?php
+    /*try {
       header("X-Frame-Options: DENY");
       header("Content-Security-Policy: frame-ancestors 'none'", false);
+    } catch (Exception $e) {
+        
+    }*/
      ?>
     <base href="<?php echo $ttth['HOST']."/ad/"; ?>">
     <link rel="shortcut icon" href="../lab/i/favicon.ico" />
@@ -212,6 +216,9 @@ $xacthuc = _token(234);
                 case 'ketquaphuckhao':
                     require_once './c/c.ketquaphuckhao.php';
                     break;
+                case 'phuchoi':
+                    require_once './c/c.phuchoi.php';
+                    break;
 				default:
 					require './c/c.trangchu.php';
 					break;
@@ -221,7 +228,8 @@ $xacthuc = _token(234);
             }
          ?>
 	</div>
-<div style="position: fixed;margin-bottom: 0;left: 0;right:0;bottom: 0;height: 16px;width: 100%;background: #000;color: #fff;line-height: 16px;font-size: 90%;padding-left: 1rem;font-family: monospace;text-align: center;">© Copyright of Ngô Thanh Lý (Faculty of Information Technology 2014) | Phone: (+84) 794 967 197</div>
+<div style="position: fixed;margin-bottom: 0;left: 0;right:0;bottom: 0;height: 16px;width: 100%;background: #000;color: #fff;line-height: 16px;font-size: 90%;padding-left: 1rem;font-family: monospace;text-align: center;">© Copyright of Ngô Thanh Lý (FIT 2014)</div>
 </body>
 <script type="text/javascript">(function(){var t;(t=jQuery).bootstrapGrowl=function(s,e){var a,o,l;switch(e=t.extend({},t.bootstrapGrowl.default_options,e),(a=t("<div>")).attr("class","bootstrap-growl alert"),e.type&&a.addClass("alert-"+e.type),e.allow_dismiss&&(a.addClass("alert-dismissible"),a.append('<button  class="close" data-dismiss="alert" type="button"><span aria-hidden="true">&#215;</span><span class="sr-only">Close</span></button>')),a.append(s),e.top_offset&&(e.offset={from:"top",amount:e.top_offset}),l=e.offset.amount,t(".bootstrap-growl").each(function(){return l=Math.max(l,parseInt(t(this).css(e.offset.from))+t(this).outerHeight()+e.stackup_spacing)}),(o={position:"body"===e.ele?"fixed":"absolute",margin:0,"z-index":"9999",display:"none"})[e.offset.from]=l+"px",a.css(o),"auto"!==e.width&&a.css("width",e.width+"px"),t(e.ele).append(a),e.align){case"center":a.css({left:"50%","margin-left":"-"+a.outerWidth()/2+"px"});break;case"left":a.css("left","20px");break;default:a.css("right","20px")}return a.fadeIn(),e.delay>0&&a.delay(e.delay).fadeOut(function(){return t(this).alert("close")}),a},t.bootstrapGrowl.default_options={ele:"body",type:"info",offset:{from:"top",amount:20},align:"right",width:250,delay:4e3,allow_dismiss:!0,stackup_spacing:10}}).call(this);</script><script type="text/javascript">function tbinfo(mess){$.bootstrapGrowl('<i class="fa fa-spinner fa-spin"></i>  '+mess, {type: 'info',delay: 6000});}function tbsuccess(mess){$.bootstrapGrowl('<i class="fa fa-check"></i>  '+mess, {type: 'success',delay: 3000});}function tbdanger(mess){$.bootstrapGrowl('<i class="fa fa-times"></i>  '+mess, {type: 'danger',delay: 3000});}function tban(){$('.bootstrap-growl').remove();}</script>
 </html>
+
